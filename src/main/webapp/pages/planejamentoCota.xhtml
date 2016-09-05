@@ -23,8 +23,7 @@
 				<p:outputLabel value="Data Início:" for="dataInicio" />
 				<p:calendar id="dataInicio"
 					value="#{planejamentoCotaController.planejamentoCota.dataInicio}"
-					size="154" pattern="dd-MM-yyyy">
-
+					size="154">
 				</p:calendar>
 
 				<p:outputLabel value="Data Fim:" for="dataFim" />
@@ -87,20 +86,19 @@
 
 			</h:panelGrid>
 			<p:toolbar style="margin-top: 20px">
-			<f:facet name="left">
-			
+				<f:facet name="left">
+
 					<p:commandButton value="salvar"
 						actionListener="#{planejamentoCotaController.salvar}"
-						update="mensagem :frm" style="width:546px" />
-					
+						update="mensagem :frm" style="width:546px" icon="ui-icon-check" />
+
 					<span class="ui-separator"> <span
 						class="ui-icon ui-icon-grip-dotted-vertical" />
 					</span>
 
 					<p:button outcome="/pages/planejamentoCotas.xhtml"
-						value="Voltar aos Planejamentos de Cotas"
-						style="width:546px"/>
-				
+						value="Voltar aos Planejamentos de Cotas" style="width:546px" icon="ui-icon-info"/>
+
 				</f:facet>
 			</p:toolbar>
 

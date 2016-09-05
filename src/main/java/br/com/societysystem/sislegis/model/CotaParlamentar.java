@@ -1,14 +1,9 @@
 package br.com.societysystem.sislegis.model;
 
-import java.io.Serializable;
-
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.Length;
@@ -16,7 +11,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name = "a8_cota_parlamentar_tb")
-public class CotaParlamentar implements Serializable
+public class CotaParlamentar extends Entidade<Long>
 {
 
 	private static final long serialVersionUID = 1L;
@@ -47,6 +42,10 @@ public class CotaParlamentar implements Serializable
 
 	public Long getIdCota() {
 		return idCota;
+	}
+	
+	public Long getId(){
+		return this.idCota;
 	}
 
 	public void setIdCota(Long idCota) {

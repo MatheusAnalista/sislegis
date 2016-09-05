@@ -8,12 +8,12 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
+import br.com.societysystem.sislegis.model.Entidade;
 import br.com.societysystem.sislegis.util.HibernateUtil;
 
 
-public class GenericDAO<T> implements IGenericDAO<T>
+public class GenericDAO<T extends Entidade<?>> implements IGenericDAO<T>
 {
-	@SuppressWarnings("unused")
 	private Class<T> classe;
 	
 	@SuppressWarnings("unchecked")
@@ -32,7 +32,13 @@ public class GenericDAO<T> implements IGenericDAO<T>
 		try
 		{
 			transacao = sessao.beginTransaction();
-			sessao.merge(entidade);
+			if(entidade.getId() == null){
+				
+				sessao.persist(entidade);
+			}else{
+				
+				sessao.update(entidade);
+			}
 			transacao.commit();
 		}
 		catch(RuntimeException erro)
@@ -70,6 +76,11 @@ public class GenericDAO<T> implements IGenericDAO<T>
 		{
 			sessao.close();
 		}
+	}
+	
+	protected Session getSession(){
+		
+		return HibernateUtil.getFabricaDeSessoes().openSession();
 	}
 	
 
@@ -128,6 +139,7 @@ public class GenericDAO<T> implements IGenericDAO<T>
 	}
 
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public T buscar(Serializable id) {
 		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();

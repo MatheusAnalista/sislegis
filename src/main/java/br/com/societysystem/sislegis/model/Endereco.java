@@ -1,7 +1,5 @@
 package br.com.societysystem.sislegis.model;
 
-import java.io.Serializable;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,7 +12,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "a3_endereco_tb")
-public class Endereco implements Serializable
+public class Endereco extends Entidade<Long>
 {
 
 	private static final long serialVersionUID = 1L;
@@ -45,6 +43,10 @@ public class Endereco implements Serializable
 
 	public Long getIdEndereco() {
 		return idEndereco;
+	}
+	
+	public Long getId(){
+		return this.idEndereco;
 	}
 
 	public void setIdEndereco(Long idEndereco) {

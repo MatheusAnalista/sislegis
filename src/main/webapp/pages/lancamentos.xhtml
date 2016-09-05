@@ -7,17 +7,17 @@
 
 	<ui:define name="content">
 
-		<h1 class="aw-page-title">Lançamentos de Consumo de Cotas Parlamentares</h1>
+		<h1 class="aw-page-title">Lançamentos de Consumo de Cotas
+			Parlamentares</h1>
 
 		<hr color="#1e94d2" />
 
 		<p:messages id="mensagem" closable="true" autoUpdate="true" />
 
 		<h:form id="frm">
-		
+
 			<p:button value="Realizar um novo lançamento"
-				outcome="/pages/lancamento.xhtml"
-				style="width:1116px" />
+				outcome="/pages/lancamento.xhtml" style="width:1116px" />
 
 
 			<p:inputText id="pesquisa" size="145"
@@ -29,22 +29,43 @@
 				emptyMessage="Nenhum registro encontrado" var="lancamento"
 				id="tabelaLancamento">
 
-				<p:column headerText="Solicitante">
-					<h:outputText value="#{lancamento.pessoa.nome}" />
+				<p:column headerText="Identificador">
+					<h:outputText value="#{lancamento.idLancamento}">
+					</h:outputText>
 				</p:column>
 
+
 				<p:column headerText="Data Lançamento">
-					<h:outputText value="#{lancamento.data}" />
+					<h:outputText value="#{lancamento.data}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="Cota Parlamentar">
+					<h:outputText
+						value="#{lancamento.planejamentoCota.cotaParlamentar.nome}" />
+				</p:column>
+
+				<p:column headerText="Destino da Ligação">
+					<h:outputText value="#{lancamento.localLigacao}" />
+				</p:column>
+
+				<p:column headerText="Quantidade Retirada">
+					<h:outputText value="#{lancamento.quantidadeRetirada}" />
+				</p:column>
+
+				<p:column headerText="Valor Diária">
+					<h:outputText value="#{lancamento.valorDiaria}" />
 				</p:column>
 
 				<p:column headerText="Ações" style="width: 80px">
-					<p:commandButton icon="ui-icon-pencil"
-						>
+					<p:commandButton icon="fa fa-fw fa-edit"
+						action="#{lancamentoController.atualizar(lancamento)}">
 					</p:commandButton>
 
 					<p:commandButton icon="ui-icon-trash"
-						
-						update=":mensagem :frm:tabelaLancamento">
+						update=":mensagem :frm:tabelaLancamento"
+						actionListener="#{lancamentoController.excluir(lancamento)}">
 						<p:confirm header="Confirmação Exclusão" icon="ui-icon-alert"
 							message="Deseja realmente excluir" />
 					</p:commandButton>

@@ -13,19 +13,17 @@
 		<property name="connection.url">jdbc:postgresql://localhost:5432/sislegis</property>
 		<property name="connection.username">postgres</property>
 		<property name="connection.password">ti@postgresql</property>
- 		<property name="dialect">org.hibernate.dialect.PostgreSQLDialect</property> -->
+ 		<property name="dialect">org.hibernate.dialect.PostgreSQLDialect</property>   -->
  
  
  		<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
         <property name="connection.url">jdbc:mysql://localhost:3306/sislegis</property>
         <property name="connection.username">root</property>
         <property name="connection.password">ti@mysql</property>
+        <property name="dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>
  
 		<!-- Pool de Conexões -->
 		<property name="connection.pool_size">1</property>
-
-		<!-- SQL dialect -->
-		<property name="dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>
 
 		<!-- Gerenciamento do Contexto das Sessões -->
 		<property name="current_session_context_class">thread</property>

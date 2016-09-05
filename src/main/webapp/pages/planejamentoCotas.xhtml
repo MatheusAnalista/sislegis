@@ -7,7 +7,8 @@
 
 	<ui:define name="content">
 
-		<h1 class="aw-page-title">Planejamentos de períodos para uso de cotas parlamentares</h1>
+		<h1 class="aw-page-title">Planejamentos de períodos para uso de
+			cotas parlamentares</h1>
 
 		<hr color="#1e94d2" />
 
@@ -27,17 +28,31 @@
 			<p:dataTable value="#{planejamentoCotaController.planejamentos}"
 				emptyMessage="Nenhum registro encontrado" var="planejamento"
 				id="tabelaPlanejamentos">
+				
+				<p:column headerText="Identificador">
+					<h:outputText value="#{planejamento.idPlanejamento}">
+					</h:outputText>
+				</p:column>
+
 
 				<p:column headerText="Data Início">
-					<h:outputText value="#{planejamento.dataInicio}" />
+					<h:outputText value="#{planejamento.dataInicio}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
 				</p:column>
 
 				<p:column headerText="Data Fim">
-					<h:outputText value="#{planejamento.dataFim}" />
+					<h:outputText value="#{planejamento.dataFim}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
 				</p:column>
 
-				<p:column headerText="Cota Limitada">
-					<h:outputText value="#{planejamento.cotaLimitada}" />
+				<p:column headerText="Vereador Detentor">
+					<h:outputText value="#{planejamento.vereador.nome}" />
+				</p:column>
+
+				<p:column headerText="Cota Parlamentar">
+					<h:outputText value="#{planejamento.cotaParlamentar.nome}" />
 				</p:column>
 
 				<p:column headerText="Quantidade Permitida">
@@ -49,7 +64,7 @@
 				</p:column>
 
 				<p:column headerText="Ações" style="width: 80px">
-					<p:commandButton icon="ui-icon-pencil"
+					<p:commandButton icon="fa fa-fw fa-edit"
 						action="#{planejamentoCotaController.atualizar(planejamento)}">
 					</p:commandButton>
 

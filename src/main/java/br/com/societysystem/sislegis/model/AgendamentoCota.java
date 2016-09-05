@@ -1,6 +1,5 @@
 package br.com.societysystem.sislegis.model;
 
-import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -15,10 +14,10 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "a11_agendamento_cota_tb")
-public class AgendamentoCota implements Serializable
+public class AgendamentoCota extends Entidade<Long>
 {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -1107224606284359987L;
 
 	@Column(name = "id_agendamento")
 	@Id
@@ -47,6 +46,11 @@ public class AgendamentoCota implements Serializable
 	
 	public Long getIdAgendamento() {
 		return idAgendamento;
+	}
+	
+	@Override
+	public Long getId(){
+		return this.idAgendamento;
 	}
 
 	public void setIdAgendamento(Long idAgendamento) {

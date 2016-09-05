@@ -1,7 +1,5 @@
 package br.com.societysystem.sislegis.model;
 
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -25,7 +23,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name = "a1_usuario_tb")
-public class Usuario implements Serializable
+public class Usuario extends Entidade<Long>
 {
 
 	private static final long serialVersionUID = 1L;
@@ -77,6 +75,10 @@ public class Usuario implements Serializable
 	
 	public Long getIdUsuario() {
 		return idUsuario;
+	}
+	
+	public Long getId(){
+		return this.idUsuario;
 	}
 
 	public void setIdUsuario(Long idUsuario) {

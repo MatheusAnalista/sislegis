@@ -1,8 +1,5 @@
 package br.com.societysystem.sislegis.model;
 
-import java.io.Serializable;
-import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,17 +10,14 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "a2_pessoa_tb")
 @Inheritance(strategy = InheritanceType.JOINED)
-public class Pessoa implements Serializable
+public class Pessoa extends Entidade<Long>
 {
-
 	private static final long serialVersionUID = 1L;
 
 	@Column(name = "id_pessoa")
@@ -54,78 +48,66 @@ public class Pessoa implements Serializable
 	private Usuario usuario;
 
 
+	
 	public Long getIdPessoa() {
 		return idPessoa;
 	}
-
+	
+	public Long getId(){
+		return this.idPessoa;
+	}
 
 	public void setIdPessoa(Long idPessoa) {
 		this.idPessoa = idPessoa;
 	}
 
-
 	public String getNome() {
 		return nome;
 	}
-
 
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
 
-
 	public String getSobrenome() {
 		return sobrenome;
 	}
-
 
 	public void setSobrenome(String sobrenome) {
 		this.sobrenome = sobrenome;
 	}
 
-
 	public String getTelefone() {
 		return telefone;
 	}
-
 
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
 
-
 	public GeneroEnum getGenero() {
 		return genero;
 	}
-
 
 	public void setGenero(GeneroEnum genero) {
 		this.genero = genero;
 	}
 
-
 	public Endereco getEndereco() {
 		return endereco;
 	}
-
 
 	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
 	}
 
-
 	public Usuario getUsuario() {
 		return usuario;
 	}
 
-
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
-
-
-	
-
 
 	@Override
 	public int hashCode() {
@@ -135,7 +117,6 @@ public class Pessoa implements Serializable
 				+ ((idPessoa == null) ? 0 : idPessoa.hashCode());
 		return result;
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -154,12 +135,8 @@ public class Pessoa implements Serializable
 		return true;
 	}
 
-
 	@Override
 	public String toString() {
 		return "Pessoa [nome=" + nome + "]";
 	}
-
-
-	
 }

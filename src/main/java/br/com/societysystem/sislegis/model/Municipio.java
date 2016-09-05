@@ -1,7 +1,5 @@
 package br.com.societysystem.sislegis.model;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,7 +10,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "t2_municipio_tb")
-public class Municipio implements Serializable
+public class Municipio extends Entidade<Long>
 {
 	
 	private static final long serialVersionUID = 1L;
@@ -38,6 +36,10 @@ public class Municipio implements Serializable
 		return idMunicipio;
 	}
 
+	public Long getId(){
+		return this.idMunicipio;
+	}
+	
 	public void setIdMunicipio(Long idMunicipio) {
 		this.idMunicipio = idMunicipio;
 	}

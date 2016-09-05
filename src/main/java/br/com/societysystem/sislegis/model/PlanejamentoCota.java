@@ -1,18 +1,12 @@
 package br.com.societysystem.sislegis.model;
-import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -20,7 +14,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "a9_planejamento_cota_parlamentar_tb")
-public class PlanejamentoCota implements Serializable
+public class PlanejamentoCota extends Entidade<Long>
 {
 
 	private static final long serialVersionUID = 1L;
@@ -30,7 +24,7 @@ public class PlanejamentoCota implements Serializable
 	@GeneratedValue
 	private Long idPlanejamento;
 	
-	@Column(name = "data_inicio", nullable = false)
+	@Column(name = "data_inicio")
 	@Temporal(TemporalType.DATE)
 	@NotNull(message = "O campo data início não pode ser nulo")
 	private Date dataInicio;
@@ -63,6 +57,10 @@ public class PlanejamentoCota implements Serializable
 	
 	public Long getIdPlanejamento() {
 		return idPlanejamento;
+	}
+	
+	public Long getId(){
+		return this.idPlanejamento;
 	}
 
 	public void setIdPlanejamento(Long idPlanejamento) {

@@ -4,7 +4,6 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import org.omnifaces.util.Messages;
-
 import br.com.societysystem.sislegis.model.CotaParlamentar;
 import br.com.societysystem.sislegis.model.PlanejamentoCota;
 import br.com.societysystem.sislegis.model.Vereador;

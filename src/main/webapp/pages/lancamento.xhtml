@@ -8,6 +8,7 @@
 	<ui:define name="content">
 		<h1 class="aw-page-title">Faça os lançamentos do consumo de cotas
 			parlamentares</h1>
+	<h:outputStylesheet library="sislegis" name="/components.css/output-label"/>
 
 		<h:form id="frm">
 
@@ -28,7 +29,8 @@
 					<f:selectItem noSelectionOption="true"
 						itemLabel="Selecione o planejamento" />
 					<f:selectItems value="#{lancamentoController.planejamentos}"
-						var="planejamento" itemLabel="#{planejamento.cotaParlamentar.nome} - #{planejamento.vereador.nome}"
+						var="planejamento"
+						itemLabel="#{planejamento.cotaParlamentar.nome} - #{planejamento.vereador.nome}"
 						itemValue="#{planejamento}">
 					</f:selectItems>
 				</p:selectOneMenu>
@@ -36,8 +38,8 @@
 
 				<p:outputLabel value="Solicitante:" />
 				<p:selectOneMenu style="width: 1090px"
-					value="#{lancamentoController.lancamento.pessoa}"
-					filter="true" converter="omnifaces.SelectItemsConverter">
+					value="#{lancamentoController.lancamento.pessoa}" filter="true"
+					converter="omnifaces.SelectItemsConverter">
 					<f:selectItem noSelectionOption="true"
 						itemLabel="Selecione o solicitante" />
 					<f:selectItems value="#{lancamentoController.pessoas}" var="pessoa"
@@ -46,7 +48,7 @@
 				</p:selectOneMenu>
 
 
-				<p:outputLabel value="Data Lancamento:" for="dataLancamento" />
+				<p:outputLabel value="Data Lancamento:" for="dataLancamento"/>
 				<p:calendar id="dataLancamento"
 					value="#{lancamentoController.lancamento.data}" size="154"
 					pattern="dd-MM-yyyy">
@@ -76,21 +78,22 @@
 					value="#{lancamentoController.lancamento.observacao}" size="154" />
 
 			</h:panelGrid>
-			
+
 			<p:toolbar style="margin-top: 20px">
 				<f:facet name="left">
 					<p:commandButton value="salvar"
 						actionListener="#{lancamentoController.salvar}"
-						update="mensagem :frm" style="width:543px" />
+						update="mensagem :frm" style="width:543px" icon="ui-icon-check" />
 
 					<span class="ui-separator"> <span
 						class="ui-icon ui-icon-grip-dotted-vertical" />
 					</span>
 
-					<p:button outcome="/pages/planejamentoCotas.xhtml"
-						value="Voltar aos Planejamentos de Cotas" style="width:543px" />
+					<p:button outcome="/pages/lancamentos.xhtml"
+						value="Voltar aos Lançamentos de Uso de Cotas" style="width:543px"
+						icon="ui-icon-info" />
 				</f:facet>
-			</p:toolbar> 
+			</p:toolbar>
 
 		</h:form>
 

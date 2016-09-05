@@ -1,24 +1,14 @@
 package br.com.societysystem.sislegis.model;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "t3_perfil_tb")
-public class Perfil implements Serializable
+public class Perfil extends Entidade<Long>
 {
 	
 	private static final long serialVersionUID = 1L;
@@ -39,6 +29,10 @@ public class Perfil implements Serializable
 	
 	public Long getIdPerfil() {
 		return idPerfil;
+	}
+	
+	public Long getId(){
+		return this.idPerfil;
 	}
 
 	public void setIdPerfil(Long idPerfil) {

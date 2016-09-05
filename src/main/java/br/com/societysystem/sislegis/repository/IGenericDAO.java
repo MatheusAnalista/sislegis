@@ -2,8 +2,9 @@ package br.com.societysystem.sislegis.repository;
 
 import java.io.Serializable;
 import java.util.List;
+import br.com.societysystem.sislegis.model.Entidade;
 
-public interface IGenericDAO<T> 
+public interface IGenericDAO<T extends Entidade<?>> 
 {
 	void salvar(T objeto);
 

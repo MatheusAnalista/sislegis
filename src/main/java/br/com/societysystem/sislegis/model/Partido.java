@@ -1,18 +1,14 @@
 package br.com.societysystem.sislegis.model;
 
-import java.io.Serializable;
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "a4_partido_tb")
-public class Partido implements Serializable
+public class Partido extends Entidade<Long>
 {
 
 	private static final long serialVersionUID = 1L;
@@ -32,6 +28,10 @@ public class Partido implements Serializable
 		return idPartido;
 	}
 
+	public Long getId(){
+		return this.idPartido;
+	}
+	
 	public void setIdPartido(Long idPartido) {
 		this.idPartido = idPartido;
 	}

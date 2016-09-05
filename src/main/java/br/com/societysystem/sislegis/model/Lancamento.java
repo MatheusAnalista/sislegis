@@ -1,6 +1,5 @@
 package br.com.societysystem.sislegis.model;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -18,21 +17,21 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "a10_lancamento_cota_tb")
-public class Lancamento implements Serializable
+public class Lancamento extends Entidade<Long>
 {
-
 	private static final long serialVersionUID = 1L;
 
 	@Column(name = "id_lancamento")
 	@Id
 	@GeneratedValue
 	private Long idLancamento;
-	
-	@Column(nullable = false)
-	@Temporal(TemporalType.TIME)
+
+	@Temporal(TemporalType.DATE)
+	@NotNull(message = "O campo data não pode ser nulo")
 	private Date data;
 	
 	@Column(name = "quantidade_retirada")
@@ -55,20 +54,24 @@ public class Lancamento implements Serializable
 	private String observacao;
 	
 	@ManyToOne
-	@JoinColumn(name = "planejamento_id", nullable = false)
+	@NotNull(message = "É obrigatória a seleção de um planejamento para realizar o lançamento!")
+	@JoinColumn(name = "planejamento_id")
 	private PlanejamentoCota planejamentoCota;
 	
 	@ManyToOne
-	@JoinColumn(name = "pessoa_id", nullable = false)
+	@NotNull(message = "É obrigatória a seleção de um solicitante para realizar o lançamento!")
+	@JoinColumn(name = "pessoa_id")
 	private Pessoa pessoa;
 
-	
-	
 	
 	public Long getIdLancamento() {
 		return idLancamento;
 	}
 
+	public Long getId(){
+		return this.idLancamento;
+	}
+	
 	public void setIdLancamento(Long idLancamento) {
 		this.idLancamento = idLancamento;
 	}
@@ -151,28 +154,8 @@ public class Lancamento implements Serializable
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((data == null) ? 0 : data.hashCode());
-		result = prime
-				* result
-				+ ((finalidadeDiaria == null) ? 0 : finalidadeDiaria.hashCode());
 		result = prime * result
 				+ ((idLancamento == null) ? 0 : idLancamento.hashCode());
-		result = prime * result
-				+ ((localLigacao == null) ? 0 : localLigacao.hashCode());
-		result = prime * result
-				+ ((numeroDestino == null) ? 0 : numeroDestino.hashCode());
-		result = prime * result
-				+ ((observacao == null) ? 0 : observacao.hashCode());
-		result = prime * result + ((pessoa == null) ? 0 : pessoa.hashCode());
-		result = prime
-				* result
-				+ ((planejamentoCota == null) ? 0 : planejamentoCota.hashCode());
-		result = prime
-				* result
-				+ ((quantidadeRetirada == null) ? 0 : quantidadeRetirada
-						.hashCode());
-		result = prime * result
-				+ ((valorDiaria == null) ? 0 : valorDiaria.hashCode());
 		return result;
 	}
 
@@ -185,52 +168,10 @@ public class Lancamento implements Serializable
 		if (getClass() != obj.getClass())
 			return false;
 		Lancamento other = (Lancamento) obj;
-		if (data == null) {
-			if (other.data != null)
-				return false;
-		} else if (!data.equals(other.data))
-			return false;
-		if (finalidadeDiaria != other.finalidadeDiaria)
-			return false;
 		if (idLancamento == null) {
 			if (other.idLancamento != null)
 				return false;
 		} else if (!idLancamento.equals(other.idLancamento))
-			return false;
-		if (localLigacao == null) {
-			if (other.localLigacao != null)
-				return false;
-		} else if (!localLigacao.equals(other.localLigacao))
-			return false;
-		if (numeroDestino == null) {
-			if (other.numeroDestino != null)
-				return false;
-		} else if (!numeroDestino.equals(other.numeroDestino))
-			return false;
-		if (observacao == null) {
-			if (other.observacao != null)
-				return false;
-		} else if (!observacao.equals(other.observacao))
-			return false;
-		if (pessoa == null) {
-			if (other.pessoa != null)
-				return false;
-		} else if (!pessoa.equals(other.pessoa))
-			return false;
-		if (planejamentoCota == null) {
-			if (other.planejamentoCota != null)
-				return false;
-		} else if (!planejamentoCota.equals(other.planejamentoCota))
-			return false;
-		if (quantidadeRetirada == null) {
-			if (other.quantidadeRetirada != null)
-				return false;
-		} else if (!quantidadeRetirada.equals(other.quantidadeRetirada))
-			return false;
-		if (valorDiaria == null) {
-			if (other.valorDiaria != null)
-				return false;
-		} else if (!valorDiaria.equals(other.valorDiaria))
 			return false;
 		return true;
 	}

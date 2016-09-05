@@ -1,11 +1,8 @@
 package br.com.societysystem.sislegis.model;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,16 +10,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "a6_legislatura_tb")
-public class Legislatura implements Serializable
+public class Legislatura extends Entidade<Long>
 {
 
 	private static final long serialVersionUID = 1L;
@@ -55,7 +50,9 @@ public class Legislatura implements Serializable
 	public Long getIdLegislatura() {
 		return idLegislatura;
 	}
-
+	public Long getId(){
+		return this.idLegislatura;
+	}
 
 	public void setIdLegislatura(Long idLegislatura) {
 		this.idLegislatura = idLegislatura;
