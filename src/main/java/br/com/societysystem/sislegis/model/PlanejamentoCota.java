@@ -38,7 +38,7 @@ public class PlanejamentoCota extends Entidade<Long>
 	private boolean cotaLimitada;
 	
 	@Column(name = "quantidade_permitida")
-	private Short quantidadePermitida;
+	private int quantidadePermitida;
 	
 	@Column(length = 200)
 	private String descricao;
@@ -91,11 +91,11 @@ public class PlanejamentoCota extends Entidade<Long>
 		this.cotaLimitada = cotaLimitada;
 	}
 
-	public Short getQuantidadePermitida() {
+	public int getQuantidadePermitida() {
 		return quantidadePermitida;
 	}
 
-	public void setQuantidadePermitida(Short quantidadePermitida) {
+	public void setQuantidadePermitida(int quantidadePermitida) {
 		this.quantidadePermitida = quantidadePermitida;
 	}
 

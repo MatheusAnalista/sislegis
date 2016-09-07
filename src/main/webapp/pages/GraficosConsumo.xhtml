@@ -4,18 +4,22 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
 	template="/WEB-INF/templates/Layout.xhtml">
-	
+
 	<ui:define name="content">
-	
-	<h1 class="aw-page-title">Consumo de Cotas Parlamentares da Câmara Municipal de Arinos - MG</h1>
+
+		<h1 class="aw-page-title">Consumo de Cotas Parlamentares da
+			Câmara Municipal de Arinos - MG</h1>
 		<hr color="#1e94d2" />
-		
+
 		<h:panelGrid columns="2" columnClasses="left,right" style="width:100%">
-			
+
 			<p:chart type="bar" model="#{graficoConsumoCota.graficoConsumo}"
 				style="width:400px;" />
-		
+
+			<p:chart type="bar" model="#{graficoConsumoCota.graficoConsumoLancado}"
+				style="width:400px;" />
+
 		</h:panelGrid>
 	</ui:define>
-	
+
 </ui:composition>

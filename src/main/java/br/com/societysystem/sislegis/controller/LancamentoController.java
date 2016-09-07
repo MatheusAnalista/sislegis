@@ -2,6 +2,8 @@ package br.com.societysystem.sislegis.controller;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import org.apache.commons.mail.EmailException;
+import org.apache.commons.mail.SimpleEmail;
 import org.omnifaces.util.Messages;
 import br.com.societysystem.sislegis.model.FinalidadeDiariaEnum;
 import br.com.societysystem.sislegis.model.Lancamento;
@@ -11,10 +13,10 @@ import br.com.societysystem.sislegis.repository.LancamentoDAO;
 import br.com.societysystem.sislegis.repository.PessoaDAO;
 import br.com.societysystem.sislegis.repository.PlanejamentoCotaDAO;
 
+
 @ManagedBean
 public class LancamentoController 
-{
-	
+{	
 	LancamentoDAO lancamentoDAO = new LancamentoDAO();
 	PlanejamentoCotaDAO planejamentoDAO = new PlanejamentoCotaDAO();
 	PessoaDAO pessoaDAO = new PessoaDAO();
@@ -37,11 +39,11 @@ public class LancamentoController
 	}
 
 	
-	public void salvar() {
+	public void salvar() throws EmailException {
 		try {
 			if (verificarDataLancamento() == true) {
 				lancamentoDAO.salvar(lancamento);
-				//darBaixaNoPlanejamento();
+				enviarEmail();
 				Messages.addGlobalInfo("Operação realizada com sucesso!");
 				limparFormulario();
 			}
@@ -81,8 +83,7 @@ public class LancamentoController
 	}
 
 	
-	public boolean verificarDataLancamento() 
-	{
+	public boolean verificarDataLancamento() {
 		if (lancamento.getData().before(lancamento.getPlanejamentoCota().getDataInicio())
 				|| lancamento.getData().after(lancamento.getPlanejamentoCota().getDataFim()))
 		{
@@ -93,17 +94,22 @@ public class LancamentoController
 		}
 	}
 
-	
-	public void darBaixaNoPlanejamento()
+
+	public void enviarEmail() throws EmailException  
 	{
-		//PlanejamentoCota planejamentoExecutado = planejamentoDAO.buscar(lancamento.getPlanejamentoCota().getQuantidadePermitida());
-		//planejamentoExecutado.setQuantidadePermitida((short) (lancamento.getPlanejamentoCota().getQuantidadePermitida() - lancamento.getQuantidadeRetirada()));
-		
-		int quantidadeRetirada = lancamento.getQuantidadeRetirada();
-		int quantidadePlanejamento = lancamento.getPlanejamentoCota().getQuantidadePermitida();
-		
-		
+		SimpleEmail email = new SimpleEmail();
+		email.setHostName("smtp.gmail.com"); // o servidor SMTP para envio do e-mail
+		email.addTo("suportetecnologia@outlook.com.br", "Teste"); //destinatário
+		email.setFrom("suportetecnologia@outlook.com.br", "Matheus Mendes"); // remetente
+		email.setSubject("Lançamento de consumo de cota"); // assunto do e-mail
+		email.setMsg("mensagem"); //conteudo do e-mail
+		email.setAuthentication("email", "senha");
+		email.setSmtpPort(465);
+		email.setSSL(true);
+		email.setTLS(true);
+		email.send();		
 	}
+	
 	
 	
 	

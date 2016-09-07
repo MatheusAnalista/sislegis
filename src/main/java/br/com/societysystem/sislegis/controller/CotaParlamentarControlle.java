@@ -91,13 +91,16 @@ public class CotaParlamentarControlle implements Serializable
 	
 	
 	public boolean verificaNomeCota()
-	{			
-		for(CotaParlamentar cota : cotasParlamentares)
+	{	
+		if(cotaParlamentar.getId() == null)
 		{
+			for(CotaParlamentar cota : cotasParlamentares)
+			{
 			if(cota.getNome().equalsIgnoreCase(cotaParlamentar.getNome()))
 			{
 				Messages.addGlobalError("Cota Parlamentar já cadastrada no banco de dados do sistema!");
 				return true;
+			}
 			}
 		}
 			return false;

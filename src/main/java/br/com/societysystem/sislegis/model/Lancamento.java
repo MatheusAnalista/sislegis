@@ -35,7 +35,7 @@ public class Lancamento extends Entidade<Long>
 	private Date data;
 	
 	@Column(name = "quantidade_retirada")
-	private Short quantidadeRetirada;
+	private int quantidadeRetirada;
 	
 	@Column(name = "numero_destino", length = 14)
 	private String numeroDestino;
@@ -84,11 +84,11 @@ public class Lancamento extends Entidade<Long>
 		this.data = data;
 	}
 
-	public Short getQuantidadeRetirada() {
+	public int getQuantidadeRetirada() {
 		return quantidadeRetirada;
 	}
 
-	public void setQuantidadeRetirada(Short quantidadeRetirada) {
+	public void setQuantidadeRetirada(int quantidadeRetirada) {
 		this.quantidadeRetirada = quantidadeRetirada;
 	}
 
