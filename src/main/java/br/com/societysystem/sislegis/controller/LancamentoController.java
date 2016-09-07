@@ -20,7 +20,6 @@ public class LancamentoController
 	LancamentoDAO lancamentoDAO = new LancamentoDAO();
 	PlanejamentoCotaDAO planejamentoDAO = new PlanejamentoCotaDAO();
 	PessoaDAO pessoaDAO = new PessoaDAO();
-
 	private Lancamento lancamento;
 	private List<Lancamento> lancamentos;
 	private List<PlanejamentoCota> planejamentos;
@@ -43,6 +42,7 @@ public class LancamentoController
 		try {
 			if (verificarDataLancamento() == true) {
 				lancamentoDAO.salvar(lancamento);
+				darBaixaNoPlanejamentoExecutado();
 				enviarEmail();
 				Messages.addGlobalInfo("Operação realizada com sucesso!");
 				limparFormulario();
@@ -94,6 +94,19 @@ public class LancamentoController
 		}
 	}
 
+	
+	public void darBaixaNoPlanejamentoExecutado()
+	{
+		PlanejamentoCota planejamento = lancamento.getPlanejamentoCota();
+		
+		int quantidadeDaCota = planejamento.getQuantidadePermitida();
+		int quantidadeLancada = lancamento.getQuantidadeRetirada();
+		int quantidadeCotaRestante = quantidadeDaCota - quantidadeLancada;
+		
+		planejamento.setQuantidadePermitida(quantidadeCotaRestante);
+		planejamentoDAO.atualizar(planejamento);
+	}
+	
 
 	public void enviarEmail() throws EmailException  
 	{
@@ -103,7 +116,7 @@ public class LancamentoController
 		email.setFrom("suportetecnologia@outlook.com.br", "Matheus Mendes"); // remetente
 		email.setSubject("Lançamento de consumo de cota"); // assunto do e-mail
 		email.setMsg("mensagem"); //conteudo do e-mail
-		email.setAuthentication("email", "senha");
+		email.setAuthentication("sti.tecnologiainformacao@gmail.com", "senha");
 		email.setSmtpPort(465);
 		email.setSSL(true);
 		email.setTLS(true);
