@@ -40,9 +40,8 @@ public class LancamentoController
 	
 	public void salvar() throws EmailException {
 		try {
-			if (verificarDataLancamento() == true) {
+			if (verificarDataLancamento() == true && darBaixaNoPlanejamentoExecutado() == true) {
 				lancamentoDAO.salvar(lancamento);
-				darBaixaNoPlanejamentoExecutado();
 				enviarEmail();
 				Messages.addGlobalInfo("Operação realizada com sucesso!");
 				limparFormulario();
@@ -62,7 +61,6 @@ public class LancamentoController
 			erro.printStackTrace();
 		}
 	}
-
 	
 	public String atualizar(Lancamento lancamento) {
 		this.lancamento = lancamento;
@@ -95,19 +93,25 @@ public class LancamentoController
 	}
 
 	
-	public void darBaixaNoPlanejamentoExecutado()
+	public boolean darBaixaNoPlanejamentoExecutado()
 	{
-		PlanejamentoCota planejamento = lancamento.getPlanejamentoCota();
-		
+		PlanejamentoCota planejamento = lancamento.getPlanejamentoCota();	
 		int quantidadeDaCota = planejamento.getQuantidadePermitida();
 		int quantidadeLancada = lancamento.getQuantidadeRetirada();
-		int quantidadeCotaRestante = quantidadeDaCota - quantidadeLancada;
-		
-		planejamento.setQuantidadePermitida(quantidadeCotaRestante);
-		planejamentoDAO.atualizar(planejamento);
-	}
-	
 
+		if(quantidadeLancada <= quantidadeDaCota && lancamento.getPlanejamentoCota().getId() != null){
+			int quantidadeCotaRestante = quantidadeDaCota - quantidadeLancada;
+			planejamento.setQuantidadePermitida(quantidadeCotaRestante);
+			planejamentoDAO.atualizar(planejamento);	
+			return true;
+		}
+		else{
+			Messages.addGlobalWarn("Quantidade solicitada no lançamento maior que quantidade disponível no planejamento escolhido!");
+			return false;
+			}
+		}
+	
+	
 	public void enviarEmail() throws EmailException  
 	{
 		SimpleEmail email = new SimpleEmail();
@@ -116,7 +120,7 @@ public class LancamentoController
 		email.setFrom("suportetecnologia@outlook.com.br", "Matheus Mendes"); // remetente
 		email.setSubject("Lançamento de consumo de cota"); // assunto do e-mail
 		email.setMsg("mensagem"); //conteudo do e-mail
-		email.setAuthentication("sti.tecnologiainformacao@gmail.com", "senha");
+		email.setAuthentication("sti.tecnologiainformacao@gmail.com", "acreditoqposso");
 		email.setSmtpPort(465);
 		email.setSSL(true);
 		email.setTLS(true);

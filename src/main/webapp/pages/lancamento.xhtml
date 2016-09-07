@@ -9,7 +9,6 @@
 		<h1 class="aw-page-title">Faça os lançamentos do consumo de cotas
 			parlamentares</h1>
 	
-
 		<h:form id="frm">
 
 			<hr color="#1e94d2" />
@@ -35,7 +34,6 @@
 					</f:selectItems>
 				</p:selectOneMenu>
 
-
 				<p:outputLabel value="Solicitante:" />
 				<p:selectOneMenu style="width: 1090px"
 					value="#{lancamentoController.lancamento.pessoa}" filter="true"
@@ -47,13 +45,11 @@
 					</f:selectItems>
 				</p:selectOneMenu>
 
-
 				<p:outputLabel value="Data Lancamento:" for="dataLancamento"/>
 				<p:calendar id="dataLancamento"
 					value="#{lancamentoController.lancamento.data}" size="154"
 					pattern="dd-MM-yyyy">
 				</p:calendar>
-
 
 				<p:outputLabel value="Quantidade Retirada:" for="quantidade" />
 				<p:inputText id="quantidade"
@@ -67,7 +63,6 @@
 				<p:outputLabel value="Local Destino:" for="localDestino" />
 				<p:inputText id="localDestino"
 					value="#{lancamentoController.lancamento.localLigacao}" size="154" />
-
 
 				<p:outputLabel value="Valor Diária:" for="valorDiaria" />
 				<p:inputText id="valorDiaria"
