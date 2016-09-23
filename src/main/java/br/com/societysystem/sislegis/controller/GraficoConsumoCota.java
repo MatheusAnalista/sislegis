@@ -1,20 +1,15 @@
 package br.com.societysystem.sislegis.controller;
 import java.util.List;
-
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.BarChartModel;
 import org.primefaces.model.chart.ChartSeries;
-
 import br.com.societysystem.sislegis.model.Lancamento;
 import br.com.societysystem.sislegis.model.PlanejamentoCota;
-import br.com.societysystem.sislegis.model.Vereador;
 import br.com.societysystem.sislegis.repository.LancamentoDAO;
 import br.com.societysystem.sislegis.repository.PlanejamentoCotaDAO;
-
 
 @ManagedBean
 public class GraficoConsumoCota
@@ -92,8 +87,7 @@ public class GraficoConsumoCota
 		BarChartModel barras = new BarChartModel();
         ChartSeries serie = new ChartSeries();
         lancamentos = lancamentoDAO.listar();
-        int somaConsumoCotaXerografica = 0;
-    	
+        int somaConsumoCotaXerografica = 0;    	
         planejamentoCota = lancamento.getPlanejamentoCota();
         
         for(Lancamento lancamento : lancamentos)
