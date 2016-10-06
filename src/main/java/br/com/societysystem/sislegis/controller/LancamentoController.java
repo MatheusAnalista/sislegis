@@ -1,5 +1,6 @@
 package br.com.societysystem.sislegis.controller;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -21,10 +22,11 @@ import br.com.societysystem.sislegis.vo.ChaveValor;
 
 @ManagedBean
 public class LancamentoController {
+	
 	LancamentoDAO lancamentoDAO = new LancamentoDAO();
 	PlanejamentoCotaDAO planejamentoDAO = new PlanejamentoCotaDAO();
 	PessoaDAO pessoaDAO = new PessoaDAO();
-	private Lancamento lancamento;
+	private Lancamento lancamento = new Lancamento();
 	private List<Lancamento> lancamentos;
 	private List<PlanejamentoCota> planejamentos;
 	private List<Pessoa> pessoas;
@@ -42,14 +44,24 @@ public class LancamentoController {
 	}
 
 	public void salvar() throws EmailException {
-		try {
-			if (verificarDataLancamento()
-					&& darBaixaNoPlanejamentoExecutado()) {
+		try {	
+			if(verificarPreenchimentoCampoXerox()){
+				if (verificarDataLancamento()
+					&& darBaixaNoPlanejamentoExecutado()){
 				lancamentoDAO.salvar(lancamento);
-				enviarEmail();
+				//enviarEmail();
 				Messages.addGlobalInfo("Operação realizada com sucesso!");
 				limparFormulario();
+				}
 			}
+			else if(verificarPreenchimentoCampoDiaria() || verificarPreenchimentoCampoLigacao()){
+				if (verificarDataLancamento()){
+					lancamentoDAO.salvar(lancamento);
+					//enviarEmail();
+					Messages.addGlobalInfo("Operação realizada com sucesso!");
+					limparFormulario();
+					}
+			}		
 		} catch (RuntimeException ex) {
 			ex.printStackTrace();
 		}
@@ -98,7 +110,7 @@ public class LancamentoController {
 		PlanejamentoCota planejamento = lancamento.getPlanejamentoCota();
 		int quantidadeDaCota = planejamento.getQuantidadePermitida();
 		int quantidadeLancada = lancamento.getQuantidadeRetirada();
-
+        
 		if (quantidadeLancada <= quantidadeDaCota
 				&& lancamento.getPlanejamentoCota().getId() != null) {
 			int quantidadeCotaRestante = quantidadeDaCota - quantidadeLancada;
@@ -111,20 +123,65 @@ public class LancamentoController {
 		}
 	}
 
+	public boolean verificarPreenchimentoCampoDiaria()
+	{
+		if(lancamento.getValorDiaria() != null)
+		{
+			return true;
+		}
+		else return false;
+	}
+	
+	
+	public boolean verificarPreenchimentoCampoLigacao(){
+		if(lancamento.getNumeroDestino() != null){
+			return true;
+		}
+		else return false;
+	}
+	
+	public boolean verificarPreenchimentoCampoXerox(){
+		if(lancamento.getQuantidadeRetirada() != 0){
+			return true;
+		}
+		else return false;
+	}
+	
+	
+	public boolean somarConsumoDiaria(){
+		lancamentos = lancamentoDAO.listar();
+
+			for(Lancamento lancamento : lancamentos){
+				PlanejamentoCota planejamentoExistenteBanco = lancamento.getPlanejamentoCota();
+				
+				if(this.lancamento.getPlanejamentoCota().getId() == planejamentoExistenteBanco.getId()){
+					Double somaConsumoDiaria = this.lancamento.getValorDiaria() + lancamento.getValorDiaria();
+					lancamento.setValorDiaria(somaConsumoDiaria);
+					lancamentoDAO.salvar(lancamento);
+					return true;
+				}
+				else if(this.lancamento.getPlanejamentoCota().getId() != lancamento.getPlanejamentoCota().getId()){
+					return true;
+				}
+				else{
+					return true;
+				}
+			}
+			return false;
+	}
+	
+	
 	private static String templateExemplo = "<b>Nome: </b>%s <br><b>Idade: </b>%s";
 	private static StringBuilder templateExemplo2 = new StringBuilder(
 			"<b>Nome: </b>%s <br><b>Idade: </b>%s");
 
+	
 	public void enviarEmail() throws EmailException {
 		ParametroEmail parametro = new EnviadorDeEmailHelper().new ParametroEmail();
-
 		parametro.setAssunto("Teste de assunto");
-
-		parametro.setMensagem("<b>Deu certo!!!</b>");
-
+		parametro.setMensagem("<b>Deu certo!!! </b>");
 		parametro.setDestinatario(ChaveValor.novoCom("Matheus",
 				"suportetecnologia@outlook.com.br"));
-
 		try {
 			EnviadorDeEmailHelper.enviarHtmlMail(parametro);
 			System.out.println("Email enviado com sucesso!!!!");
@@ -133,24 +190,6 @@ public class LancamentoController {
 		}
 	}
 
-	/*public static void main(String[] args) throws EmailException {
-		ParametroEmail parametro = new EnviadorDeEmailHelper().new ParametroEmail();
-
-		parametro.setAssunto("Teste de assunto");
-
-		parametro.setMensagem("<b>Deu certo!!!</b>");
-
-		parametro.setDestinatario(ChaveValor.novoCom("Matheus",
-				"suportetecnologia@outlook.com.br"));
-
-		try {
-			EnviadorDeEmailHelper.enviarHtmlMail(parametro);
-			System.out.println("Email enviado com sucesso!!!!");
-		} catch (EmailException e) {
-			e.printStackTrace();
-		}
-	}
-*/
 	public Lancamento getLancamento() {
 		return lancamento;
 	}

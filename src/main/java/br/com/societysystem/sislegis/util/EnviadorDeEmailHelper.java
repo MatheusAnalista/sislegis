@@ -60,7 +60,7 @@ public final class EnviadorDeEmailHelper {
 
 		USUARIO("sti.tecnologiainformacao@gmail.com"),
 
-		SENHA("ti@acreditoqposso"),
+		SENHA("ti@microsoft2523"),
 
 		FROM_EMAIL("contato@sislegis.com.br"),
 

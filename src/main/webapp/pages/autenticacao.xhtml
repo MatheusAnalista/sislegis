@@ -1,0 +1,37 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/LayoutAutenticacao.xhtml">
+
+	<ui:define name="content">
+
+		<p:dialog header="Autenticação - SISLEGIS" closable="false"
+			draggable="false" resizable="false" modal="true" visible="true"
+			responsive="true">
+			<p:messages id="msg" />
+			<h:form>
+				<h:panelGrid columns="2">
+					<h:outputLabel for="email" value="E-mail:"/>
+					<p:inputText id="email" value="#{autenticacao.usuario.email}"
+						size="33" required="true"
+						requiredMessage="Campo e-mail é obrigatório!" />
+					<p:outputLabel for="senha" value="Senha:" />
+					<p:password id="senha" value="#{autenticacao.usuario.senha}"
+						size="33" required="true"
+						requiredMessage="Campo senha é obrigatório!" />
+					<p:outputLabel />
+					<p:commandButton value="Entrar" icon="ui-icon-check"
+						style="width:270px" update=":msg"
+						actionListener="#{autenticacao.autenticar()}" />
+					<p:outputLabel />
+
+					<p:link value="Esqueceu sua senha?" />
+				</h:panelGrid>
+			</h:form>
+
+		</p:dialog>
+
+	</ui:define>
+</ui:composition>

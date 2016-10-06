@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 
+import org.apache.shiro.crypto.hash.SimpleHash;
 import org.omnifaces.util.Messages;
 
 import br.com.societysystem.sislegis.model.Perfil;
@@ -33,6 +34,9 @@ public class UsuarioController implements Serializable {
 	public void salvar() {
 		try {
 			if (usuario.getIdUsuario() == null) {
+				SimpleHash hash = new SimpleHash("md5", usuario.getSenha());
+				usuario.setSenha(hash.toHex());
+				usuario.setConfirmaSenha(hash.toHex());
 				usuarioDAO.salvar(usuario);
 				Messages.addGlobalInfo("Operação realizada com sucesso!");
 			} else {

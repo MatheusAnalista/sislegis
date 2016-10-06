@@ -6,7 +6,7 @@
 	template="/WEB-INF/templates/Layout.xhtml">
 
 	<ui:define name="content">
-
+		
 		<h1 class="aw-page-title">Consumo de Cotas Parlamentares da
 			Câmara Municipal de Arinos - MG</h1>
 		<hr color="#1e94d2" />
@@ -16,7 +16,12 @@
 			<p:chart type="bar" model="#{graficoConsumoCota.graficoConsumo}"
 				style="width:400px;" />
 
-			<p:chart type="bar" model="#{graficoConsumoCota.graficoConsumoLancado}"
+			<!-- <p:chart type="bar"
+				model="#{graficoConsumoCota.graficoConsumoDiariaLancado}"
+				style="width:400px;" />
+ -->
+			<p:chart type="bar"
+				model="#{graficoConsumoCota.graficoConsumoLigacaoLancado}"
 				style="width:400px;" />
 
 		</h:panelGrid>

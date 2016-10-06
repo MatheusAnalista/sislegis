@@ -43,8 +43,8 @@ public class Lancamento extends Entidade<Long>
 	@Column(name = "local_ligacao", length = 50)
 	private String localLigacao;
 	
-	@Column(name = "valor_diaria", precision = 6, scale = 2)
-	private BigDecimal valorDiaria;
+	@Column(name = "valor_diaria")
+	private Double valorDiaria;
 	
 	@Enumerated(EnumType.STRING)
 	@Column(name = "finalidade_diaria", length = 20)
@@ -63,6 +63,9 @@ public class Lancamento extends Entidade<Long>
 	@JoinColumn(name = "pessoa_id")
 	private Pessoa pessoa;
 
+	
+	
+	
 	
 	public Long getIdLancamento() {
 		return idLancamento;
@@ -108,11 +111,11 @@ public class Lancamento extends Entidade<Long>
 		this.localLigacao = localLigacao;
 	}
 
-	public BigDecimal getValorDiaria() {
+	public Double getValorDiaria() {
 		return valorDiaria;
 	}
 
-	public void setValorDiaria(BigDecimal valorDiaria) {
+	public void setValorDiaria(Double valorDiaria) {
 		this.valorDiaria = valorDiaria;
 	}
 

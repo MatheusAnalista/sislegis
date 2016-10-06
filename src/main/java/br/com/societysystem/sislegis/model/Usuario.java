@@ -15,6 +15,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Email;
@@ -43,6 +44,9 @@ public class Usuario extends Entidade<Long>
 	@Length(max = 50, message = "O campo senha não pode ultrapassar o {max} de caracteres!")
 	@NotEmpty(message = "O campo senha é obrigatório")
 	private String senha;
+	
+	@Transient
+	private String senhaNaoCriptografada;
 	
 	@Column(name = "confirma_senha", length = 32, nullable = false)
 	@Length(max = 50, message = "O senha não pode ultrapassar o {max} de caracteres!")
@@ -73,6 +77,14 @@ public class Usuario extends Entidade<Long>
 	
 	
 	
+	public String getSenhaNaoCriptografada() {
+		return senhaNaoCriptografada;
+	}
+
+	public void setSenhaNaoCriptografada(String senhaNaoCriptografada) {
+		this.senhaNaoCriptografada = senhaNaoCriptografada;
+	}
+
 	public Long getIdUsuario() {
 		return idUsuario;
 	}
