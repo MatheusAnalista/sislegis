@@ -14,26 +14,6 @@
 			<hr color="#1e94d2" />
 			<p:messages id="mensagem" />
 
-			<p:toolbar>
-
-				<f:facet name="left">
-
-					<p:commandButton title="Salvar" icon="ui-icon-disk" value="Salvar"
-						actionListener="#{usuarioController.salvar}"
-						update="mensagem :frm" />
-
-					<span class="ui-separator"> <span
-						class="ui-icon ui-icon-grip-dotted-vertical" />
-					</span>
-
-					<p:commandButton type="button" title="Print" icon="ui-icon-print" />
-
-					<p:commandButton type="button" value="Limpar"
-						icon="ui-icon-document" />
-
-				</f:facet>
-
-			</p:toolbar>
 
 			<h:panelGrid columns="1" style="margin-top: 40px">
 
@@ -46,33 +26,51 @@
 
 				<p:outputLabel value="Senha:" for="senha" />
 				<p:password id="senha" value="#{usuarioController.usuario.senha}"
-					match="confirmaSenha" label="Senha" size="154"
-					validatorMessage="Senhas não conferem" feedback="true"
+					match="confirmaSenha" label="Senha" size="154" feedback="true"
 					inline="true" promptLabel="Vazio" weakLabel="Fraca" goodLabel="Boa"
-					strongLabel="Forte" />
+					strongLabel="Forte" validatorMessage="Senhas não conferem" />
 
 
 				<p:outputLabel value="Confirme Senha:" for="confirmaSenha" />
 				<p:password id="confirmaSenha"
 					value="#{usuarioController.usuario.confirmaSenha}"
-					label="Confirma Senha" size="154"
-					validatorMessage="Senhas não conferem" />
+					label="Confirma Senha" size="154" />
 
 				<p:outputLabel value="Data de Cadastro:" for="dataCadastro" />
 				<p:calendar id="dataCadastro"
-					value="#{usuarioController.usuario.dataCadastro}" size="154" />
+					value="#{usuarioController.usuario.dataCadastro}" size="154">
 
+				</p:calendar>
 				<p:outputLabel value="Perfil:" />
 				<p:selectManyCheckbox value="#{usuarioController.usuario.perfis}"
-					converter="omnifaces.SelectItemsConverter">
+					converter="omnifaces.SelectItemsConverter" >
 					<f:selectItems var="perfil" itemValue="#{perfil}"
 						value="#{usuarioController.perfis}" itemLabel="#{perfil.nome}" />
 				</p:selectManyCheckbox>
 
 				<p:outputLabel value="Ativo" />
 				<p:selectBooleanCheckbox value="#{usuarioController.usuario.ativo}" />
-							
 			</h:panelGrid>
+
+			<p:toolbar>
+
+				<f:facet name="left">
+
+					<p:commandButton title="Salvar" icon="ui-icon-disk" value="Salvar"
+						actionListener="#{usuarioController.salvar}"
+						update="mensagem :frm" style="width: 546px" />
+
+					<span class="ui-separator"> <span
+						class="ui-icon ui-icon-grip-dotted-vertical" />
+					</span>
+
+					<p:button value="Voltar aos Usuários" style="width: 546px"
+						icon="ui-icon-info" outcome="/pages/usuarios.xhtml" />
+
+				</f:facet>
+
+			</p:toolbar>
+
 
 		</h:form>
 

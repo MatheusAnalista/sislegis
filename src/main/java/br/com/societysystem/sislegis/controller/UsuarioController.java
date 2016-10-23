@@ -1,6 +1,12 @@
 package br.com.societysystem.sislegis.controller;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -16,6 +22,7 @@ import br.com.societysystem.sislegis.repository.UsuarioDAO;
 
 @ManagedBean
 public class UsuarioController implements Serializable {
+	
 	private Usuario usuario;
 	UsuarioDAO usuarioDAO = new UsuarioDAO();
 	private List<Perfil> perfis;
@@ -33,22 +40,20 @@ public class UsuarioController implements Serializable {
 
 	public void salvar() {
 		try {
-			if (usuario.getIdUsuario() == null) {
+			if (ehDataCorrente()) {
 				SimpleHash hash = new SimpleHash("md5", usuario.getSenha());
 				usuario.setSenha(hash.toHex());
 				usuario.setConfirmaSenha(hash.toHex());
 				usuarioDAO.salvar(usuario);
 				Messages.addGlobalInfo("Operação realizada com sucesso!");
+				inicializar();
 			} else {
-				usuarioDAO.salvar(usuario);
-				Messages.addGlobalInfo("Atualização realizada com sucesso!");
+				Messages.addGlobalWarn("A data de hoje é diferente da data informada!");
 			}
 		} catch (RuntimeException e) {
 			e.printStackTrace();
 			Messages.addGlobalError("Erro ao tentar salvar usuário");
-		} finally {
-			inicializar();
-		}
+		} 
 	}
 
 	@PostConstruct
@@ -79,6 +84,17 @@ public class UsuarioController implements Serializable {
 		}
 	}
 
+	@SuppressWarnings("deprecation")
+	public boolean ehDataCorrente(){
+		LocalDateTime now = LocalDateTime.now(); 
+		if(usuario.getDataCadastro().getDate() == now.getDayOfMonth()){
+			return true;
+		}
+		return false;
+	}
+	
+	
+	
 	public Usuario getUsuario() {
 		return usuario;
 	}

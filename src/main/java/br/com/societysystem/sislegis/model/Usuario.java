@@ -1,5 +1,4 @@
 package br.com.societysystem.sislegis.model;
-
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -60,6 +59,7 @@ public class Usuario extends Entidade<Long>
 	@NotNull(message = "O campo data de cadastro é obrigatório")
 	private Date dataCadastro;
 	
+	@Transient
 	private byte[] foto;
 	
 	@ManyToMany(fetch = FetchType.EAGER)
@@ -67,6 +67,7 @@ public class Usuario extends Entidade<Long>
 		@JoinColumn(name = "usuario_id", nullable = false), 
 			inverseJoinColumns = 
 				@JoinColumn(name = "perfil_id", nullable = false))
+	@NotEmpty(message = "É necessário escolher um ou mais perfis de acesso!")
 	private List<Perfil> perfis;
 
 	
@@ -234,13 +235,9 @@ public class Usuario extends Entidade<Long>
 
 	@Override
 	public String toString() {
-		return "Usuario [idUsuario=" + idUsuario + ", email=" + email
-				+ ", senha=" + senha + ", confirmaSenha=" + confirmaSenha
-				+ ", ativo=" + ativo + ", dataCadastro=" + dataCadastro
-				+ ", foto=" + Arrays.toString(foto) + ", perfis=" + perfis
-				+ ", pessoa=" + pessoa + "]";
+		return "Usuario [email=" + email + "]";
 	}
 
-	
+
 	
 }

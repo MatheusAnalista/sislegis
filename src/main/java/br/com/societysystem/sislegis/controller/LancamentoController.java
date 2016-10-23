@@ -1,14 +1,9 @@
 package br.com.societysystem.sislegis.controller;
-
-import java.math.BigDecimal;
 import java.util.List;
-
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-
 import org.apache.commons.mail.EmailException;
 import org.omnifaces.util.Messages;
-
 import br.com.societysystem.sislegis.model.FinalidadeDiariaEnum;
 import br.com.societysystem.sislegis.model.Lancamento;
 import br.com.societysystem.sislegis.model.Pessoa;
@@ -33,16 +28,19 @@ public class LancamentoController {
 	private List<FinalidadeDiariaEnum> finalidadeDiarias;
 	private PlanejamentoCota planejamentoCota = new PlanejamentoCota();
 
+	
 	public LancamentoController() {
 		lancamento = new Lancamento();
 		planejamentos = planejamentoDAO.listar();
 		pessoas = pessoaDAO.listar();
 	}
 
+	
 	public void limparFormulario() {
 		lancamento = new Lancamento();
 	}
 
+	
 	public void salvar() throws EmailException {
 		try {	
 			if(verificarPreenchimentoCampoXerox()){
@@ -67,6 +65,8 @@ public class LancamentoController {
 		}
 	}
 
+	
+	
 	@PostConstruct
 	public void listar() {
 		try {
@@ -77,11 +77,15 @@ public class LancamentoController {
 		}
 	}
 
+	
+	
 	public String atualizar(Lancamento lancamento) {
 		this.lancamento = lancamento;
 		return "/pages/lancamento.xhtml";
 	}
 
+	
+	
 	public void excluir(Lancamento lancamento) {
 		try {
 			lancamentoDAO.excluir(lancamento);
@@ -106,6 +110,7 @@ public class LancamentoController {
 		}
 	}
 
+	
 	public boolean darBaixaNoPlanejamentoExecutado() {
 		PlanejamentoCota planejamento = lancamento.getPlanejamentoCota();
 		int quantidadeDaCota = planejamento.getQuantidadePermitida();
@@ -123,10 +128,10 @@ public class LancamentoController {
 		}
 	}
 
+	
 	public boolean verificarPreenchimentoCampoDiaria()
 	{
-		if(lancamento.getValorDiaria() != null)
-		{
+		if(lancamento.getValorDiaria() != null){
 			return true;
 		}
 		else return false;
@@ -139,6 +144,7 @@ public class LancamentoController {
 		}
 		else return false;
 	}
+	
 	
 	public boolean verificarPreenchimentoCampoXerox(){
 		if(lancamento.getQuantidadeRetirada() != 0){
@@ -190,6 +196,8 @@ public class LancamentoController {
 		}
 	}
 
+	
+	
 	public Lancamento getLancamento() {
 		return lancamento;
 	}

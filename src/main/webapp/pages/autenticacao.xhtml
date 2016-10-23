@@ -6,14 +6,14 @@
 	template="/WEB-INF/templates/LayoutAutenticacao.xhtml">
 
 	<ui:define name="content">
-
 		<p:dialog header="Autenticação - SISLEGIS" closable="false"
 			draggable="false" resizable="false" modal="true" visible="true"
-			responsive="true">
+			responsive="true" >
 			<p:messages id="msg" />
 			<h:form>
+
 				<h:panelGrid columns="2">
-					<h:outputLabel for="email" value="E-mail:"/>
+					<h:outputLabel for="email" value="E-mail:" />
 					<p:inputText id="email" value="#{autenticacao.usuario.email}"
 						size="33" required="true"
 						requiredMessage="Campo e-mail é obrigatório!" />
@@ -27,7 +27,6 @@
 						actionListener="#{autenticacao.autenticar()}" />
 					<p:outputLabel />
 
-					<p:link value="Esqueceu sua senha?" />
 				</h:panelGrid>
 			</h:form>
 

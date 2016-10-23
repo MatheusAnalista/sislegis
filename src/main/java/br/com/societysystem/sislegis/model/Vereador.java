@@ -10,6 +10,10 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name = "a5_vereador_tb")
@@ -20,16 +24,20 @@ public class Vereador  extends Pessoa
 	private static final long serialVersionUID = 1L;
 
 	@Column(name = "nome_parlamentar", nullable = false, length = 50)
+	@NotEmpty(message = "Nome parlamentar é obrigatório!")
 	private String nomeParlamentar;
 	
 	@Column(name = "cpf", nullable = false, length = 14)
+	@NotEmpty(message = "CPF é obrigatório!")
 	private String cpf;
 	
-	@Column(name = "data_nascimento")
+	@Column(name = "data_nascimento", nullable = false)
 	@Temporal(TemporalType.DATE)
+	@NotNull(message = "O campo data de nascimento não pode ser nulo!")
 	private Date dataNascimento;
 	
 	@Column(nullable = false)
+	@NotNull(message = "Campo idade não pode ser nulo!")
 	private Short idade;
 	
 	@Column(nullable = false)
@@ -37,7 +45,14 @@ public class Vereador  extends Pessoa
 	
 	@ManyToOne
 	@JoinColumn(nullable = false, name = "partido_id")
+	@NotNull(message = "Selecione um partido político!")
 	private Partido partido;
+
+
+	public Vereador()
+	{
+		partido = new Partido();
+	}
 
 	public String getNomeParlamentar() {
 		return nomeParlamentar;

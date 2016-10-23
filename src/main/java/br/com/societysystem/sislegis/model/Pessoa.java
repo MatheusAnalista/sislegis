@@ -1,10 +1,13 @@
 package br.com.societysystem.sislegis.model;
 
+import java.io.Serializable;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
@@ -12,11 +15,15 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name = "a2_pessoa_tb")
 @Inheritance(strategy = InheritanceType.JOINED)
-public class Pessoa extends Entidade<Long>
+public class Pessoa extends Entidade<Long> 
 {
 	private static final long serialVersionUID = 1L;
 
@@ -26,20 +33,25 @@ public class Pessoa extends Entidade<Long>
 	private Long idPessoa;
 	
 	@Column(nullable = false, length = 30)
+	@NotEmpty(message = "O campo nome não pode ser nulo!")
 	private String nome;
 	
 	@Column(nullable = false, length = 50)
+	@NotEmpty(message = "O campo sobrenome não pode ser nulo!")
 	private String sobrenome;
 	
-	@Column(nullable = false, length = 14)
+	@Column(nullable = false, length = 16)
+	@NotEmpty(message = "O campo telefone não pode ser nulo!")
 	private String telefone;
 	
 	@Enumerated(EnumType.STRING)
-	@Column(nullable = false, length = 9)
+	@Column( length = 9)
+	@NotNull(message = "Selecione um gênero")
 	private GeneroEnum genero;
 
 	@OneToOne(cascade = CascadeType.ALL, optional = false)
 	@JoinColumn(name = "endereco_id")
+	@NotNull(message = "Preencha as informações de endereço!")
 	private Endereco endereco;
 
 	
@@ -47,7 +59,15 @@ public class Pessoa extends Entidade<Long>
 	@JoinColumn(name = "usuario_id")
 	private Usuario usuario;
 
+	@Transient
+	private boolean eUsuario;
 
+	
+	public Pessoa()
+	{
+		endereco = new Endereco();
+		usuario = new Usuario();
+	}
 	
 	public Long getIdPessoa() {
 		return idPessoa;
@@ -108,6 +128,14 @@ public class Pessoa extends Entidade<Long>
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
+	
+	public boolean iseUsuario() {
+		return eUsuario;
+	}
+
+	public void seteUsuario(boolean eUsuario) {
+		this.eUsuario = eUsuario;
+	}
 
 	@Override
 	public int hashCode() {
@@ -137,6 +165,11 @@ public class Pessoa extends Entidade<Long>
 
 	@Override
 	public String toString() {
-		return "Pessoa [nome=" + nome + "]";
+		return "Pessoa [idPessoa=" + idPessoa + ", nome=" + nome
+				+ ", sobrenome=" + sobrenome + ", telefone=" + telefone
+				+ ", genero=" + genero + ", endereco=" + endereco
+				+ ", usuario=" + usuario + "]";
 	}
+
+	
 }

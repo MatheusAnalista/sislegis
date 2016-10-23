@@ -34,7 +34,6 @@ public class PlanejamentoCotaController {
 	}
 
 	
-	//INSTANCIANDO E LIMPANDO O FORMULÁRIO
 	public void iniciallizar() 
 	{
 		planejamentoCota = new PlanejamentoCota();

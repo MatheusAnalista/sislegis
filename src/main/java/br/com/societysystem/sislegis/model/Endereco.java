@@ -1,5 +1,7 @@
 package br.com.societysystem.sislegis.model;
 
+import java.io.Serializable;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,10 +11,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name = "a3_endereco_tb")
-public class Endereco extends Entidade<Long>
+public class Endereco extends Entidade<Long> implements Serializable
 {
 
 	private static final long serialVersionUID = 1L;
@@ -23,24 +28,30 @@ public class Endereco extends Entidade<Long>
 	private Long idEndereco;
 	
 	@Column(nullable = false, length = 50)
+	@NotEmpty(message = "O campo logradouro não pode ser nulo!")
 	private String logradouro;
 	
 	@Column(nullable = false, length = 50)
+	@NotEmpty(message = "O campo bairro não pode ser nulo!")
 	private String bairro;
 	
 	@Column(nullable = false)
+	@NotEmpty(message = "O campo número não pode ser nulo!")
 	private Short numero;
 	
 	@Column(length = 50)
+	@NotEmpty(message = "O campo complemento não pode ser nulo!")
 	private String complemento;
 
 	@ManyToOne
 	@JoinColumn(name = "municipio_id", nullable = false)
+	@NotNull(message = "Selecione um município")
 	private Municipio municipio;
 
 	@OneToOne(mappedBy = "endereco", cascade = CascadeType.ALL)
 	private Pessoa pessoa;
-
+	
+	
 	public Long getIdEndereco() {
 		return idEndereco;
 	}
@@ -101,9 +112,6 @@ public class Endereco extends Entidade<Long>
 		this.pessoa = pessoa;
 	}
 
-	
-	
-	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -135,7 +143,9 @@ public class Endereco extends Entidade<Long>
 		return "Endereco [idEndereco=" + idEndereco + ", logradouro="
 				+ logradouro + ", bairro=" + bairro + ", numero=" + numero
 				+ ", complemento=" + complemento + ", municipio=" + municipio
-				+ ", pessoa=" + pessoa + "]";
+				+ "]";
 	}
+
+
 
 }

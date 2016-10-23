@@ -6,11 +6,12 @@
 	template="/WEB-INF/templates/Layout.xhtml">
 
 	<ui:define name="content">
+		
 		<h1 class="aw-page-title">Faça os lançamentos do consumo de cotas
 			parlamentares</h1>
 	
 		<h:form id="frm">
-
+			
 			<hr color="#1e94d2" />
 
 			<p:messages id="mensagem" />
@@ -19,7 +20,7 @@
 
 				<!-- Recebendo o id para atualização -->
 				<h:inputHidden
-					value="#{lancamentoController.lancamento.idLancamento}" />
+					value="#{lancamentoController.lancamento.idLancamento}"/>
 
 				<p:outputLabel value="Planejamento:" />
 				<p:selectOneMenu style="width: 1090px"
@@ -89,10 +90,6 @@
 						icon="ui-icon-info" />
 				</f:facet>
 			</p:toolbar>
-
 		</h:form>
-
 	</ui:define>
-
 </ui:composition>
-

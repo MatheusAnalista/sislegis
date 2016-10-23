@@ -6,145 +6,204 @@
 	template="/WEB-INF/templates/Layout.xhtml">
 
 	<ui:define name="content">
-		<h1 class="aw-page-title">Informações dos Vereadores</h1>
 
+		<h1 class="aw-page-title">Informações de vereadores</h1>
+		<p:messages id="msg" />
 		<h:form id="frm">
 			<hr color="#1e94d2" />
 
-			<p:toolbar>
-				<f:facet name="left">
+			<p:tab id="vereador" title="Informações Pessoais">
+				<p:panel header="Informações Pessoais">
 
-					<p:commandButton type="button" title="Salvar" icon="ui-icon-disk"
-						value="Salvar" />
+					<h:panelGrid columns="1">
+						<p:outputLabel value="Nome:" for="nomeVer" />
+						<p:inputText id="nomeVer" size="140"
+							value="#{vereadorController.vereador.nome}" />
+
+						<p:outputLabel value="Sobrenome:" for="sobrenomeVer" />
+						<p:inputText id="sobrenomeVer" size="140"
+							value="#{vereadorController.vereador.sobrenome}" />
+
+						<p:outputLabel value="Telefone" for="telefoneVer" />
+						<p:inputMask mask="(99)-(9999-9999)" size="140" id="telefoneVer"
+							value="#{vereadorController.vereador.telefone}" />
+
+						<p:outputLabel for="generoVer" value="Gênero:" />
+						<p:selectOneRadio id="generoVer"
+							value="#{vereadorController.vereador.genero}">
+							<f:selectItem itemLabel="Masculino" itemValue="MASCULINO" />
+							<f:selectItem itemLabel="Feminino" itemValue="FEMININO" />
+						</p:selectOneRadio>
+					</h:panelGrid>
+				</p:panel>
+			</p:tab>
+
+			<p:tab id="endereco" title="Informações de Endereço">
+				<p:panel header="Informações de Endereço">
+					<h:panelGrid columns="1">
+						<p:outputLabel value="Logradouro:" for="logradouro" />
+						<p:inputText id="logradouro" size="140"
+							value="#{vereadorController.vereador.endereco.logradouro}" />
+
+						<p:outputLabel value="Bairro:" for="bairro" />
+						<p:inputText id="bairro" size="140"
+							value="#{vereadorController.vereador.endereco.bairro}" />
+
+						<p:outputLabel value="Número:" for="numero" />
+						<p:inputText id="numero" size="140"
+							value="#{vereadorController.vereador.endereco.numero}" />
+
+						<p:outputLabel value="Complemento:" for="complemento" />
+						<p:inputText id="complemento" size="140"
+							value="#{vereadorController.vereador.endereco.complemento}" />
+
+						<p:outputLabel value="Municipio:" />
+						<p:selectOneMenu filter="true"
+							converter="omnifaces.SelectItemsConverter"
+							value="#{vereadorController.vereador.endereco.municipio}">
+							<f:selectItem noSelectionOption="true"
+								itemLabel="Selecione um Município" />
+							<f:selectItems value="#{vereadorController.municipios}"
+								var="municipio" itemLabel="#{municipio.nome}"
+								itemValue="#{municipio}">
+							</f:selectItems>
+						</p:selectOneMenu>
+
+					</h:panelGrid>
+				</p:panel>
+			</p:tab>
+
+			<p:tab id="pessoa" title="Informações de Vereança">
+				<p:panel header="Informações de Vereança">
+					<h:panelGrid columns="1">
+
+						<p:outputLabel value="Nome Parlamentar:" for="nome" />
+						<p:inputText id="nome" size="140"
+							value="#{vereadorController.vereador.nomeParlamentar}" />
+
+						<p:outputLabel value="Presidente:" />
+						<p:selectBooleanButton
+							value="#{vereadorController.vereador.presidente}" onLabel="Sim"
+							offLabel="Não" onIcon="ui-icon-check" offIcon="ui-icon-close"
+							style="width:1020px" />
+
+						<p:outputLabel value="CPF:" for="cpf" />
+						<p:inputMask mask="999-999-999-99" id="cpf" size="140"
+							value="#{vereadorController.vereador.cpf}" />
+
+						<p:outputLabel value="Data Nascimento:" for="dataNascimento" />
+						<p:calendar id="dataNascimento"
+							value="#{vereadorController.vereador.dataNascimento}" size="140"
+							pattern="dd-MM-yyyy" />
+
+						<p:outputLabel value="Idade:" for="idade" />
+						<p:inputText id="idade" size="140"
+							value="#{vereadorController.vereador.idade}" />
+
+						<p:outputLabel value="Partido:" />
+						<p:selectOneMenu filter="true"
+							converter="omnifaces.SelectItemsConverter"
+							value="#{vereadorController.vereador.partido}" id="gridPartido">
+							<f:selectItem noSelectionOption="true"
+								itemLabel="Selecione um Partido" />
+							<f:selectItems value="#{vereadorController.partidos}"
+								var="partido" itemLabel="#{partido.nome}" itemValue="#{partido}">
+							</f:selectItems>
+						</p:selectOneMenu>
+						
+						<p:commandButton value="Inserir Partido" oncomplete="PF('dialogoPartido').show();"/>
+						
+					</h:panelGrid>
+				</p:panel>
+			</p:tab>
+
+			<p:tab title="Informações de Acesso">
+				<p:panel header="Informações de Acesso">
+					<p:outputLabel value="E-mail:" for="email" />
+					<p:inputText id="email"
+						value="#{vereadorController.vereador.usuario.email}" size="154" />
+
+					<p:outputLabel value="Senha:" for="senha" />
+					<p:password id="senha"
+						value="#{vereadorController.vereador.usuario.senha}"
+						match="confirmaSenha" label="Senha" size="154" feedback="true"
+						inline="true" promptLabel="Vazio" weakLabel="Fraca"
+						goodLabel="Boa" strongLabel="Forte" />
+
+					<p:outputLabel value="Confirme Senha:" for="confirmaSenha" />
+					<p:password id="confirmaSenha"
+						value="#{vereadorController.vereador.usuario.confirmaSenha}"
+						label="Confirma Senha" size="154"
+						validatorMessage="Senhas não conferem" />
+
+					<p:outputLabel value="Data de Cadastro:" for="dataCadastro" />
+					<p:calendar id="dataCadastro"
+						value="#{vereadorController.vereador.usuario.dataCadastro}"
+						size="154" />
+
+					<p:outputLabel value="Perfil:" />
+					<p:selectManyCheckbox
+						value="#{vereadorController.vereador.usuario.perfis}"
+						converter="omnifaces.SelectItemsConverter">
+						<f:selectItems var="perfil" itemValue="#{perfil}"
+							value="#{vereadorController.perfis}" itemLabel="#{perfil.nome}" />
+					</p:selectManyCheckbox>
+
+					<p:outputLabel value="Ativo" />
+					<p:selectBooleanCheckbox
+						value="#{vereadorController.vereador.usuario.ativo}" />
+				</p:panel>
+			</p:tab>
+
+
+			<p:toolbar style="margin-top: 25px">
+				<f:facet name="left">
+					<p:commandButton value="Salvar" icon="ui-icon-check"
+						actionListener="#{vereadorController.salvar}" update="msg :frm"
+						style="width:538px" />
 
 					<span class="ui-separator"> <span
 						class="ui-icon ui-icon-grip-dotted-vertical" />
 					</span>
 
-					<p:commandButton type="button" title="Print" icon="ui-icon-print" />
-
-					<p:commandButton type="button" value="Limpar"
-						icon="ui-icon-document" />
-
+					<p:button outcome="/pages/vereador.xhtml"
+						value="Voltar aos Vereadores" style="width:538px"
+						icon="ui-icon-info" />
 				</f:facet>
-
 			</p:toolbar>
 
-
-			<p:wizard style="margin-top: 40px" nextLabel="Próximo"
-				backLabel="Anterior">
-
-				<p:tab id="pessoa" title="Dados Pessoais">
-					<p:panel header="Detalhes">
-						<h:panelGrid columns="2">
-
-							<p:outputLabel value="Nome" for="nome" />
-							<p:inputText id="nome" size="140" />
-
-							<p:outputLabel value="Sobrenome" for="sobrenome" />
-							<p:inputText id="sobrenome" size="140" />
-
-							<p:outputLabel value="Telefone" for="telefone" />
-							<p:inputMask mask="(99)-(9999-9999)" size="140" id="telefone" />
-
-							<p:outputLabel for="genero" value="Gênero:" />
-							<p:selectOneRadio id="genero">
-								<f:selectItem itemLabel="Masculino" />
-								<f:selectItem itemLabel="Feminino" />
-							</p:selectOneRadio>
-						</h:panelGrid>
-					</p:panel>
-				</p:tab>
-
-
-				<p:tab id="endereco" title="Endereço">
-					<p:panel header="Detalhes">
-
-						<h:panelGrid columns="2">
-							<p:outputLabel value="Logradouro" for="logradouro" />
-							<p:inputText id="logradouro" size="135" />
-
-							<p:outputLabel value="Bairro" for="bairro" />
-							<p:inputText id="bairro" size="135" />
-
-							<p:outputLabel value="Número" for="numero" />
-							<p:inputText id="numero" size="135" />
-
-							<p:outputLabel value="Complemento" for="complemento" />
-							<p:inputText id="complemento" size="135" />
-
-							<p:outputLabel value="Município" />
-							<h:panelGrid columns="2">
-								<p:outputLabel for="municipio" value="Municipio" />
-								<p:selectOneMenu id="municipio" filter="true">
-									<f:selectItem itemLabel="Option 1" itemValue="1" />
-									<f:selectItem itemLabel="Option 2" itemValue="2" />
-									<f:selectItem itemLabel="Option 3" itemValue="3" />
-								</p:selectOneMenu>
-							</h:panelGrid>
-						</h:panelGrid>
-					</p:panel>
-				</p:tab>
-
-
-
-				<p:tab id="vereador" title="Vereador">
-					<p:panel header="Detalhes Vereador">
-
-						<h:panelGrid columns="2">
-							<p:outputLabel value="Nome Parlamentar" for="nomeParlamentar" />
-							<p:inputText id="nomeParlamentar" size="120" />
-
-							<p:outputLabel value="CPF" for="cpf" />
-							<p:inputMask mask="999.999.999-99" size="120" id="cpf" />
-
-							<p:outputLabel value="Data de Nascimento" for="dataNascimento" />
-							<p:calendar id="dataNascimento" size="120" />
-
-							<h:outputLabel value="Presidente:" />
-							<p:selectBooleanCheckbox />
-
-							<h:panelGrid columns="3">
-								<p:outputLabel for="partido" value="Partido" />
-								<p:selectOneMenu id="partido" filter="true">
-									<f:selectItem itemLabel="Option 1" itemValue="1" />
-									<f:selectItem itemLabel="Option 2" itemValue="2" />
-									<f:selectItem itemLabel="Option 3" itemValue="3" />
-								</p:selectOneMenu>
-								<p:commandButton value="+"
-									oncomplete="PF('dialogoPartido').show();" />
-							</h:panelGrid>
-						</h:panelGrid>
-					</p:panel>
-				</p:tab>
-
-			</p:wizard>
-
+			<p:confirmDialog global="true">
+				<p:commandButton value="Sim" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Não" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
 		</h:form>
 
+
 		<p:dialog header="Cadastro de Partidos" widgetVar="dialogoPartido"
-			draggable="false" resizable="false" modal="true" closable="false">
+			draggable="false" resizable="false" modal="true" closable="true">
 			<h:form id="formCadastro">
 
 				<h:panelGrid id="painelPartido" columns="2">
 					<p:outputLabel value="Nome" />
-					<p:inputText size="20" maxlength="50" />
+					<p:inputText size="20" maxlength="50"
+						value="#{vereadorController.vereador.partido.nome}" />
 
 					<p:outputLabel value="Sigla" />
-					<p:inputText size="8" maxlength="8" />
+					<p:inputText size="8" maxlength="8"
+						value="#{vereadorController.vereador.partido.sigla}" />
 				</h:panelGrid>
 
 				<h:panelGrid columns="2">
-					<p:commandButton value="Salvar" />
+					<p:commandButton value="Salvar"
+						actionListener="#{vereadorController.salvarPartido()}" update="msg :formCadastro:painelPartido :frm:gridPartido" />
 					<p:commandButton value="Fechar"
 						oncomplete="PF('dialogoPartido').hide();" />
 				</h:panelGrid>
-
-
 			</h:form>
 		</p:dialog>
 
 	</ui:define>
-
 </ui:composition>
 

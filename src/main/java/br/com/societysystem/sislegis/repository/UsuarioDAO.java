@@ -16,7 +16,7 @@ public class UsuarioDAO extends GenericDAO<Usuario> {
 		try{
 			Criteria consulta = sessao.createCriteria(Usuario.class);
 			consulta.add(Restrictions.eq("email", email));
-			
+		
 			SimpleHash hash = new SimpleHash("md5", senha);
 			consulta.add(Restrictions.eq("senha", hash.toHex()));
 			Usuario usuarioRetornado = (Usuario) consulta.uniqueResult();

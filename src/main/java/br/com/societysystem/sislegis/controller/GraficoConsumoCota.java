@@ -1,18 +1,23 @@
 package br.com.societysystem.sislegis.controller;
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
+
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.BarChartModel;
 import org.primefaces.model.chart.ChartSeries;
+
 import br.com.societysystem.sislegis.model.Lancamento;
 import br.com.societysystem.sislegis.model.PlanejamentoCota;
+import br.com.societysystem.sislegis.model.Vereador;
 import br.com.societysystem.sislegis.repository.LancamentoDAO;
 import br.com.societysystem.sislegis.repository.PlanejamentoCotaDAO;
+import br.com.societysystem.sislegis.util.IsNullUtil;
 
 @ManagedBean
 public class GraficoConsumoCota
@@ -32,7 +37,7 @@ public class GraficoConsumoCota
 	@PostConstruct
     public void inicializar() {
         graficoConsumoRestante();
-        //graficoConsumoDiariaLancado();
+        graficoConsumoDiariaLancado();
         graficoConsumoLigacaoLancado();
     }
 	
@@ -52,7 +57,6 @@ public class GraficoConsumoCota
 		Axis yAxis = graficoConsumo.getAxis(AxisType.Y);
         yAxis = graficoConsumo.getAxis(AxisType.Y);
         yAxis.setMin(0);
-        yAxis.setMax(300);
     }
 
 	private BarChartModel consumoRestante(){
@@ -68,7 +72,7 @@ public class GraficoConsumoCota
         return model;
 	}
 		
-/*	private void graficoConsumoDiariaLancado(){
+	private void graficoConsumoDiariaLancado(){
 		graficoConsumoDiariaLancado = consumoDiariaLancado();
 		graficoConsumoDiariaLancado.setTitle("Consumo de Diária");
 		graficoConsumoDiariaLancado.setAnimate(true);
@@ -80,48 +84,48 @@ public class GraficoConsumoCota
 		Axis yAxis = graficoConsumoDiariaLancado.getAxis(AxisType.Y);
         yAxis = graficoConsumoDiariaLancado.getAxis(AxisType.Y);
         yAxis.setMin(0);
-        yAxis.setMax(5000);
     }
 	
 	private BarChartModel consumoDiariaLancado(){
-		BarChartModel barras = new BarChartModel();
-        ChartSeries serie = new ChartSeries();       
-        lancamentos = lancamentoDAO.listar();         
-        Double total = 0.0;
-        int count = 0;
-        List<PlanejamentoCota> planejamentos = new ArrayList<PlanejamentoCota>();      
-     
-       for(Lancamento lancamento : lancamentos){ 
-        	PlanejamentoCota planejamentoExistenteBanco = lancamento.getPlanejamentoCota();      	
-        	planejamentos.add(planejamentoExistenteBanco);
-        	Double consumo;
-        	
-        	for(int i = 0; i<planejamentos.size(); i++){
-        		count++;		
-        	}
+		BarChartModel model = new BarChartModel();
+		
+		ChartSeries ver = new ChartSeries();
+		
+		List<Lancamento> lancamentos = lancamentoDAO.recuperarPorDiaria();
+		
+		Map<Vereador, Long> mapRelatorio = new HashMap<Vereador, Long>();
+		
+		if(!IsNullUtil.isNullOrEmpty(lancamentos)){
 			
-    		if(count >=2 && lancamento.getPlanejamentoCota().getId() == lancamento.getPlanejamentoCota().getId()){
-        		for(int x = 0; x< planejamentos.size(); x++){
-        			consumo = lancamento.getValorDiaria();
-        			List<Double> somaConsumo = new ArrayList<Double>();
-        			somaConsumo.add(consumo);
-        			for(int j = 0; j< somaConsumo.size(); j++){
-        				total += somaConsumo.get(j);
-            		}
-        			serie.set(lancamento.getPlanejamentoCota().getVereador().getNomeParlamentar(),(Number) total); 	
-        		}
-        	} 
-			else if(count <=1 ){
-        		serie.set(lancamento.getPlanejamentoCota().getVereador().getNomeParlamentar(),  lancamento.getValorDiaria());
-        	}
-        	else{
-        		serie.set(lancamento.getPlanejamentoCota().getVereador().getNomeParlamentar(),  lancamento.getValorDiaria());
-        	}
-        }  
-        serie.setLabel("Vereadores");
-        barras.addSeries(serie);    	
-        return barras;
-	}*/
+			//Faz a sintese das infrmações para o grafico
+			for(Lancamento lancamento : lancamentos){
+				
+				final Vereador vereador = lancamento.getPlanejamentoCota().getVereador();
+				
+				Long quantidadeAtual = mapRelatorio.get(vereador);
+				
+				if(IsNullUtil.isNullOrEmpty(quantidadeAtual)){
+				
+					mapRelatorio.put(vereador, 1l);
+				}else{
+					
+					mapRelatorio.put(vereador, ++quantidadeAtual);
+				}
+				
+			}
+			
+		}
+		
+		//Percorre Map ja preenchido com os dados corretos para o relatorio e seta no grafico
+		for (Vereador key : mapRelatorio.keySet()) {
+			
+			ver.set(key.getNomeParlamentar(),  mapRelatorio.get(key));
+		}         
+        
+		ver.setLabel("Vereadores");
+		model.addSeries(ver);    	
+        return model;
+	}
 	
 	
 	private void graficoConsumoLigacaoLancado(){
@@ -136,34 +140,45 @@ public class GraficoConsumoCota
 		Axis yAxis = graficoConsumoLigacaoLancado.getAxis(AxisType.Y);
         yAxis = graficoConsumoLigacaoLancado.getAxis(AxisType.Y);
         yAxis.setMin(0);
-        yAxis.setMax(300);
     }
 
 	private BarChartModel consumoLigacaoLancado(){
+		
 		BarChartModel model = new BarChartModel();
-        ChartSeries ver = new ChartSeries();
-		List<Lancamento> lancamentos = new ArrayList<Lancamento>();
-		lancamentos = lancamentoDAO.listar();
 		
-		int contadorLancamentoLigacao = 0;
-		int contadorSomaLigacao = 0;
-		Long idPlanejamentoDeLigacao = 0L;
-		List<Long> quantidadePlanejamentoLigacoes = new ArrayList<Long>();
+		ChartSeries ver = new ChartSeries();
 		
-		for(Lancamento lancamento : lancamentos){
-			if(lancamento.getNumeroDestino().isEmpty() == false){
-				contadorLancamentoLigacao ++;
-				idPlanejamentoDeLigacao = lancamento.getPlanejamentoCota().getId();	
-				quantidadePlanejamentoLigacoes.add(idPlanejamentoDeLigacao);
+		List<Lancamento> lancamentos = lancamentoDAO.recuperarPorCotaLigacao();
+		
+		Map<Vereador, Long> mapRelatorio = new HashMap<Vereador, Long>();
+		
+		if(!IsNullUtil.isNullOrEmpty(lancamentos)){
+			
+			//Faz a sintese das infrmações para o grafico
+			for(Lancamento lancamento : lancamentos){
+				
+				final Vereador vereador = lancamento.getPlanejamentoCota().getVereador();
+				
+				Long quantidadeAtual = mapRelatorio.get(vereador);
+				
+				if(IsNullUtil.isNullOrEmpty(quantidadeAtual)){
+				
+					mapRelatorio.put(vereador, 1l);
+				}else{
+					
+					mapRelatorio.put(vereador, ++quantidadeAtual);
+				}
+				
 			}
 			
-			for(Long ids : quantidadePlanejamentoLigacoes){
-			if (ids == idPlanejamentoDeLigacao){
-					contadorSomaLigacao++;
-					ver.set(lancamento.getPlanejamentoCota().getVereador().getNomeParlamentar(),  contadorSomaLigacao);
-				}
-			}
 		}
+		
+		//Percorre Map ja preenchido com os dados corretos para o relatorio e seta no grafico
+		for (Vereador key : mapRelatorio.keySet()) {
+			
+			ver.set(key.getNomeParlamentar(),  mapRelatorio.get(key));
+		}
+		
         ver.setLabel("Vereadores");
         model.addSeries(ver);
         return model;

@@ -14,12 +14,18 @@ public class AutenticacaoListener implements PhaseListener{
 
 	@Override
 	public void afterPhase(PhaseEvent event) {
-		String paginaAtual = Faces.getViewId();
-		System.out.println("Pagina atual " +paginaAtual);
+		if(true){
+			
+			return;
+		}
+
+		String paginaAtual = Faces.getViewId();	
+		String paginaInicial = Faces.getViewId();
 		
+		boolean epaginaInicial = paginaInicial.contains("inicial.xhtml");
 		boolean epaginaAutenticacao = paginaAtual.contains("autenticacao.xhtml");
-		
-		if(!epaginaAutenticacao){
+	
+	if(!epaginaAutenticacao && !epaginaInicial){
 			Autenticacao autenticacao = Faces.getSessionAttribute("autenticacao");
 			if(autenticacao == null)
 			{
@@ -37,13 +43,11 @@ public class AutenticacaoListener implements PhaseListener{
 
 	@Override
 	public void beforePhase(PhaseEvent event) {
-		System.out.println("antes da fase " +event.getPhaseId());
 		
 	}
 
 	@Override
-	public PhaseId getPhaseId() {
-		
+	public PhaseId getPhaseId() {	
 		return PhaseId.ANY_PHASE;
 	}
 

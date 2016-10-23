@@ -7,7 +7,7 @@
 
 	<ui:define name="content">
 
-		<h1 class="aw-page-title">Usuários</h1>
+		<h1 class="aw-page-title">Solicitantes</h1>
 
 		<hr color="#1e94d2" />
 
@@ -15,45 +15,48 @@
 
 		<h:form id="frm">
 
+			<p:button value="Cadastrar um novo solicitante"
+				outcome="/pages/pessoa.xhtml" style="width:1116px" />
 
-			<p:button value="Cadastrar um novo usuário"
-				outcome="/pages/usuario.xhtml"
-				style="width:1116px" />
 
 			<p:inputText id="pesquisa" size="145"
 				placeholder="Digite aqui sua pesquisa"
 				style="margin-top: 20px; margin-bottom: 20px" />
-			<p:commandButton icon="ui-icon-search" />
+			<p:commandButton icon="ui-icon-search" style="width:68px" />
 
+			<p:dataTable value="#{pessoaController.pessoas}"
+				emptyMessage="Nenhum registro encontrado" var="pessoa"
+				id="tabelaPessoa">
 
-			<p:dataTable value="#{usuarioController.usuarios}"
-				emptyMessage="Nenhum registro encontrado" var="usuario"
-				id="tabelaUsuarios">
-
-				<p:column headerText="E-mail">
-					<h:outputText value="#{usuario.email}" />
+				<p:column headerText="Identificador">
+					<h:outputText value="#{pessoa.idPessoa}">
+					</h:outputText>
 				</p:column>
 
-				<p:column headerText="Data Cadastro">
-					<h:outputText value="#{usuario.dataCadastro}" />
+
+				<p:column headerText="Nome">
+					<h:outputText value="#{pessoa.nome}"/>
+				</p:column>
+				
+				<p:column headerText="Sobrenome">
+					<h:outputText value="#{pessoa.sobrenome}"/>
 				</p:column>
 
-				<p:column headerText="Situação">
-					<p:selectBooleanButton value="#{usuarioController.usuario.ativo}"
-						offLabel="ativo" onLabel="desativo" />
+				<p:column headerText="Telefone">
+					<h:outputText
+						value="#{pessoa.telefone}" />
 				</p:column>
 
-				<p:column headerText="Ações">
-
-					<p:commandButton icon="ui-icon-pencil"
-						action="#{usuarioController.atualizar(usuario)}">
+				<p:column headerText="Ações" style="width: 80px">
+					<p:commandButton icon="fa fa-fw fa-edit"
+						action="#{pessoaController.atualizar(pessoa)}">
 					</p:commandButton>
 
 					<p:commandButton icon="ui-icon-trash"
-						actionListener="#{usuarioController.excluir(usuario)}"
-						update=":mensagem :frm:tabelaUsuarios">
+						update=":mensagem :frm:tabelaPessoa"
+						actionListener="#{pessoaController.excluir(pessoa)}">
 						<p:confirm header="Confirmação Exclusão" icon="ui-icon-alert"
-							message="Deseja realmente excluir #{usuario.email}?" />
+							message="Deseja realmente excluir {pessoa.nome} ?" />
 					</p:commandButton>
 				</p:column>
 

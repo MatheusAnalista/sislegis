@@ -9,89 +9,90 @@
 
 		<h1 class="aw-page-title">Informações de solicitantes de cotas
 			parlamentares</h1>
-
+		<p:messages id="msg" />
 		<h:form id="frm">
-
 			<hr color="#1e94d2" />
+			<p:wizard>
+				<p:tab id="pessoa" title="Detalhes">
+					<p:panel header="Informações Pessoais">
+						<h:panelGrid columns="1">
 
-			<p:toolbar>
+							<h:inputHidden value="#{pessoaController.pessoa.idPessoa}" />
+							<h:inputHidden
+								value="#{pessoaController.pessoa.endereco.idEndereco}" />
+							<p:outputLabel value="Nome" for="nome" />
+							<p:inputText id="nome" size="140"
+								value="#{pessoaController.pessoa.nome}" />
+
+							<p:outputLabel value="Sobrenome" for="sobrenome" />
+							<p:inputText id="sobrenome" size="140"
+								value="#{pessoaController.pessoa.sobrenome}" />
+
+							<p:outputLabel value="Telefone" for="telefone" />
+							<p:inputMask mask="(99)-(9999-9999)" size="140" id="telefone"
+								value="#{pessoaController.pessoa.telefone}" />
+
+							<p:outputLabel for="genero" value="Gênero:" />
+							<p:selectOneRadio id="genero"
+								value="#{pessoaController.pessoa.genero}">
+								<f:selectItem itemLabel="Masculino" itemValue="MASCULINO" />
+								<f:selectItem itemLabel="Feminino" itemValue="FEMININO" />
+							</p:selectOneRadio>
+						</h:panelGrid>
+					</p:panel>
+				</p:tab>
+
+				<p:tab id="endereco" title="Endereço">
+					<p:panel header="Informações de Endereço">
+						<h:panelGrid columns="1">
+							<p:outputLabel value="Logradouro" for="logradouro" />
+							<p:inputText id="logradouro" size="140"
+								value="#{pessoaController.pessoa.endereco.logradouro}" />
+
+							<p:outputLabel value="Bairro" for="bairro" />
+							<p:inputText id="bairro" size="140"
+								value="#{pessoaController.pessoa.endereco.bairro}" />
+
+							<p:outputLabel value="Número" for="numero" />
+							<p:inputText id="numero" size="140"
+								value="#{pessoaController.pessoa.endereco.numero}" />
+
+							<p:outputLabel value="Complemento" for="complemento" />
+							<p:inputText id="complemento" size="140"
+								value="#{pessoaController.pessoa.endereco.complemento}" />
+
+							<p:outputLabel value="Municipio" />
+							<p:selectOneMenu filter="true"
+								converter="omnifaces.SelectItemsConverter"
+								value="#{pessoaController.pessoa.endereco.municipio}">
+								<f:selectItem noSelectionOption="true"
+									itemLabel="Selecione um Município" />
+								<f:selectItems value="#{pessoaController.municipios}"
+									var="municipio" itemLabel="#{municipio.nome}"
+									itemValue="#{municipio}">
+								</f:selectItems>
+							</p:selectOneMenu>
+
+						</h:panelGrid>
+					</p:panel>
+				</p:tab>
+			</p:wizard>
+			<p:toolbar style="margin-top: 25px">
 				<f:facet name="left">
-
-					<p:commandButton type="button" title="Salvar" icon="ui-icon-disk"
-						value="Salvar" />
+					<p:commandButton value="Salvar" icon="ui-icon-check"
+						actionListener="#{pessoaController.salvar}" update="msg :frm"
+						style="width:535px" />
 
 					<span class="ui-separator"> <span
 						class="ui-icon ui-icon-grip-dotted-vertical" />
 					</span>
 
-					<p:commandButton type="button" title="Print" icon="ui-icon-print" />
-
-					<p:commandButton type="button" value="Limpar"
-						icon="ui-icon-document" />
-
+					<p:button outcome="/pages/pessoas.xhtml"
+						value="Voltar aos Solicitantes" style="width:535px"
+						icon="ui-icon-info" />
 				</f:facet>
-
 			</p:toolbar>
-
-
-			<p:wizard style="margin-top: 40px" nextLabel="Próximo"
-				backLabel="Anterior">
-
-				<p:tab id="pessoa" title="Dados Pessoais">
-					<p:panel header="Detalhes">
-						<h:panelGrid columns="1">
-
-							<p:outputLabel value="Nome" for="nome" />
-							<p:inputText id="nome" size="140" />
-
-							<p:outputLabel value="Sobrenome" for="sobrenome" />
-							<p:inputText id="sobrenome" size="140" />
-
-							<p:outputLabel value="Telefone" for="telefone" />
-							<p:inputMask mask="(99)-(9999-9999)" size="140" id="telefone" />
-
-							<p:outputLabel for="genero" value="Gênero:" />
-							<p:selectOneRadio id="genero">
-								<f:selectItem itemLabel="Masculino" />
-								<f:selectItem itemLabel="Feminino" />
-							</p:selectOneRadio>
-
-							<p:outputLabel value="Usuário do Sistema:" />
-							<p:selectBooleanCheckbox  />
-						</h:panelGrid>
-					</p:panel>
-				</p:tab>
-
-
-				<p:tab id="endereco" title="Endereço">
-					<p:panel header="Detalhes">
-
-						<h:panelGrid columns="1">
-							<p:outputLabel value="Logradouro" for="logradouro" />
-							<p:inputText id="logradouro" size="140" />
-
-							<p:outputLabel value="Bairro" for="bairro" />
-							<p:inputText id="bairro" size="140" />
-
-							<p:outputLabel value="Número" for="numero" />
-							<p:inputText id="numero" size="140" />
-
-							<p:outputLabel value="Complemento" for="complemento" />
-							<p:inputText id="complemento" size="140" />
-
-							<p:outputLabel for="municipio" value="Municipio" />
-							<p:selectOneMenu id="municipio" filter="true">
-								<f:selectItem itemLabel="Option 1" itemValue="1" />
-								<f:selectItem itemLabel="Option 2" itemValue="2" />
-								<f:selectItem itemLabel="Option 3" itemValue="3" />
-							</p:selectOneMenu>
-						</h:panelGrid>
-					</p:panel>
-				</p:tab>
-			</p:wizard>
 		</h:form>
-
 	</ui:define>
-
 </ui:composition>
 

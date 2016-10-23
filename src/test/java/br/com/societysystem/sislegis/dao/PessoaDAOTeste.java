@@ -13,7 +13,7 @@ import br.com.societysystem.sislegis.repository.PessoaDAO;
 public class PessoaDAOTeste 
 {
 	@Test
-	@Ignore
+	
 	public void salvar()
 	{
 		Pessoa pessoa = new Pessoa();

@@ -1,5 +1,7 @@
 package br.com.societysystem.sislegis.controller;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import br.com.societysystem.sislegis.repository.UsuarioDAO;
 
@@ -10,6 +12,7 @@ import javax.faces.bean.SessionScoped;
 import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
 
+import br.com.societysystem.sislegis.model.Perfil;
 import br.com.societysystem.sislegis.model.Usuario;
 
 @ManagedBean
@@ -43,12 +46,28 @@ public class Autenticacao {
 			Messages.addGlobalError("E-mail e/ou senha inválidos");
 			return;
 		}
+		else if(!usuarioAutenticado.isAtivo())
+		{
+			Messages.addGlobalWarn("Usuário desativado, verifique com o administrador do sistema!");
+			return;
+		}
 		inicializar();
 		Faces.redirect("./pages/GraficosConsumo.xhtml");
 	}
 	
 
-
+	
+	
+	public boolean exibirConteudoMenu()
+	{
+		if(usuarioAutenticado.getPerfis().equals("administrador"))
+		{
+			return true;
+		}
+		return false;
+	}
+	
+	
 		public Usuario getUsuarioAutenticado() {
 			return usuarioAutenticado;
 		}

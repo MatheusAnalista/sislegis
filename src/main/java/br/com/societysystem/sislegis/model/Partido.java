@@ -5,6 +5,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name = "a4_partido_tb")
@@ -19,11 +22,15 @@ public class Partido extends Entidade<Long>
 	private Long idPartido;
 	
 	@Column(nullable = false, length = 50)
+	@NotEmpty(message = "O nome do partido político não pode ser nulo!")
 	private String nome;
 	
 	@Column(nullable = false, length = 20)
+	@NotEmpty(message = "A sigla do partido político não pode ser nulo!")
 	private String sigla;
 
+	
+	
 	public Long getIdPartido() {
 		return idPartido;
 	}

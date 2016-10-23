@@ -181,12 +181,9 @@ public class Lancamento extends Entidade<Long>
 
 	@Override
 	public String toString() {
-		return "Lancamento [idLancamento=" + idLancamento + ", data=" + data
-				+ ", quantidadeRetirada=" + quantidadeRetirada
-				+ ", numeroDestino=" + numeroDestino + ", localLigacao="
-				+ localLigacao + ", valorDiaria=" + valorDiaria
+		return "Lancamento [quantidadeRetirada=" + quantidadeRetirada
 				+ ", finalidadeDiaria=" + finalidadeDiaria + ", observacao="
-				+ observacao + ", planejamentoCota=" + planejamentoCota
-				+ ", pessoa=" + pessoa + "]";
+				+ observacao + "]";
 	}
+
 }
