@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
-@Table(name = "a4_partido_tb")
+@Table(name = "partido_politico")
 public class Partido extends Entidade<Long>
 {
 

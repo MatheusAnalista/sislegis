@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "t3_perfil_tb")
+@Table(name = "perfil")
 public class Perfil extends Entidade<Long>
 {
 	

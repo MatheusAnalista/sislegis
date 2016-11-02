@@ -10,7 +10,7 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
-@Table(name = "a8_cota_parlamentar_tb")
+@Table(name = "cota_parlamentar")
 public class CotaParlamentar extends Entidade<Long>
 {
 
@@ -21,14 +21,14 @@ public class CotaParlamentar extends Entidade<Long>
 	@Column(name = "id_cota")
 	private Long idCota;
 	
-	@NotEmpty(message = "O campo nome não pode ser nulo!")
+	@NotEmpty(message = "O campo nome é obrigatório!")
 	@Column(nullable = false, length = 50)
 	@Length(max = 50, message = "O campo nome não pode ultrapassar o {max} de caracteres!")
 	private String nome;
 	
-	@NotEmpty(message = "O campo descrição não pode ser nulo!")
-	@Column(length = 200)
-	@Length(max = 200, message = "O campo descrição não pode ultrapassar o {max} de caracteres!")
+	@NotEmpty(message = "O campo descrição é obrigatório!")
+	@Column(length = 255)
+	@Length(max = 255, message = "O campo descrição não pode ultrapassar o {max} de caracteres!")
 	private String descricao;
 	
 	

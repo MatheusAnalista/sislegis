@@ -1,5 +1,4 @@
 package br.com.societysystem.sislegis.model;
-
 import java.io.Serializable;
 
 import javax.persistence.CascadeType;
@@ -7,7 +6,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
@@ -21,9 +19,9 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
-@Table(name = "a2_pessoa_tb")
+@Table(name = "pessoa")
 @Inheritance(strategy = InheritanceType.JOINED)
-public class Pessoa extends Entidade<Long> 
+public class Pessoa extends Entidade<Long> implements Serializable 
 {
 	private static final long serialVersionUID = 1L;
 
@@ -56,18 +54,20 @@ public class Pessoa extends Entidade<Long>
 
 	
 	@OneToOne(cascade = CascadeType.ALL, optional = true)
-	@JoinColumn(name = "usuario_id")
+	@JoinColumn(name = "usuario_id", nullable = true)
 	private Usuario usuario;
-
-	@Transient
-	private boolean eUsuario;
 
 	
 	public Pessoa()
 	{
 		endereco = new Endereco();
-		usuario = new Usuario();
+		//usuario = new Usuario();
 	}
+	
+
+	
+	
+	
 	
 	public Long getIdPessoa() {
 		return idPessoa;
@@ -128,14 +128,7 @@ public class Pessoa extends Entidade<Long>
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
-	
-	public boolean iseUsuario() {
-		return eUsuario;
-	}
 
-	public void seteUsuario(boolean eUsuario) {
-		this.eUsuario = eUsuario;
-	}
 
 	@Override
 	public int hashCode() {
@@ -170,6 +163,5 @@ public class Pessoa extends Entidade<Long>
 				+ ", genero=" + genero + ", endereco=" + endereco
 				+ ", usuario=" + usuario + "]";
 	}
-
 	
 }

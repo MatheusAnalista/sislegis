@@ -5,10 +5,11 @@
 	xmlns:p="http://primefaces.org/ui"
 	template="/WEB-INF/templates/Layout.xhtml">
 
+
 	<ui:define name="content">
 
-		<h1 class="aw-page-title">Lançamentos de Consumo de Cotas
-			Parlamentares</h1>
+		<h1 class="aw-page-title">Escolha mediante link, qual cota
+			parlamentar deseja realizar o lançamento de uso</h1>
 
 		<hr color="#1e94d2" />
 
@@ -16,70 +17,27 @@
 
 		<h:form id="frm">
 
-			<p:button value="Realizar um novo lançamento"
-				outcome="/pages/lancamento.xhtml" style="width:1116px" />
+			<h:panelGrid columns="3">
 
+				<h:commandLink action="/pages/lancamentoCotaDiaria.xhtml">
+					<h:graphicImage library="sislegis" name="images/money2.png"
+						style="margin-top: 50px; margin-left: 350px; margin-right:50px"
+						title="Lançar uso diária" url="/pages/lancamentoCotaDiaria.xhtml" />
+				</h:commandLink>
 
-			<p:inputText id="pesquisa" size="145"
-				placeholder="Digite aqui sua pesquisa"
-				style="margin-top: 20px; margin-bottom: 20px" />
-			<p:commandButton icon="ui-icon-search" style="width:68px" />
+				<h:commandLink action="/pages/lancamentoCotaLigacao.xhtml">
+					<h:graphicImage library="sislegis" name="images/phone.png"
+						style="margin-top: 50px; margin-right:50px"
+						title="Lançar uso cota de ligações"
+						url="/pages/lancamentoCotaLigacao.xhtml" />
+				</h:commandLink>
 
-			<p:dataTable value="#{lancamentoController.lancamentos}"
-				emptyMessage="Nenhum registro encontrado" var="lancamento"
-				id="tabelaLancamento">
+				<h:commandLink action="/pages/lancamentoCotaXerografica.xhtml">
+					<h:graphicImage library="sislegis" name="images/copiadora.png"
+						style="margin-top: 50px;" title="Lançar uso cota xerográfica" />
+				</h:commandLink>
 
-				<p:column headerText="Identificador">
-					<h:outputText value="#{lancamento.idLancamento}">
-					</h:outputText>
-				</p:column>
-
-
-				<p:column headerText="Data Lançamento">
-					<h:outputText value="#{lancamento.data}">
-						<f:convertDateTime pattern="dd/MM/yyyy" />
-					</h:outputText>
-				</p:column>
-
-				<p:column headerText="Cota Parlamentar">
-					<h:outputText
-						value="#{lancamento.planejamentoCota.cotaParlamentar.nome}" />
-				</p:column>
-
-				<p:column headerText="Destino da Ligação">
-					<h:outputText value="#{lancamento.localLigacao}" />
-				</p:column>
-
-				<p:column headerText="Quantidade Retirada">
-					<h:outputText value="#{lancamento.quantidadeRetirada}" />
-				</p:column>
-
-				<p:column headerText="Valor Diária">
-					<h:outputText value="#{lancamento.valorDiaria}" />
-				</p:column>
-
-				<p:column headerText="Ações" style="width: 80px">
-					<p:commandButton icon="fa fa-fw fa-edit"
-						action="#{lancamentoController.atualizar(lancamento)}">
-					</p:commandButton>
-
-					<p:commandButton icon="ui-icon-trash"
-						update=":mensagem :frm:tabelaLancamento"
-						actionListener="#{lancamentoController.excluir(lancamento)}">
-						<p:confirm header="Confirmação Exclusão" icon="ui-icon-alert"
-							message="Deseja realmente excluir" />
-					</p:commandButton>
-				</p:column>
-
-			</p:dataTable>
-
-			<p:confirmDialog global="true" responsive="true">
-				<p:commandButton value="Sim" type="button"
-					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-
-				<p:commandButton value="Não" type="button"
-					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-			</p:confirmDialog>
+			</h:panelGrid>
 
 		</h:form>
 	</ui:define>

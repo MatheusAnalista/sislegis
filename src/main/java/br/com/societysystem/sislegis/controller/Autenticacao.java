@@ -21,6 +21,8 @@ public class Autenticacao {
 
 	private Usuario usuario;
 	private Usuario usuarioAutenticado;
+	private Perfil perfil;
+	
 	
 	public Usuario getUsuario() {
 		return usuario;
@@ -36,11 +38,12 @@ public class Autenticacao {
 		usuario = new Usuario();
 	}
 	
+	
+	
 	public void autenticar() throws IOException
 	{
 		UsuarioDAO usuarioDAO = new UsuarioDAO();
 		usuarioAutenticado = usuarioDAO.autenticar(usuario.getEmail(), usuario.getSenha());
-		
 		if(usuarioAutenticado == null)
 		{
 			Messages.addGlobalError("E-mail e/ou senha inválidos");
@@ -53,19 +56,21 @@ public class Autenticacao {
 		}
 		inicializar();
 		Faces.redirect("./pages/GraficosConsumo.xhtml");
+		
 	}
 	
 
 	
-	
-	public boolean exibirConteudoMenu()
+	/*public boolean isAdministrador()
 	{
-		if(usuarioAutenticado.getPerfis().equals("administrador"))
-		{
+		if(this.usuarioAutenticado.getPerfis().contains("Administrador")){
 			return true;
 		}
+
 		return false;
-	}
+	}*/
+	
+
 	
 	
 		public Usuario getUsuarioAutenticado() {
@@ -75,5 +80,13 @@ public class Autenticacao {
 		public void setUsuarioAutenticado(Usuario usuarioAutenticado) {
 			this.usuarioAutenticado = usuarioAutenticado;
 		}
-	    
+
+		public Perfil getPerfil() {
+			return perfil;
+		}
+
+		public void setPerfil(Perfil perfil) {
+			this.perfil = perfil;
+		}
+		
 }

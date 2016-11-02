@@ -34,7 +34,7 @@ public class LancamentoDAOTeste
 		lancamento.setLocalLigacao("arinos");
 		lancamento.setNumeroDestino("99999");
 		lancamento.setObservacao("afafa");
-		lancamento.setQuantidadeRetirada((short) 10);
+		lancamento.setQuantidadeRetirada( 10);
 		lancamento.setPessoa(pessoa);
 		lancamento.setPlanejamentoCota(pla);
 		

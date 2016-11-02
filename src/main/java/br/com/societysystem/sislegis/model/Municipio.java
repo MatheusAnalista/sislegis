@@ -9,7 +9,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "t2_municipio_tb")
+@Table(name = "municipio")
 public class Municipio extends Entidade<Long>
 {
 	

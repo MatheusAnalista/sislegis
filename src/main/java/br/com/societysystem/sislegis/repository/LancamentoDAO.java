@@ -49,4 +49,23 @@ public class LancamentoDAO extends GenericDAO<Lancamento> {
 
 		return consulta.list();
 	}
+	
+	
+/*	@SuppressWarnings("unchecked")
+	public List<Lancamento> recuperarPorCotaXerografica() {
+
+		Criteria consulta = super.getSession().createCriteria(Lancamento.class);
+
+		consulta.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+
+		consulta.createAlias("planejamentoCota", "planejamentoCota");
+
+		consulta.createAlias("planejamentoCota.vereador", "vereador");
+
+		consulta.add(Restrictions.isNotNull("quantidadeRetirada"));
+		
+		consulta.addOrder(Order.asc("vereador.nome"));
+
+		return consulta.list();
+	}*/
 }

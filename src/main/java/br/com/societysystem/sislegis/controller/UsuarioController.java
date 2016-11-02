@@ -1,9 +1,9 @@
 package br.com.societysystem.sislegis.controller;
-
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -38,23 +38,25 @@ public class UsuarioController implements Serializable {
 		perfis = perfilDAO.listar();
 	}
 
-	public void salvar() {
+	public String salvar() {
 		try {
-			if (ehDataCorrente()) {
+			if (ehDataCorrente() && eEmailInexistente()) {
 				SimpleHash hash = new SimpleHash("md5", usuario.getSenha());
 				usuario.setSenha(hash.toHex());
 				usuario.setConfirmaSenha(hash.toHex());
 				usuarioDAO.salvar(usuario);
 				Messages.addGlobalInfo("Operação realizada com sucesso!");
 				inicializar();
-			} else {
-				Messages.addGlobalWarn("A data de hoje é diferente da data informada!");
-			}
+				listar();
+				return "/pages/usuarios.xhtml";
+			} 
 		} catch (RuntimeException e) {
 			e.printStackTrace();
 			Messages.addGlobalError("Erro ao tentar salvar usuário");
-		} 
+		}
+			return null;
 	}
+
 
 	@PostConstruct
 	public void listar() {
@@ -84,15 +86,35 @@ public class UsuarioController implements Serializable {
 		}
 	}
 
+
+	
 	@SuppressWarnings("deprecation")
 	public boolean ehDataCorrente(){
 		LocalDateTime now = LocalDateTime.now(); 
-		if(usuario.getDataCadastro().getDate() == now.getDayOfMonth()){
+			if(usuario.getDataCadastro().getDate() == now.getDayOfMonth() && usuario.getIdUsuario() == null || usuario.getDataCadastro().getDate() == now.getDayOfMonth() || usuario.getIdUsuario() !=null){
 			return true;
-		}
-		return false;
+			}
+			Messages.addGlobalWarn("A data de hoje é diferente da data informada!");
+			return false;
 	}
 	
+
+	
+	public boolean eEmailInexistente(){
+		String email = usuario.getEmail();
+		List<Usuario> usuarios = new ArrayList<>();
+		usuarios = usuarioDAO.listar();
+		String emailsNoBanco;
+		
+		for(Usuario usuario : usuarios){
+			emailsNoBanco = usuario.getEmail();
+			if(emailsNoBanco.equals(email) && usuario.getId() != this.getUsuario().getId()){
+				Messages.addGlobalWarn("E-mail já existente no banco de dados!");
+				return false;
+			}		
+		}
+		return true;		
+	}
 	
 	
 	public Usuario getUsuario() {

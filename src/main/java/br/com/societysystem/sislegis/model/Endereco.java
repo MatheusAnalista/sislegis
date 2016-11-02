@@ -16,7 +16,7 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
-@Table(name = "a3_endereco_tb")
+@Table(name = "endereco")
 public class Endereco extends Entidade<Long> implements Serializable
 {
 
@@ -36,11 +36,10 @@ public class Endereco extends Entidade<Long> implements Serializable
 	private String bairro;
 	
 	@Column(nullable = false)
-	@NotEmpty(message = "O campo número não pode ser nulo!")
+	@NotNull(message = "O campo número não pode ser nulo!")
 	private Short numero;
 	
-	@Column(length = 50)
-	@NotEmpty(message = "O campo complemento não pode ser nulo!")
+	@Column(length = 50, nullable = true)
 	private String complemento;
 
 	@ManyToOne

@@ -1,9 +1,13 @@
 package br.com.societysystem.sislegis.controller;
+import java.time.LocalDateTime;
 import java.util.List;
+
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+
 import org.apache.commons.mail.EmailException;
 import org.omnifaces.util.Messages;
+
 import br.com.societysystem.sislegis.model.FinalidadeDiariaEnum;
 import br.com.societysystem.sislegis.model.Lancamento;
 import br.com.societysystem.sislegis.model.Pessoa;
@@ -41,19 +45,20 @@ public class LancamentoController {
 	}
 
 	
-	public void salvar() throws EmailException {
+	public String salvar() throws EmailException {
 		try {	
 			if(verificarPreenchimentoCampoXerox()){
 				if (verificarDataLancamento()
-					&& darBaixaNoPlanejamentoExecutado()){
+					&& darBaixaNoPlanejamentoExecutado() && ehDataCorrente()){
 				lancamentoDAO.salvar(lancamento);
 				//enviarEmail();
 				Messages.addGlobalInfo("Operação realizada com sucesso!");
 				limparFormulario();
+				return "/pages/GraficosConsumo.xhtml";
 				}
 			}
 			else if(verificarPreenchimentoCampoDiaria() || verificarPreenchimentoCampoLigacao()){
-				if (verificarDataLancamento()){
+				if (verificarDataLancamento() && ehDataCorrente()){
 					lancamentoDAO.salvar(lancamento);
 					//enviarEmail();
 					Messages.addGlobalInfo("Operação realizada com sucesso!");
@@ -63,6 +68,7 @@ public class LancamentoController {
 		} catch (RuntimeException ex) {
 			ex.printStackTrace();
 		}
+		return null;
 	}
 
 	
@@ -111,6 +117,16 @@ public class LancamentoController {
 	}
 
 	
+	@SuppressWarnings("deprecation")
+	public boolean ehDataCorrente(){
+		LocalDateTime now = LocalDateTime.now(); 
+			if(lancamento.getData().getDate() == now.getDayOfMonth() && lancamento.getId() == null || lancamento.getData().getDate() == now.getDayOfMonth() || lancamento.getId() !=null){
+			return true;
+			}
+			Messages.addGlobalWarn("A data de hoje é diferente da data informada!");
+			return false;
+	}
+	
 	public boolean darBaixaNoPlanejamentoExecutado() {
 		PlanejamentoCota planejamento = lancamento.getPlanejamentoCota();
 		int quantidadeDaCota = planejamento.getQuantidadePermitida();
@@ -147,7 +163,7 @@ public class LancamentoController {
 	
 	
 	public boolean verificarPreenchimentoCampoXerox(){
-		if(lancamento.getQuantidadeRetirada() != 0){
+		if(lancamento.getQuantidadeRetirada() != null){
 			return true;
 		}
 		else return false;
@@ -182,15 +198,29 @@ public class LancamentoController {
 			"<b>Nome: </b>%s <br><b>Idade: </b>%s");
 
 	
+	
+	public boolean analisarEnvioOuNaoDeEmail() throws EmailException{
+		int quantidadePermitida = planejamentoCota.getQuantidadePermitida();
+		double trintaPorCentoDaQuantidadePermitida = quantidadePermitida * 0.3;
+		
+		if(planejamentoCota.getQuantidadePermitida() <= trintaPorCentoDaQuantidadePermitida){
+			enviarEmail();
+			return true;
+		}
+		return false;
+	}
+	
+
 	public void enviarEmail() throws EmailException {
 		ParametroEmail parametro = new EnviadorDeEmailHelper().new ParametroEmail();
-		parametro.setAssunto("Teste de assunto");
-		parametro.setMensagem("<b>Deu certo!!! </b>");
-		parametro.setDestinatario(ChaveValor.novoCom("Matheus",
-				"suportetecnologia@outlook.com.br"));
+		parametro.setAssunto("Informações sobre os lançamentos de cotas parlamentares");
+		parametro.setMensagem("<b> Planejamento executado com menos de 30% da cota restante!</b>");
+		
+		parametro.setDestinatario(ChaveValor.novoCom("SISLEGIS",
+				"cotasparlamentaresdearinos@gmail.com"));
 		try {
 			EnviadorDeEmailHelper.enviarHtmlMail(parametro);
-			System.out.println("Email enviado com sucesso!!!!");
+			System.out.println("Email enviado com sucesso!!!!" + lancamento.getQuantidadeRetirada());
 		} catch (EmailException e) {
 			e.printStackTrace();
 		}

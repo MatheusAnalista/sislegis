@@ -1,0 +1,109 @@
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/Layout.xhtml">
+
+	<ui:define name="content">
+
+		<h1 class="aw-page-title">Você pode neste espaço, realizar o
+			lançamento de consumo de cota de ligações</h1>
+
+		<h:form id="frm">
+
+			<hr color="#1e94d2" />
+
+			<p:messages id="mensagem" />
+
+			<h:panelGrid columns="1" style="margin-top: 20px" id="gridCadastro">
+
+				<!-- Recebendo o id para atualização -->
+				<h:inputHidden
+					value="#{lancamentoController.lancamento.idLancamento}" />
+
+				<p:outputLabel value="Planejamento:" />
+				<p:selectOneMenu style="width: 1090px"
+					value="#{lancamentoController.lancamento.planejamentoCota}"
+					filter="true" converter="omnifaces.SelectItemsConverter">
+					<f:selectItem noSelectionOption="true"
+						itemLabel="Selecione o planejamento" />
+					<f:selectItems value="#{lancamentoController.planejamentos}"
+						var="planejamento"
+						itemLabel="#{planejamento.cotaParlamentar.nome} - #{planejamento.vereador.nomeParlamentar}"
+						itemValue="#{planejamento}">
+					</f:selectItems>
+				</p:selectOneMenu>
+
+				<p:outputLabel value="Solicitante:" />
+				<p:selectOneMenu style="width: 1090px"
+					value="#{lancamentoController.lancamento.pessoa}" filter="true"
+					converter="omnifaces.SelectItemsConverter">
+					<f:selectItem noSelectionOption="true"
+						itemLabel="Selecione o solicitante" />
+					<f:selectItems value="#{lancamentoController.pessoas}" var="pessoa"
+						itemLabel="#{pessoa.nome}" itemValue="#{pessoa}">
+					</f:selectItems>
+				</p:selectOneMenu>
+
+				<p:outputLabel value="Data Lancamento:" for="dataLancamento" />
+				<p:calendar id="dataLancamento"
+					value="#{lancamentoController.lancamento.data}" size="154"
+					pattern="dd-MM-yyyy" placeholder="Infome a data deste lançamento">
+				</p:calendar>
+
+				<p:outputLabel value="Numero de Destino da ligação:"
+					for="numeroDestino" />
+
+				<p:inputMask mask="(99)-(9999-9999)" size="140" id="numeroDestino"
+					value="#{lancamentoController.lancamento.numeroDestino}"
+					required="true"
+					requiredMessage="Campo numero de destino da ligação é obrigatório!"
+					placeholder="Infome o número de destino da ligação" />
+
+				<p:outputLabel value="Local de destino da ligação:"
+					for="localDestino" />
+				<p:inputText id="localDestino"
+					value="#{lancamentoController.lancamento.localLigacao}" size="154"
+					required="true"
+					requiredMessage="Campo local de destino da ligação é obrigatório!"
+					placeholder="Descreva o local de destino da ligação" />
+
+				<p:outputLabel value="Observação:" for="observacao" />
+				<p:inputText id="observacao"
+					value="#{lancamentoController.lancamento.observacao}" size="154"
+					placeholder="Caso deseje, informe mais informações" />
+
+			</h:panelGrid>
+
+			<p:toolbar style="margin-top: 20px">
+				<f:facet name="left">
+					<p:commandButton value="salvar"
+						action="#{lancamentoController.salvar}" update="mensagem :frm"
+						style="width:543px" icon="ui-icon-check">
+						<p:confirm header="Confirmação de operação" icon="ui-icon-alert"
+							message="Deseja realmente realizar esta operação?" />
+					</p:commandButton>
+
+					<span class="ui-separator"> <span
+						class="ui-icon ui-icon-grip-dotted-vertical" />
+					</span>
+
+					<p:button outcome="/pages/lancamentos.xhtml"
+						value="Voltar aos Lançamentos de Uso de Cotas" style="width:543px"
+						icon="ui-icon-info" />
+				</f:facet>
+			</p:toolbar>
+
+			<p:confirmDialog global="true" responsive="true">
+				<p:commandButton value="Sim" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+
+				<p:commandButton value="Não" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+
+		</h:form>
+	</ui:define>
+</ui:composition>

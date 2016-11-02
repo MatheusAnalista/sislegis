@@ -14,7 +14,10 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Email;
@@ -22,7 +25,7 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
-@Table(name = "a1_usuario_tb")
+@Table(name = "usuario")
 public class Usuario extends Entidade<Long>
 {
 
@@ -33,14 +36,14 @@ public class Usuario extends Entidade<Long>
 	@GeneratedValue
 	private Long idUsuario;
 	
-	@Column(length = 50, nullable = false)
+	@Column(length = 50, nullable = false, unique = true)
 	@Length(max = 50, message = "O campo e-mail não pode ultrapassar o {max} de caracteres!")
 	@NotEmpty(message = "O campo e-mail é obrigatório")
 	@Email(message = "Preencha com um e-mail válido!")
 	private String email;
 	
 	@Column(length = 32, nullable = false)
-	@Length(max = 50, message = "O campo senha não pode ultrapassar o {max} de caracteres!")
+	@Length(max = 32, message = "O campo senha não pode ultrapassar o {max} de caracteres!")
 	@NotEmpty(message = "O campo senha é obrigatório")
 	private String senha;
 	
@@ -48,7 +51,7 @@ public class Usuario extends Entidade<Long>
 	private String senhaNaoCriptografada;
 	
 	@Column(name = "confirma_senha", length = 32, nullable = false)
-	@Length(max = 50, message = "O senha não pode ultrapassar o {max} de caracteres!")
+	@Length(max = 32, message = "O senha não pode ultrapassar o {max} de caracteres!")
 	@NotEmpty(message = "O campo confirma senha é obrigatório")
 	private String confirmaSenha;
 	
@@ -56,6 +59,7 @@ public class Usuario extends Entidade<Long>
 	private boolean ativo;
 	
 	@Column(name = "data_cadastro", nullable = false, updatable = false)
+	@Temporal(TemporalType.DATE)
 	@NotNull(message = "O campo data de cadastro é obrigatório")
 	private Date dataCadastro;
 	
@@ -63,7 +67,7 @@ public class Usuario extends Entidade<Long>
 	private byte[] foto;
 	
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "t4_perfil_usuario_tb", joinColumns = 
+	@JoinTable(name = "perfil_usuario", joinColumns = 
 		@JoinColumn(name = "usuario_id", nullable = false), 
 			inverseJoinColumns = 
 				@JoinColumn(name = "perfil_id", nullable = false))

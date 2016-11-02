@@ -31,6 +31,7 @@ public class CotaParlamentarControlle implements Serializable
 		return "cotaParlamentar?faces-redirect=true";
 	}
 	
+
 	
 	@PostConstruct
 	public void listar()
@@ -46,7 +47,7 @@ public class CotaParlamentarControlle implements Serializable
 	}
 	
 	
-	public void salvar(){
+	public String salvar(){
 		try
 		{
 			if	(verificaNomeCota() == false)
@@ -54,12 +55,15 @@ public class CotaParlamentarControlle implements Serializable
 				cotaDAO.salvar(cotaParlamentar);	
 				Messages.addGlobalInfo("Operação realizada com sucesso!");	
 				cotaParlamentar = new CotaParlamentar();
+				listar();
+				return "/pages/cotasParlamentares.xhtml";
 			}
 		}
 		catch (RuntimeException ex) 
 		{
 			ex.printStackTrace();
 		}
+		return null;
 	}
 	
 

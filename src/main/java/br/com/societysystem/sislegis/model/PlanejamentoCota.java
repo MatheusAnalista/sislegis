@@ -10,10 +10,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
+
 @Entity
-@Table(name = "a9_planejamento_cota_parlamentar_tb")
+@Table(name = "planejamento_consumo_cota")
 public class PlanejamentoCota extends Entidade<Long>
 {
 
@@ -26,23 +28,25 @@ public class PlanejamentoCota extends Entidade<Long>
 	
 	@Column(name = "data_inicio")
 	@Temporal(TemporalType.DATE)
-	@NotNull(message = "O campo data início não pode ser nulo")
+	@NotNull(message = "O campo data início é obrigatório!")
 	private Date dataInicio;
 	
 	@Column(name = "data_fim", nullable = false)
 	@Temporal(TemporalType.DATE)
-	@NotNull(message = "O campo data fim não pode ser nulo")
+	@NotNull(message = "O campo data fim é obrigatório!")
 	private Date dataFim;
 	
 	@Column(name = "cota_limitada", nullable = false)
 	private boolean cotaLimitada;
 	
 	@Column(name = "quantidade_permitida")
-	private int quantidadePermitida;
+	private Integer quantidadePermitida;
 	
 	@Column(length = 200)
 	private String descricao;
 	
+	@Transient
+	private boolean vigente;
 	
 	@ManyToOne
 	@JoinColumn(name = "cota_id", nullable = false)
@@ -53,6 +57,7 @@ public class PlanejamentoCota extends Entidade<Long>
 	@JoinColumn(name = "vereador_id", nullable = false)
 	@NotNull(message = "Selecione o vereador para o planejamento")
 	private Vereador vereador;
+
 
 	
 	public Long getIdPlanejamento() {
@@ -91,11 +96,11 @@ public class PlanejamentoCota extends Entidade<Long>
 		this.cotaLimitada = cotaLimitada;
 	}
 
-	public int getQuantidadePermitida() {
+	public Integer getQuantidadePermitida() {
 		return quantidadePermitida;
 	}
 
-	public void setQuantidadePermitida(int quantidadePermitida) {
+	public void setQuantidadePermitida(Integer quantidadePermitida) {
 		this.quantidadePermitida = quantidadePermitida;
 	}
 
@@ -157,6 +162,14 @@ public class PlanejamentoCota extends Entidade<Long>
 				+ quantidadePermitida + ", descricao=" + descricao
 				+ ", cotaParlamentar=" + cotaParlamentar + ", vereador="
 				+ vereador + "]";
+	}
+
+	public boolean isVigente() {
+		return vigente;
+	}
+
+	public void setVigente(boolean vigente) {
+		this.vigente = vigente;
 	}
 
 	

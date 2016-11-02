@@ -9,7 +9,7 @@
 			<default-locale>pt_BR</default-locale>
 		</locale-config>
 	</application>
-	
+
 	<lifecycle>
 		<phase-listener>br.com.societysystem.sislegis.util.AutenticacaoListener</phase-listener>
 	</lifecycle>

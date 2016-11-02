@@ -7,6 +7,7 @@ import br.com.societysystem.sislegis.vo.ChaveValor;
 
 public final class EnviadorDeEmailHelper {
 
+	
 	public static void enviarHtmlMail(final ParametroEmail parametro)
 			throws EmailException {
 
@@ -22,7 +23,7 @@ public final class EnviadorDeEmailHelper {
 
 			email.addTo(parametro.getDestinatario().getValor(), parametro
 					.getDestinatario().getChave());
-
+			
 			email.setSubject(parametro.getAssunto());
 
 			email.setHtmlMsg(parametro.getMensagem());
@@ -58,9 +59,9 @@ public final class EnviadorDeEmailHelper {
 
 		PORTA(465),
 
-		USUARIO("sti.tecnologiainformacao@gmail.com"),
+		USUARIO("cotasparlamentaresdearinos@gmail.com"),
 
-		SENHA("ti@microsoft2523"),
+		SENHA(""),
 
 		FROM_EMAIL("contato@sislegis.com.br"),
 

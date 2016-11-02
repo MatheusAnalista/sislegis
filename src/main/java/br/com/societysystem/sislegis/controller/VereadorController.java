@@ -35,6 +35,8 @@ public class VereadorController {
 	PerfilDAO perfilDAO = new PerfilDAO();
 	private Usuario usuario;
 	
+	
+	
 	public VereadorController(){
 		vereador = new Vereador();
 		partido = new Partido();
@@ -49,6 +51,7 @@ public class VereadorController {
 		vereador = new Vereador();
 	}
 	
+
 		
 	@PostConstruct
 	public void listar() {

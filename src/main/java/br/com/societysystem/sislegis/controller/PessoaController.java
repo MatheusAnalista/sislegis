@@ -26,7 +26,7 @@ public class PessoaController {
 	private List<Pessoa> pessoas;
 	private List<Municipio> municipios;
 	PessoaDAO pessoaDAO = new PessoaDAO();
-
+	private Usuario usuario;
 	
 	
 	
@@ -43,6 +43,7 @@ public class PessoaController {
 	}
 	
 	
+	
 	@PostConstruct
 	public void listar()
 	{
@@ -54,19 +55,22 @@ public class PessoaController {
 		}
 	}
 	
-	public void salvar()
+	public String salvar()
 	{
 		try
 		{
 			pessoaDAO.salvar(pessoa);
 			Messages.addGlobalInfo("Operação realizada com sucesso!");
 			limparFormulario();
+			listar();
+			return "/pages/pessoas.xhtml";
 		}
 		catch(RuntimeException erro)
 		{
 			erro.printStackTrace();
 			Messages.addGlobalError("Erro ao tentar salvar o solicitante!");
 		}
+		return null;
 	}
 	
 	
@@ -128,6 +132,14 @@ public class PessoaController {
 
 	public void setMunicipios(List<Municipio> municipios) {
 		this.municipios = municipios;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 }

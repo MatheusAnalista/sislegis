@@ -6,8 +6,10 @@
 	template="/WEB-INF/templates/Layout.xhtml">
 
 	<ui:define name="content">
-		<h1 class="aw-page-title">Planeje as cotas parlamentares para uso</h1>
-
+		<h1 class="aw-page-title">Aqui você pode planejar as cotas
+			parlamentares para consumo, definindo seu período de vigência</h1>
+		<link rel="StyleSheet" type="text/css" href="styles/label.css"
+			media="screen" />
 		<h:form id="frm">
 
 			<hr color="#1e94d2" />
@@ -23,13 +25,14 @@
 				<p:outputLabel value="Data Início:" for="dataInicio" />
 				<p:calendar id="dataInicio"
 					value="#{planejamentoCotaController.planejamentoCota.dataInicio}"
-					size="154">
-				</p:calendar>
+					size="154"
+					placeholder="Informe a data que inicia este planejamento" />
 
 				<p:outputLabel value="Data Fim:" for="dataFim" />
 				<p:calendar id="dataFim"
 					value="#{planejamentoCotaController.planejamentoCota.dataFim}"
-					size="154" pattern="dd-MM-yyyy">
+					size="154"
+					placeholder="Informe a data que expira este planejamento">
 
 				</p:calendar>
 
@@ -49,7 +52,8 @@
 							<p:outputLabel value="Quantidade Permitida:" />
 							<p:inputText
 								value="#{planejamentoCotaController.planejamentoCota.quantidadePermitida}"
-								size="153" />
+								size="153"
+								placeholder="Infome a quantidade máxima disponível para este planejamento" />
 						</h:panelGrid>
 					</h:panelGroup>
 				</h:panelGroup>
@@ -57,7 +61,8 @@
 				<p:outputLabel value="Descrição:" for="descricao" />
 				<p:inputText id="descricao"
 					value="#{planejamentoCotaController.planejamentoCota.descricao}"
-					size="154" />
+					size="154"
+					placeholder="Descreva informações sobre a cota parlamentar" />
 
 				<p:outputLabel value="Cota Parlamentar:" />
 				<p:selectOneMenu
@@ -89,18 +94,30 @@
 				<f:facet name="left">
 
 					<p:commandButton value="salvar"
-						actionListener="#{planejamentoCotaController.salvar}"
-						update="mensagem :frm" style="width:546px" icon="ui-icon-check" />
+						action="#{planejamentoCotaController.salvar}"
+						update="mensagem :frm" style="width:530px" icon="ui-icon-check">
+						<p:confirm header="Confirmação de operação" icon="ui-icon-alert"
+							message="Deseja realmente realizar esta operação" />
+					</p:commandButton>
 
 					<span class="ui-separator"> <span
 						class="ui-icon ui-icon-grip-dotted-vertical" />
 					</span>
 
 					<p:button outcome="/pages/planejamentoCotas.xhtml"
-						value="Voltar aos Planejamentos de Cotas" style="width:546px" icon="ui-icon-info"/>
+						value="Voltar aos Planejamentos de Cotas" style="width:530px"
+						icon="ui-icon-info" />
 
 				</f:facet>
 			</p:toolbar>
+
+			<p:confirmDialog global="true" responsive="true">
+				<p:commandButton value="Sim" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+
+				<p:commandButton value="Não" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
 
 		</h:form>
 

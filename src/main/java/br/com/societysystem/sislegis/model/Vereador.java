@@ -16,7 +16,7 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
-@Table(name = "a5_vereador_tb")
+@Table(name = "vereador")
 @PrimaryKeyJoinColumn(name = "id_vereador")
 public class Vereador  extends Pessoa
 {
@@ -36,9 +36,6 @@ public class Vereador  extends Pessoa
 	@NotNull(message = "O campo data de nascimento não pode ser nulo!")
 	private Date dataNascimento;
 	
-	@Column(nullable = false)
-	@NotNull(message = "Campo idade não pode ser nulo!")
-	private Short idade;
 	
 	@Column(nullable = false)
 	private boolean presidente;
@@ -78,14 +75,6 @@ public class Vereador  extends Pessoa
 		this.dataNascimento = dataNascimento;
 	}
 
-	public Short getIdade() {
-		return idade;
-	}
-
-	public void setIdade(Short idade) {
-		this.idade = idade;
-	}
-
 	public boolean isPresidente() {
 		return presidente;
 	}
@@ -102,10 +91,6 @@ public class Vereador  extends Pessoa
 		this.partido = partido;
 	}
 
-	
-	
-	
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -113,7 +98,6 @@ public class Vereador  extends Pessoa
 		result = prime * result + ((cpf == null) ? 0 : cpf.hashCode());
 		result = prime * result
 				+ ((dataNascimento == null) ? 0 : dataNascimento.hashCode());
-		result = prime * result + ((idade == null) ? 0 : idade.hashCode());
 		result = prime * result
 				+ ((nomeParlamentar == null) ? 0 : nomeParlamentar.hashCode());
 		result = prime * result + ((partido == null) ? 0 : partido.hashCode());
@@ -140,11 +124,6 @@ public class Vereador  extends Pessoa
 				return false;
 		} else if (!dataNascimento.equals(other.dataNascimento))
 			return false;
-		if (idade == null) {
-			if (other.idade != null)
-				return false;
-		} else if (!idade.equals(other.idade))
-			return false;
 		if (nomeParlamentar == null) {
 			if (other.nomeParlamentar != null)
 				return false;
@@ -163,10 +142,8 @@ public class Vereador  extends Pessoa
 	@Override
 	public String toString() {
 		return "Vereador [nomeParlamentar=" + nomeParlamentar + ", cpf=" + cpf
-				+ ", dataNascimento=" + dataNascimento + ", idade=" + idade
-				+ ", presidente=" + presidente + ", partido=" + partido + "]";
+				+ ", dataNascimento=" + dataNascimento + ", presidente="
+				+ presidente + ", partido=" + partido + "]";
 	}
-	
-
 
 }

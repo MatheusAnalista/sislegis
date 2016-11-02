@@ -7,7 +7,9 @@
 
 	<ui:define name="content">
 
-		<h1 class="aw-page-title">Usuários</h1>
+		<h1 class="aw-page-title">Gerencie o acesso dos usuários ao
+			sistema sislegis. Aqui você pode cadastrá-los, ativá-los e
+			desativá-los</h1>
 
 		<hr color="#1e94d2" />
 
@@ -16,9 +18,8 @@
 		<h:form id="frm">
 
 
-			<p:button value="Cadastrar um novo usuário"
-				outcome="/pages/usuario.xhtml"
-				style="width:1116px" />
+			<p:button value="Cadastrar novo usuário"
+				outcome="/pages/usuario.xhtml" style="width:1116px" />
 
 			<p:inputText id="pesquisa" size="145"
 				placeholder="Digite aqui sua pesquisa"
@@ -28,19 +29,23 @@
 
 			<p:dataTable value="#{usuarioController.usuarios}"
 				emptyMessage="Nenhum registro encontrado" var="usuario"
-				id="tabelaUsuarios">
+				id="tabelaUsuarios" filteredValue="#{usuarioController.usuarios}">
 
-				<p:column headerText="E-mail">
+				<p:column headerText="E-mail" style="width: 400px">
 					<h:outputText value="#{usuario.email}" />
 				</p:column>
 
-				<p:column headerText="Data Cadastro">
-					<h:outputText value="#{usuario.dataCadastro}" />
+				<p:column headerText="Data de Cadastro" style="width: 400px">
+					<h:outputText value="#{usuario.dataCadastro}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
 				</p:column>
 
-				<p:column headerText="Situação">
-					<p:selectBooleanButton value="#{usuarioController.usuario.ativo}"
-						offLabel="ativo" onLabel="desativo" />
+				<p:column headerText="Usuário ativo" style="width: 100px">
+					<h:graphicImage library="sislegis" name="images/userAtivo.png"
+						rendered="#{usuario.ativo}" />
+					<h:graphicImage library="sislegis" name="images/userInativo.png"
+						rendered="#{usuario.ativo == false}" />
 				</p:column>
 
 				<p:column headerText="Ações">

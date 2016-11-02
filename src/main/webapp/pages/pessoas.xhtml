@@ -7,7 +7,7 @@
 
 	<ui:define name="content">
 
-		<h1 class="aw-page-title">Solicitantes</h1>
+		<h1 class="aw-page-title">Solicitantes cadastrados</h1>
 
 		<hr color="#1e94d2" />
 
@@ -28,23 +28,20 @@
 				emptyMessage="Nenhum registro encontrado" var="pessoa"
 				id="tabelaPessoa">
 
-				<p:column headerText="Identificador">
-					<h:outputText value="#{pessoa.idPessoa}">
-					</h:outputText>
+				<p:column headerText="Identificador" style="width: 90px">
+					<h:outputText value="#{pessoa.idPessoa}"/>
 				</p:column>
-
 
 				<p:column headerText="Nome">
-					<h:outputText value="#{pessoa.nome}"/>
-				</p:column>
-				
-				<p:column headerText="Sobrenome">
-					<h:outputText value="#{pessoa.sobrenome}"/>
+					<h:outputText value="#{pessoa.nome}" />
 				</p:column>
 
-				<p:column headerText="Telefone">
-					<h:outputText
-						value="#{pessoa.telefone}" />
+				<p:column headerText="Sobrenome">
+					<h:outputText value="#{pessoa.sobrenome}" />
+				</p:column>
+
+				<p:column headerText="Telefone" style="width: 150px">
+					<h:outputText value="#{pessoa.telefone}"  />
 				</p:column>
 
 				<p:column headerText="Ações" style="width: 80px">
@@ -56,7 +53,7 @@
 						update=":mensagem :frm:tabelaPessoa"
 						actionListener="#{pessoaController.excluir(pessoa)}">
 						<p:confirm header="Confirmação Exclusão" icon="ui-icon-alert"
-							message="Deseja realmente excluir {pessoa.nome} ?" />
+							message="Deseja realmente excluir #{pessoa.nome} ?" />
 					</p:commandButton>
 				</p:column>
 

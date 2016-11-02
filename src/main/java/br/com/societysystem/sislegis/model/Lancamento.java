@@ -20,7 +20,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "a10_lancamento_cota_tb")
+@Table(name = "lancamento_consumo")
 public class Lancamento extends Entidade<Long>
 {
 	private static final long serialVersionUID = 1L;
@@ -31,16 +31,16 @@ public class Lancamento extends Entidade<Long>
 	private Long idLancamento;
 
 	@Temporal(TemporalType.DATE)
-	@NotNull(message = "O campo data não pode ser nulo")
+	@NotNull(message = "O campo data é obrigatório!")
 	private Date data;
 	
 	@Column(name = "quantidade_retirada")
-	private int quantidadeRetirada;
+	private Integer quantidadeRetirada;
 	
-	@Column(name = "numero_destino", length = 14)
+	@Column(name = "numero_destino_ligacao", length = 16)
 	private String numeroDestino;
 	
-	@Column(name = "local_ligacao", length = 50)
+	@Column(name = "local_destino_ligacao", length = 50)
 	private String localLigacao;
 	
 	@Column(name = "valor_diaria")
@@ -54,12 +54,12 @@ public class Lancamento extends Entidade<Long>
 	private String observacao;
 	
 	@ManyToOne
-	@NotNull(message = "É obrigatória a seleção de um planejamento para realizar o lançamento!")
+	@NotNull(message = "Planejamento é obrigatório!")
 	@JoinColumn(name = "planejamento_id")
 	private PlanejamentoCota planejamentoCota;
 	
 	@ManyToOne
-	@NotNull(message = "É obrigatória a seleção de um solicitante para realizar o lançamento!")
+	@NotNull(message = "Solicitante é obrigatório!")
 	@JoinColumn(name = "pessoa_id")
 	private Pessoa pessoa;
 
@@ -87,11 +87,11 @@ public class Lancamento extends Entidade<Long>
 		this.data = data;
 	}
 
-	public int getQuantidadeRetirada() {
+	public Integer getQuantidadeRetirada() {
 		return quantidadeRetirada;
 	}
 
-	public void setQuantidadeRetirada(int quantidadeRetirada) {
+	public void setQuantidadeRetirada(Integer quantidadeRetirada) {
 		this.quantidadeRetirada = quantidadeRetirada;
 	}
 

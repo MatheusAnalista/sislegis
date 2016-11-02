@@ -7,13 +7,12 @@
 
 	<ui:define name="content">
 
-		<h1 class="aw-page-title">Informações de acesso ao sistema</h1>
+		<h1 class="aw-page-title">Administração de usuários do sistema</h1>
 
 		<h:form id="frm">
 
 			<hr color="#1e94d2" />
 			<p:messages id="mensagem" />
-
 
 			<h:panelGrid columns="1" style="margin-top: 40px">
 
@@ -22,55 +21,72 @@
 
 				<p:outputLabel value="E-mail:" for="email" />
 				<p:inputText id="email" value="#{usuarioController.usuario.email}"
-					size="154" />
+					size="154"
+					placeholder="Informe um e-mail válido para o usuário. Deve conter email@email.com" />
 
 				<p:outputLabel value="Senha:" for="senha" />
 				<p:password id="senha" value="#{usuarioController.usuario.senha}"
 					match="confirmaSenha" label="Senha" size="154" feedback="true"
 					inline="true" promptLabel="Vazio" weakLabel="Fraca" goodLabel="Boa"
-					strongLabel="Forte" validatorMessage="Senhas não conferem" />
+					strongLabel="Forte" validatorMessage="Senhas não conferem"
+					placeholder="Infome uma senha para o usuário. Dê preferência à senhas fortes" />
 
 
 				<p:outputLabel value="Confirme Senha:" for="confirmaSenha" />
 				<p:password id="confirmaSenha"
 					value="#{usuarioController.usuario.confirmaSenha}"
-					label="Confirma Senha" size="154" />
-
+					label="Confirma Senha" size="154"
+					placeholder="Informe a mesma senha inserida no campo acima">
+				</p:password>
+				
 				<p:outputLabel value="Data de Cadastro:" for="dataCadastro" />
 				<p:calendar id="dataCadastro"
-					value="#{usuarioController.usuario.dataCadastro}" size="154">
-
+					value="#{usuarioController.usuario.dataCadastro}" size="154"
+					placeholder="Informe a data atual" pattern="dd/MM/yyyy">
 				</p:calendar>
 				<p:outputLabel value="Perfil:" />
 				<p:selectManyCheckbox value="#{usuarioController.usuario.perfis}"
-					converter="omnifaces.SelectItemsConverter" >
+					converter="omnifaces.SelectItemsConverter">
 					<f:selectItems var="perfil" itemValue="#{perfil}"
 						value="#{usuarioController.perfis}" itemLabel="#{perfil.nome}" />
 				</p:selectManyCheckbox>
 
-				<p:outputLabel value="Ativo" />
-				<p:selectBooleanCheckbox value="#{usuarioController.usuario.ativo}" />
+				<p:outputLabel value="Ativo:" />
+				<p:selectBooleanCheckbox value="#{usuarioController.usuario.ativo}"
+					onLabel="Sim" offLabel="Não" onIcon="ui-icon-check"
+					offIcon="ui-icon-close" />
+
 			</h:panelGrid>
 
-			<p:toolbar>
+			<p:toolbar style="margin-top: 20px">
 
 				<f:facet name="left">
 
 					<p:commandButton title="Salvar" icon="ui-icon-disk" value="Salvar"
-						actionListener="#{usuarioController.salvar}"
-						update="mensagem :frm" style="width: 546px" />
+						action="#{usuarioController.salvar}" update="mensagem :frm"
+						style="width: 546px">
+						<p:confirm header="Confirmação de operação" icon="ui-icon-alert"
+							message="Deseja realmente realizar esta operação #{usuario.email}?" />
+					</p:commandButton>
 
 					<span class="ui-separator"> <span
 						class="ui-icon ui-icon-grip-dotted-vertical" />
 					</span>
 
-					<p:button value="Voltar aos Usuários" style="width: 546px"
-						icon="ui-icon-info" outcome="/pages/usuarios.xhtml" />
+					<p:button value="Voltar à listagem de Usuários"
+						style="width: 546px" icon="ui-icon-info"
+						outcome="/pages/usuarios.xhtml" />
 
 				</f:facet>
 
 			</p:toolbar>
+			<p:confirmDialog global="true" responsive="true">
+				<p:commandButton value="Sim" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
 
+				<p:commandButton value="Não" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
 
 		</h:form>
 

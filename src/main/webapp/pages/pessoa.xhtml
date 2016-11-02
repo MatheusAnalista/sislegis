@@ -12,7 +12,9 @@
 		<p:messages id="msg" />
 		<h:form id="frm">
 			<hr color="#1e94d2" />
-			<p:wizard>
+
+			
+
 				<p:tab id="pessoa" title="Detalhes">
 					<p:panel header="Informações Pessoais">
 						<h:panelGrid columns="1">
@@ -20,17 +22,20 @@
 							<h:inputHidden value="#{pessoaController.pessoa.idPessoa}" />
 							<h:inputHidden
 								value="#{pessoaController.pessoa.endereco.idEndereco}" />
-							<p:outputLabel value="Nome" for="nome" />
+							<p:outputLabel value="Nome:" for="nome" />
 							<p:inputText id="nome" size="140"
-								value="#{pessoaController.pessoa.nome}" />
+								value="#{pessoaController.pessoa.nome}"
+								placeholder="Informe o nome do solicitante" />
 
-							<p:outputLabel value="Sobrenome" for="sobrenome" />
+							<p:outputLabel value="Sobrenome:" for="sobrenome" />
 							<p:inputText id="sobrenome" size="140"
-								value="#{pessoaController.pessoa.sobrenome}" />
+								value="#{pessoaController.pessoa.sobrenome}"
+								placeholder="Informe o sobrenome do solicitante" />
 
-							<p:outputLabel value="Telefone" for="telefone" />
+							<p:outputLabel value="Telefone:" for="telefone" />
 							<p:inputMask mask="(99)-(9999-9999)" size="140" id="telefone"
-								value="#{pessoaController.pessoa.telefone}" />
+								value="#{pessoaController.pessoa.telefone}"
+								placeholder="Informe o número de telefone com DDD" />
 
 							<p:outputLabel for="genero" value="Gênero:" />
 							<p:selectOneRadio id="genero"
@@ -45,23 +50,27 @@
 				<p:tab id="endereco" title="Endereço">
 					<p:panel header="Informações de Endereço">
 						<h:panelGrid columns="1">
-							<p:outputLabel value="Logradouro" for="logradouro" />
+							<p:outputLabel value="Logradouro:" for="logradouro" />
 							<p:inputText id="logradouro" size="140"
-								value="#{pessoaController.pessoa.endereco.logradouro}" />
+								value="#{pessoaController.pessoa.endereco.logradouro}"
+								placeholder="Informe o logradouro do solicitante" />
 
-							<p:outputLabel value="Bairro" for="bairro" />
+							<p:outputLabel value="Bairro:" for="bairro" />
 							<p:inputText id="bairro" size="140"
-								value="#{pessoaController.pessoa.endereco.bairro}" />
+								value="#{pessoaController.pessoa.endereco.bairro}"
+								placeholder="Informe o bairro do solicitanteF" />
 
-							<p:outputLabel value="Número" for="numero" />
+							<p:outputLabel value="Número:" for="numero" />
 							<p:inputText id="numero" size="140"
-								value="#{pessoaController.pessoa.endereco.numero}" />
+								value="#{pessoaController.pessoa.endereco.numero}"
+								placeholder="Informe o número da residência ou apartamento" />
 
-							<p:outputLabel value="Complemento" for="complemento" />
+							<p:outputLabel value="Complemento:" for="complemento" />
 							<p:inputText id="complemento" size="140"
-								value="#{pessoaController.pessoa.endereco.complemento}" />
+								value="#{pessoaController.pessoa.endereco.complemento}"
+								placeholder="Caso deseje, informe um complemento" />
 
-							<p:outputLabel value="Municipio" />
+							<p:outputLabel value="Municipio:" />
 							<p:selectOneMenu filter="true"
 								converter="omnifaces.SelectItemsConverter"
 								value="#{pessoaController.pessoa.endereco.municipio}">
@@ -76,13 +85,15 @@
 						</h:panelGrid>
 					</p:panel>
 				</p:tab>
-			</p:wizard>
+			
 			<p:toolbar style="margin-top: 25px">
 				<f:facet name="left">
 					<p:commandButton value="Salvar" icon="ui-icon-check"
-						actionListener="#{pessoaController.salvar}" update="msg :frm"
-						style="width:535px" />
-
+						action="#{pessoaController.salvar}" update="msg :frm"
+						style="width:535px">
+						<p:confirm header="Confirmação de operação" icon="ui-icon-alert"
+							message="Deseja realmente realizar esta operação?" />
+					</p:commandButton>
 					<span class="ui-separator"> <span
 						class="ui-icon ui-icon-grip-dotted-vertical" />
 					</span>
@@ -91,7 +102,17 @@
 						value="Voltar aos Solicitantes" style="width:535px"
 						icon="ui-icon-info" />
 				</f:facet>
+
 			</p:toolbar>
+
+			<p:confirmDialog global="true" responsive="true">
+				<p:commandButton value="Sim" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+
+				<p:commandButton value="Não" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+
 		</h:form>
 	</ui:define>
 </ui:composition>

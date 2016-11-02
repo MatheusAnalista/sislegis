@@ -11,7 +11,7 @@
 	</f:facet>
 
 	<title>SISLEGIS - Apoio à Administraçã de Cotas Parlamentares</title>
-	
+
 	<h:outputStylesheet library="sislegis" name="styles/custom.css" />
 	<h:outputStylesheet library="sislegis" name="styles/layout.css" />
 	<h:outputStylesheet library="sislegis" name="styles/components.css" />
@@ -27,7 +27,20 @@
 	<header class="aw-topbar">
 		<h:graphicImage library="sislegis" name="images/logo.png" />
 
+		<h:graphicImage library="sislegis" name="images/1.png" style="margin-left: 1px"/>
+
+		<h:graphicImage library="sislegis" name="images/userAdm.png"
+			rendered="#{autenticacao.usuarioAutenticado != null}" style="margin-left: 150px"/>
+
+		<h:outputLabel value="Olá, #{autenticacao.usuarioAutenticado.email}"
+			style="color: white; margin-right: 300px"
+			rendered="#{autenticacao.usuarioAutenticado != null}" />
+
+		<h:outputLabel value="Sair" style="color: white; margin-right: 10px"
+			rendered="#{autenticacao.usuarioAutenticado != null}" />
+
 		<a href="#" class="aw-toggle  js-toggle"><i class="fa  fa-bars"></i></a>
+
 	</header>
 
 	<aside class="aw-sidebar  js-sidebar">

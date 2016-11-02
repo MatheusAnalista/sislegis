@@ -46,9 +46,7 @@
 		<mapping class="br.com.societysystem.sislegis.model.Endereco"/>
 		<mapping class="br.com.societysystem.sislegis.model.Pessoa"/>
 		<mapping class="br.com.societysystem.sislegis.model.Vereador"/>
-		<mapping class="br.com.societysystem.sislegis.model.Legislatura"/>	
 		<mapping class="br.com.societysystem.sislegis.model.PlanejamentoCota"/>
-		<mapping class="br.com.societysystem.sislegis.model.AgendamentoCota"/>
 		<mapping class="br.com.societysystem.sislegis.model.Lancamento"/>
 	</session-factory>
 

@@ -1,9 +1,12 @@
 package br.com.societysystem.sislegis.controller;
-
+import java.util.Date;
 import java.util.List;
+
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+
 import org.omnifaces.util.Messages;
+
 import br.com.societysystem.sislegis.model.CotaParlamentar;
 import br.com.societysystem.sislegis.model.PlanejamentoCota;
 import br.com.societysystem.sislegis.model.Vereador;
@@ -17,37 +20,26 @@ public class PlanejamentoCotaController {
 	private PlanejamentoCota planejamentoCota;
 	PlanejamentoCotaDAO planejamentoCotaDAO = new PlanejamentoCotaDAO();
 	private List<PlanejamentoCota> planejamentos;
-
 	private List<CotaParlamentar> cotasParlamentares;
 	CotaParlamentarDAO cotaDAO = new CotaParlamentarDAO();
 
 	private List<Vereador> vereadores;
 	VereadorDAO vereadorDAO = new VereadorDAO();
 
-	
-
-	public PlanejamentoCotaController()
-	{
+	public PlanejamentoCotaController() {
 		planejamentoCota = new PlanejamentoCota();
 		vereadores = vereadorDAO.listar();
 		cotasParlamentares = cotaDAO.listar();
 	}
 
-	
-	public void iniciallizar() 
-	{
+	public void iniciallizar() {
 		planejamentoCota = new PlanejamentoCota();
 	}
 
-	
-	
-	public String criarPlanejamento() 
-	{
+	public String criarPlanejamento() {
 		return "planejamentoCota?faces-redirect=true";
 	}
 
-	
-	
 	@PostConstruct
 	public void listar() {
 		try {
@@ -57,69 +49,64 @@ public class PlanejamentoCotaController {
 		}
 	}
 
-	
-	
-	public void salvar()
-	{
-		try
-		{
-			if	(verificaDataInicioDataFim() == false)
-			{
-				planejamentoCotaDAO.salvar(planejamentoCota);	
+	public String salvar() {
+		try {
+			if (verificaDataInicioDataFim() == false) {
+				planejamentoCotaDAO.salvar(planejamentoCota);
 				Messages.addGlobalInfo("Operação realizada com sucesso!");
 				iniciallizar();
+				listar();
+				return "/pages/planejamentoCotas.xhtml";
 			}
-		}
-		catch (RuntimeException ex) 
-		{
+		} catch (RuntimeException ex) {
 			ex.printStackTrace();
 		}
+		return null;
 	}
 
-	
-	
-	public void excluir(PlanejamentoCota planejamentoCota)
-	{
-		try 
-		{
+	public boolean verificarVigenciaDePlanejamento() {
+		Date dataAtual = new Date();
+
+		if (planejamentoCota.getDataFim().after(dataAtual)
+				|| planejamentoCota.getDataFim() == dataAtual) {
+			planejamentoCota.setVigente(true);
+			planejamentoCotaDAO.salvar(planejamentoCota);
+
+			return true;
+		}
+
+		return false;
+	}
+
+
+	public void excluir(PlanejamentoCota planejamentoCota) {
+		try {
 			planejamentoCotaDAO.excluir(planejamentoCota);
 			planejamentos.remove(planejamentoCota);
 			listar();
 
 			Messages.addGlobalInfo("Planejamento de cota excluído com sucesso!");
-		} 
-		catch (RuntimeException erro) 
-		{
+		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Erro ao tentar excluir o planejamento de cota!");
 			erro.printStackTrace();
 		}
 	}
 
-	
-	
-	public String atualizar(PlanejamentoCota planejamento) 
-	{
+	public String atualizar(PlanejamentoCota planejamento) {
 		this.planejamentoCota = planejamento;
 		return "/pages/planejamentoCota.xhtml";
 	}
 
-	
-	
-	public boolean verificaDataInicioDataFim() 
-	{
-		if (planejamentoCota.getDataInicio().after(planejamentoCota.getDataFim()))
-		{
+	public boolean verificaDataInicioDataFim() {
+		if (planejamentoCota.getDataInicio().after(
+				planejamentoCota.getDataFim())) {
 			Messages.addGlobalError("Data início não pode ser posterior a data fim!");
 			return true;
-		}
-		else
-		{
+		} else {
 			return false;
 		}
 	}
 
-	
-	
 	public PlanejamentoCota getPlanejamentoCota() {
 		return planejamentoCota;
 	}

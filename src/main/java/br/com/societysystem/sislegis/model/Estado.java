@@ -7,7 +7,7 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name = "t1_estado_tb")
+@Table(name = "estado")
 public class Estado extends Entidade<Long>
 {
 

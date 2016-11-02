@@ -13,21 +13,14 @@ import br.com.societysystem.sislegis.repository.PessoaDAO;
 public class PessoaDAOTeste 
 {
 	@Test
-	
+	@Ignore
 	public void salvar()
 	{
 		Pessoa pessoa = new Pessoa();
 		PessoaDAO pessoaDAO = new PessoaDAO();	
 		MunicipioDAO municipioDAO = new MunicipioDAO();
 		Municipio m = municipioDAO.buscar(1L);
-		
-		Usuario u = new Usuario();
-		u.setAtivo(false);
-		u.setConfirmaSenha("a");
-		u.setSenha("a");
-		u.setDataCadastro(new Date());
-		u.setEmail("email@hotmail.com");
-		
+
 		Endereco end = new Endereco();
 		
 		end.setBairro("dddd");
@@ -36,25 +29,25 @@ public class PessoaDAOTeste
 		end.setNumero((short) 55);
 		end.setMunicipio(m);
 		
-		pessoa.setNome("Luan");
+		pessoa.setNome("sjsj");
 		pessoa.setSobrenome("Silva");
 		pessoa.setTelefone("8888888");
 		pessoa.setGenero(GeneroEnum.MASCULINO);
 		pessoa.setEndereco(end);
-		pessoa.setUsuario(u);
 		pessoaDAO.salvar(pessoa);
 		
 	}
 	
 	
 	@Test
-	@Ignore
+	
 	public void buscar()
 	{
 		PessoaDAO pessoaDAO = new PessoaDAO();	
 		Pessoa pessoa = pessoaDAO.buscar(2L);
 		
 		System.out.println("Pessoa selecionada p/ manipulação: " +pessoa.getNome() + "Sobrenome: " +pessoa.getSobrenome());
+		pessoaDAO.excluir(pessoa);
 	}
 	
 	

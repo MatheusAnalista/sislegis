@@ -7,7 +7,7 @@
 
 	<ui:define name="content">
 
-		<h1 class="aw-page-title">Cotas parlamentares</h1>
+		<h1 class="aw-page-title">Cotas parlamentares cadastradas</h1>
 
 		<hr color="#1e94d2" />
 
@@ -37,8 +37,12 @@
 					<h:outputText value="#{cota.nome}" />
 				</p:column>
 
-				<p:column headerText="Descrição">
-					<h:outputText value="#{cota.descricao}" />
+				<p:column headerText="Descrição" style="width:560px">
+					<h:outputText value="#{cota.descricao}"/>
+				</p:column>
+				
+				<p:column headerText="Cota ativa">
+					<h:graphicImage library="sislegis" name="images/like.png" rendered="#{cota.ativa}"/>
 				</p:column>
 
 				<p:column headerText="Ações" style="width: 80px">
@@ -50,7 +54,7 @@
 						actionListener="#{cotaParlamentarControlle.excluir(cota)}"
 						update=":mensagem :frm:tabelaCotas">
 						<p:confirm header="Confirmação Exclusão" icon="ui-icon-alert"
-							message="Deseja realmente excluir #{cota.nome}?" />
+							message="Deseja realmente excluir cota #{cota.nome}?" />
 					</p:commandButton>
 				</p:column>
 

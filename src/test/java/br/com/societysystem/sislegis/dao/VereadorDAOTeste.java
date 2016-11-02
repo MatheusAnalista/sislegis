@@ -61,7 +61,6 @@ public class VereadorDAOTeste
 		v.setCpf("5555555555");
 		v.setGenero(GeneroEnum.MASCULINO);
 		v.setNomeParlamentar("testePar");
-		v.setIdade((short) 45);
 		v.setPartido(partido);
 		//v.setEnderecos((List<Endereco>) end);
 		v.setUsuario(u);

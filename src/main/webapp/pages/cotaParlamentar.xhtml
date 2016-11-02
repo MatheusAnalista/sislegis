@@ -6,7 +6,7 @@
 	template="/WEB-INF/templates/Layout.xhtml">
 
 	<ui:define name="content">
-		<h1 class="aw-page-title">Cotas parlamentares</h1>
+		<h1 class="aw-page-title">Cadastre aqui as cotas parlamentares da instituição</h1>
 
 		<h:form id="frm">
 
@@ -23,37 +23,49 @@
 					<p:outputLabel value="Nome da Cota Parlamentar:" for="nomeCota" />
 					<p:inputText id="nomeCota"
 						value="#{cotaParlamentarControlle.cotaParlamentar.nome}"
-						style="width:1115px" />
+						style="width:1115px" placeholder="Informe o nome da cota parlamentar"/>
 
 					<p:outputLabel value="Descrição:" for="descricaoCota" />
 					<p:inputText id="descricaoCota"
 						value="#{cotaParlamentarControlle.cotaParlamentar.descricao}"
-						style="width:1115px"  />
-
+						style="width:1115px" placeholder="Informe a descrição da cota parlamentar"/>
 
 					<p:outputLabel value="Ativa:" />
 					<p:selectBooleanButton
 						value="#{cotaParlamentarControlle.cotaParlamentar.ativa}"
 						onLabel="Sim" offLabel="Não" onIcon="ui-icon-check"
 						offIcon="ui-icon-close" />
+						
 				</h:panelGrid>
 			</div>
 			<p:toolbar style="margin-top: 20px">
 
 				<f:facet name="left">
 					<p:commandButton value="salvar"
-						actionListener="#{cotaParlamentarControlle.salvar}"
-						update="mensagem :frm" style="width: 546px"  icon="ui-icon-check"/>
+						action="#{cotaParlamentarControlle.salvar}" update="mensagem :frm"
+						style="width: 546px" icon="ui-icon-check">
+						<p:confirm header="Confirmação de operação" icon="ui-icon-alert"
+							message="Deseja realmente realizar esta operação?" />
+					</p:commandButton>
 
 					<span class="ui-separator"> <span
 						class="ui-icon ui-icon-grip-dotted-vertical" />
 					</span>
 
 					<p:button outcome="/pages/cotasParlamentares.xhtml"
-						value="Voltar as Cotas Parlamentares"  style="width: 546px" icon = "ui-icon-info"/>
+						value="Voltar as Cotas Parlamentares" style="width: 546px"
+						icon="ui-icon-info" />
 				</f:facet>
 
 			</p:toolbar>
+
+			<p:confirmDialog global="true" responsive="true">
+				<p:commandButton value="Sim" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+
+				<p:commandButton value="Não" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
 
 		</h:form>
 

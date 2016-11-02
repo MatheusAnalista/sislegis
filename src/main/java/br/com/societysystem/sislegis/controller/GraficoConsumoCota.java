@@ -3,10 +3,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.BarChartModel;
@@ -20,16 +18,14 @@ import br.com.societysystem.sislegis.repository.PlanejamentoCotaDAO;
 import br.com.societysystem.sislegis.util.IsNullUtil;
 
 @ManagedBean
-public class GraficoConsumoCota
-{
+public class GraficoConsumoCota{
 	private BarChartModel graficoConsumo;
 	private BarChartModel graficoConsumoDiariaLancado;
 	private BarChartModel graficoConsumoLigacaoLancado;
-	
+	private Autenticacao autenticacao;
 	PlanejamentoCotaDAO planejamentoDAO = new PlanejamentoCotaDAO();
 	private PlanejamentoCota planejamentoCota = new PlanejamentoCota();
 	private List<PlanejamentoCota> planejamentos;
-
 	private Lancamento lancamento = new Lancamento();
 	private List<Lancamento> lancamentos = new ArrayList<Lancamento>();
 	LancamentoDAO lancamentoDAO = new LancamentoDAO();
@@ -45,10 +41,12 @@ public class GraficoConsumoCota
 		lancamentos = lancamentoDAO.listar();
 	}
 	
+	
 	private void graficoConsumoRestante(){
 		graficoConsumo = consumoRestante();
 		graficoConsumo.setTitle("Cota Xerográfica Disponível");
 		graficoConsumo.setAnimate(true);
+		graficoConsumo.setMouseoverHighlight(true);
 		graficoConsumo.setLegendPosition("ne");
 		graficoConsumo.setBarPadding(5);
 		graficoConsumo.setBarMargin(8);
@@ -69,9 +67,10 @@ public class GraficoConsumoCota
         }
         ver.setLabel("Vereadores");
         model.addSeries(ver);
-        return model;
+        return model;	
 	}
 		
+	
 	private void graficoConsumoDiariaLancado(){
 		graficoConsumoDiariaLancado = consumoDiariaLancado();
 		graficoConsumoDiariaLancado.setTitle("Consumo de Diária");
@@ -107,21 +106,16 @@ public class GraficoConsumoCota
 				if(IsNullUtil.isNullOrEmpty(quantidadeAtual)){
 				
 					mapRelatorio.put(vereador, 1l);
-				}else{
-					
+				}else{				
 					mapRelatorio.put(vereador, ++quantidadeAtual);
-				}
-				
-			}
-			
-		}
-		
+				}	
+			}		
+		}		
 		//Percorre Map ja preenchido com os dados corretos para o relatorio e seta no grafico
 		for (Vereador key : mapRelatorio.keySet()) {
 			
 			ver.set(key.getNomeParlamentar(),  mapRelatorio.get(key));
-		}         
-        
+		}                 
 		ver.setLabel("Vereadores");
 		model.addSeries(ver);    	
         return model;
@@ -167,25 +161,22 @@ public class GraficoConsumoCota
 				}else{
 					
 					mapRelatorio.put(vereador, ++quantidadeAtual);
-				}
-				
-			}
-			
+				}			
+			}			
 		}
-		
 		//Percorre Map ja preenchido com os dados corretos para o relatorio e seta no grafico
 		for (Vereador key : mapRelatorio.keySet()) {
 			
 			ver.set(key.getNomeParlamentar(),  mapRelatorio.get(key));
-		}
-		
+		}		
         ver.setLabel("Vereadores");
         model.addSeries(ver);
         return model;
 	}
 	
+
 	
-		
+	
 	public Lancamento getLancamento() {
 		return lancamento;
 	}
@@ -219,19 +210,22 @@ public class GraficoConsumoCota
 	public BarChartModel getGraficoConsumoDiariaLancado() {
 		return graficoConsumoDiariaLancado;
 	}
-
 	public void setGraficoConsumoDiariaLancado(
 			BarChartModel graficoConsumoDiariaLancado) {
 		this.graficoConsumoDiariaLancado = graficoConsumoDiariaLancado;
 	}
-
 	public BarChartModel getGraficoConsumoLigacaoLancado() {
 		return graficoConsumoLigacaoLancado;
 	}
-
 	public void setGraficoConsumoLigacaoLancado(
 			BarChartModel graficoConsumoLigacaoLancado) {
 		this.graficoConsumoLigacaoLancado = graficoConsumoLigacaoLancado;
+	}
+	public Autenticacao getAutenticacao() {
+		return autenticacao;
+	}
+	public void setAutenticacao(Autenticacao autenticacao) {
+		this.autenticacao = autenticacao;
 	}
 	
 }
