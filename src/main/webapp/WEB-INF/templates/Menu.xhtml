@@ -1,8 +1,37 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-	xmlns:h="http://xmlns.jcp.org/jsf/html">
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
 
 	<nav class="aw-menu">
+
+		<h:form>
+			<p:hotkey bind="ctrl+r"
+				action="#{teclasAtalho.atalhoParaTelaRelatorios()}" />
+				
+				<p:hotkey bind="ctrl+l"
+				action="#{teclasAtalho.atalhoParaTelaLancamentos()}" />
+				
+				<p:hotkey bind="ctrl+p"
+				action="#{teclasAtalho.atalhoParaTelaPlanejamentoCotas()}" />
+				
+				<p:hotkey bind="ctrl+g"
+				action="#{teclasAtalho.atalhoParaTelaGraficos()}" />
+				
+				<p:hotkey bind="ctrl+u"
+				action="#{teclasAtalho.atalhoParaTelaUsuarios()}" />
+				
+				<p:hotkey bind="ctrl+s"
+				action="#{teclasAtalho.atalhoParaTelaSolicitantes()}" />
+				
+				<p:hotkey bind="ctrl+c"
+				action="#{teclasAtalho.atalhoParaTelaCotasParlamentares()}" />
+				
+				<p:hotkey bind="ctrl+v"
+				action="#{teclasAtalho.atalhoParaTelaVereadores()}" />
+		</h:form>
+
+		
 		<ul>
 			<li class="is-selected"><h:link
 					outcome="/pages/GraficosConsumo.xhtml"
@@ -18,12 +47,11 @@
 					title="Aqui você pode fazer o planejamento de consumo de cotas parlamentares para o período desejado (ctrl+shift+p)">
 					<i class="fa  fa-fw  fa-edit"></i>Planejar Consumo de Cota Parlamentar</h:link>
 			</li>
+
 			<li><h:link outcome="/pages/lancamentos.xhtml"
 					title="Aqui você pode realizar o lançamento do consumo das cotas parlamentares (ctrl+shift+l)">
-					<i class="fa  fa-fw  fa-rocket"></i>Lançar Uso de Cota Parlamentar
-					
-					</h:link>
-			</li>
+					<i class="fa  fa-fw  fa-rocket"></i>Lançar Uso de Cota Parlamentar					
+					</h:link></li>
 
 			<li><h:link outcome="/pages/relatorios.xhtml"
 					title="Gere relatórios gerais e detalhados (ctrl+shift+r)">
@@ -45,7 +73,9 @@
 			<li><h:link outcome="/pages/usuarios.xhtml"
 					title="Aqui você pode manter informações dos usuários que acessam o sistema (ctrl+shift+u)">
 					<i class="fa  fa-fw  fa-group"></i>Usuários</h:link></li>
+
 		</ul>
+
 	</nav>
 
 </ui:composition>
