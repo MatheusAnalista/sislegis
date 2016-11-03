@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
+<!-- 2016-11-03T12:56:34 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="consumoDiariasGeral" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7562481b-c22e-4215-861b-a5a790bf13de">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Sislegis Data Adapter"/>
+	<queryString language="SQL">
+		<![CDATA[select v.nome_parlamentar, SUM(lc.valor_diaria)
+from vereador as v, planejamento_consumo_cota as pc, lancamento_consumo as lc
+where v.id_vereador = pc.vereador_id and pc.id_planejamento = lc.planejamento_id
+  and lc.valor_diaria is not null
+group BY v.nome_parlamentar  
+ORDER BY v.nome_parlamentar ]]>
+	</queryString>
+	<field name="nome_parlamentar" class="java.lang.String"/>
+	<field name="SUM(lc.valor_diaria)" class="java.lang.Double"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="104" splitType="Stretch">
+			<image hAlign="Center" vAlign="Middle">
+				<reportElement x="0" y="10" width="550" height="94" uuid="48c43e8a-9b79-47f3-a996-236cfd3284f3"/>
+				<imageExpression><![CDATA["C:/Users/Matheus Mendes/Pictures/relatorio.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="46" splitType="Stretch">
+			<staticText>
+				<reportElement x="80" y="16" width="400" height="30" uuid="c6a6bf82-9006-44d1-9495-5c05f6530413"/>
+				<textElement textAlignment="Center">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Relatório de consumo de diárias]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="90" y="30" width="100" height="30" uuid="9eb0d686-d169-4525-bf18-775fdffcbbd3"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Vereador]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="360" y="30" width="100" height="30" uuid="3de4f7cb-95f0-4fe4-a8d6-fbc2fa6589b6"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="40" splitType="Stretch">
+			<textField>
+				<reportElement x="90" y="10" width="100" height="30" uuid="6bc844f4-4b15-4bb2-8be2-84cecfcd05eb"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nome_parlamentar}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="360" y="10" width="100" height="30" uuid="617f2a99-efa6-4619-9654-57eb12ccd2f5"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SUM(lc.valor_diaria)}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="85" splitType="Stretch">
+			<staticText>
+				<reportElement x="80" y="10" width="400" height="52" uuid="3dd23d6d-34c2-4f29-87d0-8027a05a423f"/>
+				<box>
+					<topPen lineWidth="1.0" lineColor="#3780DE"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Câmara Municipal de Arinos 
+Rua Prof. Benevides, 385 - (38) 3635-1347 - (38)3635-1660 ]]></text>
+			</staticText>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="230" y="60" width="100" height="15" uuid="2c11046a-067f-411c-8bec-099b9f223570"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

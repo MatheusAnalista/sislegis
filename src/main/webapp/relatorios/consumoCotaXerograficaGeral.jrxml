@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
+<!-- 2016-11-03T09:27:31 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="consumoCotaXerograficaGeral" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5ddaf960-c459-4248-9a8e-f101396218ec">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Sislegis Data Adapter"/>
+	<queryString language="SQL">
+		<![CDATA[select v.nome_parlamentar, SUM(lc.quantidade_retirada), pc.quantidade_permitida
+from vereador as v, planejamento_consumo_cota as pc, lancamento_consumo as lc
+where v.id_vereador = pc.vereador_id and v.id_vereador = pc.vereador_id AND
+pc.id_planejamento = lc.planejamento_id
+  and pc.quantidade_permitida is not null
+group BY V.nome_parlamentar 
+ ORDER BY pc.quantidade_permitida]]>
+	</queryString>
+	<field name="nome_parlamentar" class="java.lang.String"/>
+	<field name="SUM(lc.quantidade_retirada)" class="java.math.BigDecimal"/>
+	<field name="quantidade_permitida" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="98" splitType="Stretch">
+			<image hAlign="Center" vAlign="Middle">
+				<reportElement x="10" y="0" width="530" height="98" uuid="0f982585-5f61-48af-9380-5babe7b6253a"/>
+				<imageExpression><![CDATA["C:/Users/Matheus Mendes/Pictures/relatorio.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="54" splitType="Stretch">
+			<staticText>
+				<reportElement x="80" y="24" width="400" height="30" uuid="2297c71c-d022-4c98-b02c-3b28db24b573"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Relatório consumo de cota xerográfica]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="50" y="20" width="100" height="30" uuid="550dd27c-8a83-4145-8ea5-97a54cc5a2dc"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Vereador]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="190" y="20" width="140" height="30" uuid="6dd2af45-87e6-405a-822c-ea11fa79ff12"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Quantidade consumida]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="380" y="20" width="130" height="30" uuid="a782232d-d1ca-47e7-9762-f2ca27eea5e8"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Quantidade disponível]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="52" splitType="Stretch">
+			<textField>
+				<reportElement x="50" y="0" width="100" height="30" uuid="6ba1ab36-8c45-4d41-8116-12a18f331dbf"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nome_parlamentar}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="250" y="0" width="100" height="30" uuid="2c43788a-c347-416e-a90f-f16b7dc672db"/>
+				<textFieldExpression><![CDATA[$F{SUM(lc.quantidade_retirada)}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="430" y="0" width="70" height="30" uuid="f9718239-7fd6-417b-a5cd-692a00ef81bb"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{quantidade_permitida}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="84" splitType="Stretch">
+			<staticText>
+				<reportElement x="80" y="10" width="400" height="54" uuid="4c9a1d43-ce97-4acc-b088-d2e307f10b13"/>
+				<box>
+					<topPen lineWidth="1.0" lineColor="#309BD9"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Câmara Municipal de Arinos 
+Rua Prof. Benevides, 385 - (38) 3635-1347 - (38)3635-1660 ]]></text>
+			</staticText>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="230" y="54" width="100" height="30" uuid="faf6f93d-1802-41dd-a4f0-8c67d2445e8f"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

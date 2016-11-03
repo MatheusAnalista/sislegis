@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
+<!-- 2016-11-03T09:37:41 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="consumoCotaLigacaoGeral" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ccf01fab-12b7-4753-85c0-89e6220594fe">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Sislegis Data Adapter"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT v.nome_parlamentar, COUNT(lc.id_lancamento)
+FROM lancamento_consumo as lc, planejamento_consumo_cota as pc, vereador as v
+WHERE v.id_vereador = pc.vereador_id and pc.id_planejamento = lc.planejamento_id AND
+lc.numero_destino_ligacao IS NOT NULL
+  group BY v.nome_parlamentar]]>
+	</queryString>
+	<field name="nome_parlamentar" class="java.lang.String"/>
+	<field name="COUNT(lc.id_lancamento)" class="java.lang.Long"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="89" splitType="Stretch">
+			<image hAlign="Center" vAlign="Middle">
+				<reportElement x="30" y="10" width="520" height="79" uuid="4b4caf63-b0e2-4b4b-9b46-42623b2bbc97"/>
+				<imageExpression><![CDATA["C:/Users/Matheus Mendes/Pictures/relatorio.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="64" splitType="Stretch">
+			<staticText>
+				<reportElement x="77" y="20" width="400" height="30" uuid="9c10a83b-e19c-4df6-8206-ac6a2a203bed"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Relatório consumo de cota ligações]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="40" splitType="Stretch">
+			<staticText>
+				<reportElement x="110" y="10" width="103" height="30" uuid="aec54ef1-279b-454d-9d14-144c4a1a6006"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Vereador]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="370" y="5" width="100" height="30" uuid="8a0d56b2-7b54-4d9e-8726-4423fabe2884"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="30" splitType="Stretch">
+			<textField>
+				<reportElement x="110" y="0" width="100" height="30" uuid="da1c06b9-d62b-4f20-a5b6-9126a5092202"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nome_parlamentar}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="380" y="0" width="100" height="30" uuid="38bbee74-8dc5-4121-b2fd-3780d821e25e"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COUNT(lc.id_lancamento)}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="75" splitType="Stretch">
+			<staticText>
+				<reportElement x="77" y="10" width="400" height="48" uuid="30785f44-1d51-405d-885f-5594d301bff5"/>
+				<box>
+					<topPen lineWidth="1.0" lineColor="#459AD6"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Câmara Municipal de Arinos 
+Rua Prof. Benevides, 385 - (38) 3635-1347 - (38)3635-1660 ]]></text>
+			</staticText>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="227" y="50" width="100" height="15" uuid="679b04ff-fd92-4765-b89a-e147b9631cee"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>
