@@ -70,7 +70,7 @@
 
 			<hr />
 
-			<li><h:link outcome="/pages/usuarios.xhtml"
+			<li><h:link outcome="/pages/usuarios.xhtml" rendered="#{autenticacao.isAdministrador()}"
 					title="Aqui você pode manter informações dos usuários que acessam o sistema (ctrl+shift+u)">
 					<i class="fa  fa-fw  fa-group"></i>Usuários</h:link></li>
 

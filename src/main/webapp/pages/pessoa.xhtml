@@ -10,7 +10,7 @@
 		<h1 class="aw-page-title">Informações de solicitantes de cotas
 			parlamentares</h1>
 		<p:messages id="msg" />
-		<h:form id="frm">
+		<h:form id="frm" rendered="#{autenticacao.isVereador() == false}">
 			<hr color="#1e94d2" />
 
 			<p:wizard  flowListener="#{pessoaController.metodo()}">

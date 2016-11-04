@@ -16,7 +16,8 @@
 		<h:form id="frm">
 
 			<p:button value="Cadastrar um novo solicitante"
-				outcome="/pages/pessoa.xhtml" style="width:1116px" />
+				outcome="/pages/pessoa.xhtml" style="width:1116px"
+				rendered="#{autenticacao.isVereador() == false}" />
 
 
 			<p:inputText id="pesquisa" size="145"
@@ -29,7 +30,7 @@
 				id="tabelaPessoa">
 
 				<p:column headerText="Identificador" style="width: 90px">
-					<h:outputText value="#{pessoa.idPessoa}"/>
+					<h:outputText value="#{pessoa.idPessoa}" />
 				</p:column>
 
 				<p:column headerText="Nome">
@@ -41,10 +42,11 @@
 				</p:column>
 
 				<p:column headerText="Telefone" style="width: 150px">
-					<h:outputText value="#{pessoa.telefone}"  />
+					<h:outputText value="#{pessoa.telefone}" />
 				</p:column>
 
-				<p:column headerText="Ações" style="width: 80px">
+				<p:column headerText="Ações" style="width: 80px"
+					rendered="#{autenticacao.isVereador() == false}">
 					<p:commandButton icon="fa fa-fw fa-edit"
 						action="#{pessoaController.atualizar(pessoa)}">
 					</p:commandButton>

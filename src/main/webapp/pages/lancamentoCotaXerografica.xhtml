@@ -10,7 +10,7 @@
 		<h1 class="aw-page-title">Você pode neste espaço, realizar o
 			lançamento de consumo de cota xerográfica</h1>
 
-		<h:form id="frm">
+		<h:form id="frm" rendered="#{autenticacao.isVereador() == false}">
 
 			<hr color="#1e94d2" />
 

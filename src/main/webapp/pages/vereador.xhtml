@@ -9,7 +9,7 @@
 
 		<h1 class="aw-page-title">Informações de vereadores</h1>
 		<p:messages id="msg" />
-		<h:form id="frm">
+		<h:form id="frm" rendered="#{autenticacao.isAdministrador()}">
 			<hr color="#1e94d2" />
 			
 				<p:tab id="vereador" title="Dados Pessoais">

@@ -1,11 +1,15 @@
 package br.com.societysystem.sislegis.controller;
 import java.io.IOException;
+import java.util.List;
+
 import br.com.societysystem.sislegis.repository.UsuarioDAO;
 import br.com.societysystem.sislegis.util.HibernateUtil;
+
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.hibernate.Session;
@@ -68,16 +72,29 @@ public class Autenticacao {
 	
 	
 	
-	/*public boolean isAdministrador()
+	public boolean isAdministrador()
 	{
-		if(this.usuarioAutenticado.getPerfis().contains("Administrador")){
-			return true;
+		List<Perfil> perfis = usuarioAutenticado.getPerfis();
+		
+		for(Perfil perfil : perfis){
+			if(perfil.getId() == 1){
+				return true;
+			}
 		}
-
 		return false;
-	}*/
+	}
 	
 
+	public boolean isVereador(){
+		List<Perfil> perfis = usuarioAutenticado.getPerfis();
+		
+		for(Perfil perfil : perfis){
+			if(perfil.getIdPerfil() == 4){
+				return true;
+			}
+		}
+		return false;
+	}
 	
 	
 		public Usuario getUsuarioAutenticado() {

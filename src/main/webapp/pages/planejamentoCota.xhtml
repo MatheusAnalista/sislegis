@@ -10,7 +10,7 @@
 			parlamentares para consumo, definindo seu período de vigência</h1>
 		<link rel="StyleSheet" type="text/css" href="styles/label.css"
 			media="screen" />
-		<h:form id="frm">
+		<h:form id="frm" rendered="#{autenticacao.isVereador() == false}">
 
 			<hr color="#1e94d2" />
 

@@ -9,7 +9,7 @@
 
 		<h1 class="aw-page-title">Administração de usuários do sistema</h1>
 
-		<h:form id="frm">
+		<h:form id="frm" rendered="#{autenticacao.isAdministrador()}">
 
 			<hr color="#1e94d2" />
 			<p:messages id="mensagem" />

@@ -8,7 +8,7 @@
 	<ui:define name="content">
 		<h1 class="aw-page-title">Cadastre aqui as cotas parlamentares da instituição</h1>
 
-		<h:form id="frm">
+		<h:form id="frm" rendered="#{autenticacao.isVereador() == false}">
 
 			<hr color="#1e94d2" />
 			<p:messages id="mensagem" />

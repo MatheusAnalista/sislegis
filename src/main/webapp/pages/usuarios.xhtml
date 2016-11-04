@@ -8,14 +8,13 @@
 	<ui:define name="content">
 
 		<h1 class="aw-page-title">Gerencie o acesso dos usuários ao
-			sislegis. Aqui você pode cadastrá-los, ativá-los e
-			desativá-los</h1>
+			sislegis. Aqui você pode cadastrá-los, ativá-los e desativá-los</h1>
 
 		<hr color="#1e94d2" />
 
 		<p:messages id="mensagem" closable="true" autoUpdate="true" />
 
-		<h:form id="frm">
+		<h:form id="frm" rendered="#{autenticacao.isAdministrador()}">
 
 			<p:button value="Cadastrar novo usuário"
 				outcome="/pages/usuario.xhtml" style="width:1116px" />
@@ -46,7 +45,8 @@
 						rendered="#{usuario.ativo == false}" />
 				</p:column>
 
-				<p:column headerText="Ações">
+				<p:column headerText="Ações"
+					rendered="#{autenticacao.isAdministrador()}">
 
 					<p:commandButton icon="ui-icon-pencil"
 						action="#{usuarioController.atualizar(usuario)}">
@@ -58,7 +58,7 @@
 						<p:confirm header="Confirmação Exclusão" icon="ui-icon-alert"
 							message="Deseja realmente excluir #{usuario.email}?" />
 					</p:commandButton>
-					
+
 				</p:column>
 
 			</p:dataTable>

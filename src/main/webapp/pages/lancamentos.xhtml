@@ -15,7 +15,7 @@
 
 		<p:messages id="mensagem" closable="true" autoUpdate="true" />
 
-		<h:form id="frm">
+		<h:form id="frm" rendered="#{autenticacao.isVereador() == false}">
 
 			<h:panelGrid columns="3">
 
