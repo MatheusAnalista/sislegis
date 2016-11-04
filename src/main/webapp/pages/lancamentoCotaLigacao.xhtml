@@ -26,13 +26,13 @@
 				<p:outputLabel value="Planejamento:" />
 				<p:selectOneMenu style="width: 1090px"
 					value="#{lancamentoController.lancamento.planejamentoCota}"
-					filter="true" converter="omnifaces.SelectItemsConverter">
+					filter="true" converter="omnifaces.SelectItemsConverter" >
 					<f:selectItem noSelectionOption="true"
-						itemLabel="Selecione o planejamento" />
+						itemLabel="Selecione o planejamento"/>
 					<f:selectItems value="#{lancamentoController.planejamentos}"
 						var="planejamento"
 						itemLabel="#{planejamento.cotaParlamentar.nome} - #{planejamento.vereador.nomeParlamentar}"
-						itemValue="#{planejamento}">
+						itemValue="#{planejamento}" >
 					</f:selectItems>
 				</p:selectOneMenu>
 

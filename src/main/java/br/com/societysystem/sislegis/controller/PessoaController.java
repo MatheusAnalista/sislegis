@@ -1,19 +1,15 @@
 package br.com.societysystem.sislegis.controller;
+import java.io.Serializable;
 import java.util.List;
-
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-
+import javax.faces.bean.SessionScoped;
 import org.omnifaces.util.Messages;
-
 import br.com.societysystem.sislegis.model.Endereco;
 import br.com.societysystem.sislegis.model.Municipio;
-import br.com.societysystem.sislegis.model.Perfil;
 import br.com.societysystem.sislegis.model.Pessoa;
-import br.com.societysystem.sislegis.model.PlanejamentoCota;
 import br.com.societysystem.sislegis.model.Usuario;
 import br.com.societysystem.sislegis.repository.MunicipioDAO;
-import br.com.societysystem.sislegis.repository.PerfilDAO;
 import br.com.societysystem.sislegis.repository.PessoaDAO;
 
 
@@ -30,9 +26,17 @@ public class PessoaController {
 	
 	
 	
+	public String metodo(){
+		return null;
+	}
+	
+	
+	
 	public PessoaController()
 	{
-		pessoa = new Pessoa();
+		if(pessoa == null){
+			pessoa = new Pessoa();
+		}
 		municipios = municipioDAO.listar();
 		endereco = new Endereco();
 	}	

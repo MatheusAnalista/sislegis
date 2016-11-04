@@ -17,7 +17,6 @@
 
 		<h:form id="frm">
 
-
 			<p:button value="Cadastrar novo usuário"
 				outcome="/pages/usuario.xhtml" style="width:1116px" />
 
@@ -25,7 +24,6 @@
 				placeholder="Digite aqui sua pesquisa"
 				style="margin-top: 20px; margin-bottom: 20px" />
 			<p:commandButton icon="ui-icon-search" />
-
 
 			<p:dataTable value="#{usuarioController.usuarios}"
 				emptyMessage="Nenhum registro encontrado" var="usuario"
@@ -60,6 +58,7 @@
 						<p:confirm header="Confirmação Exclusão" icon="ui-icon-alert"
 							message="Deseja realmente excluir #{usuario.email}?" />
 					</p:commandButton>
+					
 				</p:column>
 
 			</p:dataTable>

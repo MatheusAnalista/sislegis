@@ -14,11 +14,7 @@ public class AutenticacaoListener implements PhaseListener{
 
 	@Override
 	public void afterPhase(PhaseEvent event) {
-		if(true){
-			
-			return;
-		}
-
+	
 		String paginaAtual = Faces.getViewId();	
 		String paginaInicial = Faces.getViewId();
 		

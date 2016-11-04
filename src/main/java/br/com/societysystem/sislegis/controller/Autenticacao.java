@@ -1,14 +1,14 @@
 package br.com.societysystem.sislegis.controller;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 import br.com.societysystem.sislegis.repository.UsuarioDAO;
-
+import br.com.societysystem.sislegis.util.HibernateUtil;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-
+import javax.faces.context.FacesContext;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
+import org.hibernate.Session;
 import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
 
@@ -60,6 +60,13 @@ public class Autenticacao {
 	}
 	
 
+	public String encerrarSessaoDoUsuario()
+	{
+		usuarioAutenticado = null;
+		return "autenticacao.xhtml?faces-redirect=true";
+	}
+	
+	
 	
 	/*public boolean isAdministrador()
 	{

@@ -23,26 +23,33 @@
 </h:head>
 
 <h:body>
-
+<h:form>
 	<header class="aw-topbar">
+		
+		
 		<h:graphicImage library="sislegis" name="images/logo.png" />
 
-		<h:graphicImage library="sislegis" name="images/1.png" style="margin-left: 1px"/>
+		<h:graphicImage library="sislegis" name="images/1.png"
+			style="margin-left: 1px" />
 
 		<h:graphicImage library="sislegis" name="images/userAdm.png"
-			rendered="#{autenticacao.usuarioAutenticado != null}" style="margin-left: 150px"/>
+			rendered="#{autenticacao.usuarioAutenticado != null}"
+			style="margin-left: 150px" />
 
 		<h:outputLabel value="Olá, #{autenticacao.usuarioAutenticado.email}"
 			style="color: white; margin-right: 300px"
 			rendered="#{autenticacao.usuarioAutenticado != null}" />
 
-		<h:outputLabel value="Sair" style="color: white; margin-right: 10px"
-			rendered="#{autenticacao.usuarioAutenticado != null}" />
-
+		
+			<h:commandLink action="#{autenticacao.encerrarSessaoDoUsuario()}">
+				<h:graphicImage library="sislegis" name="images/exit.png"
+					rendered="#{autenticacao.usuarioAutenticado != null}" title="Sair"/>
+			</h:commandLink>
+	
 		<a href="#" class="aw-toggle  js-toggle"><i class="fa  fa-bars"></i></a>
 
 	</header>
-
+	</h:form>
 	<aside class="aw-sidebar  js-sidebar">
 		<ui:include src="Menu.xhtml" />
 	</aside>
