@@ -22,7 +22,8 @@
 			<p:inputText id="pesquisa" size="145"
 				placeholder="Digite aqui sua pesquisa"
 				style="margin-top: 20px; margin-bottom: 20px" />
-			<p:commandButton icon="ui-icon-search" />
+			<p:commandButton icon="ui-icon-search"
+				action="#{usuarioController.pesquisarPorNome()}" />
 
 			<p:dataTable value="#{usuarioController.usuarios}"
 				emptyMessage="Nenhum registro encontrado" var="usuario"

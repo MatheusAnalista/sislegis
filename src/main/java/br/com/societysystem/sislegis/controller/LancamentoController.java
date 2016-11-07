@@ -1,5 +1,6 @@
 package br.com.societysystem.sislegis.controller;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -27,16 +28,22 @@ public class LancamentoController {
 	PessoaDAO pessoaDAO = new PessoaDAO();
 	private Lancamento lancamento = new Lancamento();
 	private List<Lancamento> lancamentos;
+	private List<Lancamento> lancamentosCotaXerografica;
+	private List<Lancamento> lancamentosDiarias;
+	private List<Lancamento> lancamentosCotaLigacao;
 	private List<PlanejamentoCota> planejamentos;
 	private List<Pessoa> pessoas;
 	private List<FinalidadeDiariaEnum> finalidadeDiarias;
 	private PlanejamentoCota planejamentoCota = new PlanejamentoCota();
-
+	
 	
 	public LancamentoController() {
 		lancamento = new Lancamento();
 		planejamentos = planejamentoDAO.listar();
 		pessoas = pessoaDAO.listar();
+		listarSomenteConsumoDiaria();
+		listarSomenteConsumoLigacao();
+		listarSomenteConsumoXerografico();
 	}
 
 	
@@ -72,24 +79,25 @@ public class LancamentoController {
 	}
 
 	
-	
-	@PostConstruct
-	public void listar() {
-		try {
-			lancamentos = lancamentoDAO.listar();
-		} catch (RuntimeException erro) {
-			Messages.addGlobalError("Erro ao tentar carregar a lista de lançamentos realizados!");
-			erro.printStackTrace();
-		}
-	}
 
-	
-	
-	public String atualizar(Lancamento lancamento) {
+	public String atualizarConsumoDiaria(Lancamento lancamento) 
+	{
 		this.lancamento = lancamento;
-		return "/pages/lancamento.xhtml";
+		return "lancamentoCotaDiaria";
+	}
+	
+	public String atualizarConsumoCotaXerografica(Lancamento lancamento) 
+	{
+		this.lancamento = lancamento;
+		return "lancamentoCotaXerografica";
 	}
 
+	public String atualizarConsumoCotaLigacao(Lancamento lancamento) 
+	{
+		this.lancamento = lancamento;
+		return "lancamentoCotaLigacao";
+	}
+	
 	
 	
 	public void excluir(Lancamento lancamento) {
@@ -104,6 +112,7 @@ public class LancamentoController {
 		}
 	}
 
+	
 	public boolean verificarDataLancamento() {
 		if (lancamento.getData().before(
 				lancamento.getPlanejamentoCota().getDataInicio())
@@ -199,7 +208,7 @@ public class LancamentoController {
 
 	
 	
-	public boolean analisarEnvioOuNaoDeEmail() throws EmailException{
+/*	public boolean analisarEnvioOuNaoDeEmail() throws EmailException{
 		int quantidadePermitida = planejamentoCota.getQuantidadePermitida();
 		double trintaPorCentoDaQuantidadePermitida = quantidadePermitida * 0.3;
 		
@@ -208,7 +217,7 @@ public class LancamentoController {
 			return true;
 		}
 		return false;
-	}
+	}*/
 	
 
 	public void enviarEmail() throws EmailException {
@@ -226,6 +235,23 @@ public class LancamentoController {
 		}
 	}
 
+	
+
+	public void listarSomenteConsumoXerografico(){
+		lancamentosCotaXerografica = lancamentoDAO.recuperarPorCotaXerografica();
+	}
+	
+	
+	
+	public void listarSomenteConsumoDiaria(){
+		lancamentosDiarias = lancamentoDAO.recuperarPorDiaria();
+	}
+	
+	
+	public void listarSomenteConsumoLigacao(){
+		lancamentosCotaLigacao = lancamentoDAO.recuperarPorCotaLigacao();
+	}
+	
 	
 	
 	public Lancamento getLancamento() {
@@ -276,4 +302,30 @@ public class LancamentoController {
 	public void setPlanejamentoCota(PlanejamentoCota planejamentoCota) {
 		this.planejamentoCota = planejamentoCota;
 	}
+
+	public List<Lancamento> getLancamentosCotaXerografica() {
+		return lancamentosCotaXerografica;
+	}
+	public void setLancamentosCotaXerografica(
+			List<Lancamento> lancamentosCotaXerografica) {
+		this.lancamentosCotaXerografica = lancamentosCotaXerografica;
+	}
+
+
+	public List<Lancamento> getLancamentosDiarias() {
+		return lancamentosDiarias;
+	}
+
+
+	public void setLancamentosDiarias(List<Lancamento> lancamentosDiarias) {
+		this.lancamentosDiarias = lancamentosDiarias;
+	}
+
+	public List<Lancamento> getLancamentosCotaLigacao() {
+		return lancamentosCotaLigacao;
+	}
+
+	public void setLancamentosCotaLigacao(List<Lancamento> lancamentosCotaLigacao) {
+		this.lancamentosCotaLigacao = lancamentosCotaLigacao;
+	}	
 }

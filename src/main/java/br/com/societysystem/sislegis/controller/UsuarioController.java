@@ -1,12 +1,7 @@
 package br.com.societysystem.sislegis.controller;
 import java.io.Serializable;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -28,6 +23,8 @@ public class UsuarioController implements Serializable {
 	private List<Perfil> perfis;
 	PerfilDAO perfilDAO = new PerfilDAO();
 	private List<Usuario> usuarios;
+	private List<String> emailsEncontrados;
+	
 
 	public void inicializar() {
 		usuario = new Usuario();
@@ -87,6 +84,12 @@ public class UsuarioController implements Serializable {
 	}
 
 
+	public List<String> pesquisarPorNome(){	
+
+		emailsEncontrados = usuarioDAO.pesquisarNomeUsuario(usuario.getEmail());
+		return emailsEncontrados;
+	}
+	
 	
 	@SuppressWarnings("deprecation")
 	public boolean ehDataCorrente(){
@@ -117,6 +120,8 @@ public class UsuarioController implements Serializable {
 	}
 	
 	
+	
+	
 	public Usuario getUsuario() {
 		return usuario;
 	}
@@ -139,6 +144,14 @@ public class UsuarioController implements Serializable {
 
 	public void setUsuarios(List<Usuario> usuarios) {
 		this.usuarios = usuarios;
+	}
+
+	public List<String> getEmailsEncontrados() {
+		return emailsEncontrados;
+	}
+
+	public void setEmailsEncontrados(List<String> emailsEncontrados) {
+		this.emailsEncontrados = emailsEncontrados;
 	}
 
 }

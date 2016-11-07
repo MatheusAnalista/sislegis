@@ -51,7 +51,7 @@ public class LancamentoDAO extends GenericDAO<Lancamento> {
 	}
 	
 	
-/*	@SuppressWarnings("unchecked")
+	@SuppressWarnings("unchecked")
 	public List<Lancamento> recuperarPorCotaXerografica() {
 
 		Criteria consulta = super.getSession().createCriteria(Lancamento.class);
@@ -67,5 +67,5 @@ public class LancamentoDAO extends GenericDAO<Lancamento> {
 		consulta.addOrder(Order.asc("vereador.nome"));
 
 		return consulta.list();
-	}*/
+	}
 }

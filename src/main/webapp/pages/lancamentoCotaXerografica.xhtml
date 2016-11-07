@@ -27,7 +27,7 @@
 					value="#{lancamentoController.lancamento.planejamentoCota}"
 					filter="true" converter="omnifaces.SelectItemsConverter">
 					<f:selectItem noSelectionOption="true"
-						itemLabel="Selecione o planejamento" />
+						itemLabel="Selecione o planejamento que será utilizado" />
 					<f:selectItems value="#{lancamentoController.planejamentos}"
 						var="planejamento"
 						itemLabel="#{planejamento.cotaParlamentar.nome} - #{planejamento.vereador.nomeParlamentar}"
@@ -46,7 +46,7 @@
 					</f:selectItems>
 				</p:selectOneMenu>
 
-				<p:outputLabel value="Data Lancamento:" for="dataLancamento" />
+				<p:outputLabel value="Data do Lancamento:" for="dataLancamento" />
 				<p:calendar id="dataLancamento"
 					value="#{lancamentoController.lancamento.data}" size="154"
 					pattern="dd-MM-yyyy" placeholder="Infome a data deste lançamento">
@@ -62,7 +62,7 @@
 				<p:outputLabel value="Observação:" for="observacao" />
 				<p:inputText id="observacao"
 					value="#{lancamentoController.lancamento.observacao}" size="154"
-					placeholder="Caso deseje, informe mais informações" />
+					placeholder="Caso deseje, informe mais informações referente a este lançamento" />
 
 			</h:panelGrid>
 
@@ -79,7 +79,7 @@
 						class="ui-icon ui-icon-grip-dotted-vertical" />
 					</span>
 
-					<p:button outcome="/pages/lancamentos.xhtml"
+					<p:button outcome="/pages/consumoCotaXerografica.xhtml"
 						value="Voltar aos Lançamentos de Uso de Cotas" style="width:543px"
 						icon="ui-icon-info" />
 				</f:facet>

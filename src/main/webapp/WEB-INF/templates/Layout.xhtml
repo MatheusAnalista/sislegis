@@ -23,32 +23,35 @@
 </h:head>
 
 <h:body>
-<h:form>
-	<header class="aw-topbar">
-		
-		
-		<h:graphicImage library="sislegis" name="images/logo.png" />
+	<h:form>
+		<header class="aw-topbar">
 
-		<h:graphicImage library="sislegis" name="images/1.png"
-			style="margin-left: 1px" />
 
-		<h:graphicImage library="sislegis" name="images/userAdm.png"
-			rendered="#{autenticacao.usuarioAutenticado != null}"
-			style="margin-left: 150px" />
+			<h:graphicImage library="sislegis" name="images/logo.png" />
 
-		<h:outputLabel value="Olá, #{autenticacao.usuarioAutenticado.email}"
-			style="color: white; margin-right: 300px"
-			rendered="#{autenticacao.usuarioAutenticado != null}" />
+			<h:graphicImage library="sislegis" name="images/1.png"
+				style="margin-left: 1px" />
 
-		
+			<h:graphicImage library="sislegis" name="images/userAdm.png"
+				rendered="#{autenticacao.usuarioAutenticado != null}"
+				style="margin-left: 150px" />
+
+			<h:outputLabel value="Olá, #{autenticacao.usuarioAutenticado.email}"
+				style="color: white; margin-right: 100px"
+				rendered="#{autenticacao.usuarioAutenticado != null}" />
+
+			<h:outputText value="Não é você? Clique no ícone para sair"
+				style="color: white" />
+
 			<h:commandLink action="#{autenticacao.encerrarSessaoDoUsuario()}">
 				<h:graphicImage library="sislegis" name="images/exit.png"
-					rendered="#{autenticacao.usuarioAutenticado != null}" title="Sair"/>
+					rendered="#{autenticacao.usuarioAutenticado != null}" title="Sair"
+					style="margin-left: 5px" />
 			</h:commandLink>
-	
-		<a href="#" class="aw-toggle  js-toggle"><i class="fa  fa-bars"></i></a>
 
-	</header>
+			<a href="#" class="aw-toggle  js-toggle"><i class="fa  fa-bars"></i></a>
+
+		</header>
 	</h:form>
 	<aside class="aw-sidebar  js-sidebar">
 		<ui:include src="Menu.xhtml" />

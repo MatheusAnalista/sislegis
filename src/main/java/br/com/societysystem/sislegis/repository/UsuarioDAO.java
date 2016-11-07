@@ -1,5 +1,10 @@
 package br.com.societysystem.sislegis.repository;
 
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -28,5 +33,30 @@ public class UsuarioDAO extends GenericDAO<Usuario> {
 		finally{
 			sessao.close();
 		}
+	}
+	
+	
+	
+	public List<String> pesquisarPorNomeDoUsuario(String email){
+		
+		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();
+		
+		Criteria criterio = sessao.createCriteria(Usuario.class);
+		
+		criterio.add(Restrictions.eq("email", email));
+		
+		@SuppressWarnings("unchecked")
+		List<String> emailsEncontrados = criterio.list();
+		
+		return emailsEncontrados;
+	}
+	
+	
+	public List<String> pesquisarNomeUsuario(String email){
+		EntityManager entityManager = null;
+		String jpql = "select u from Usuario u where u.email = :email";
+		Query pesquisa = entityManager.createQuery(jpql, Usuario.class);
+		pesquisa.setParameter("email", email);
+		return (List<String>) pesquisa;
 	}
 }

@@ -27,7 +27,7 @@
 					value="#{lancamentoController.lancamento.planejamentoCota}"
 					filter="true" converter="omnifaces.SelectItemsConverter">
 					<f:selectItem noSelectionOption="true"
-						itemLabel="Selecione o planejamento" />
+						itemLabel="Selecione o planejamento que será utilizado" />
 					<f:selectItems value="#{lancamentoController.planejamentos}"
 						var="planejamento"
 						itemLabel="#{planejamento.cotaParlamentar.nome} - #{planejamento.vereador.nomeParlamentar}"
@@ -35,30 +35,32 @@
 					</f:selectItems>
 				</p:selectOneMenu>
 
-				<p:outputLabel value="Solicitante:" />
+				<p:outputLabel value="Vereador:" />
 				<p:selectOneMenu style="width: 1090px"
 					value="#{lancamentoController.lancamento.pessoa}" filter="true"
 					converter="omnifaces.SelectItemsConverter">
 					<f:selectItem noSelectionOption="true"
-						itemLabel="Selecione o solicitante" />
-					<f:selectItems value="#{lancamentoController.pessoas}" var="pessoa"
-						itemLabel="#{pessoa.nome}" itemValue="#{pessoa}">
+						itemLabel="Selecione o vereador solicitante" />
+					<f:selectItems value="#{vereadorController.vereadores}"
+						var="pessoa" itemLabel="#{pessoa.nomeParlamentar}"
+						itemValue="#{pessoa}">
 					</f:selectItems>
 				</p:selectOneMenu>
 
-				<p:outputLabel value="Data Lancamento:" for="dataLancamento" />
+				<p:outputLabel value="Data do Lancamento:" for="dataLancamento" />
 				<p:calendar id="dataLancamento"
 					value="#{lancamentoController.lancamento.data}" size="154"
 					pattern="dd-MM-yyyy" placeholder="Infome a data deste lançamento">
 				</p:calendar>
 
-				<p:outputLabel value="Valor Diária:" for="valorDiaria" />
+				<p:outputLabel value="Valor gasto com a Diária:" for="valorDiaria" />
 				<p:inputText id="valorDiaria"
 					value="#{lancamentoController.lancamento.valorDiaria}" size="154"
 					required="true"
 					requiredMessage="Campo valor da diária é obrigatório!"
 					placeholder="Infome o valor consumido de diária" />
 
+				<p:outputLabel value="Informe a finalidade do consumo da diária:" />
 				<p:selectOneRadio id="finalidade"
 					value="#{lancamentoController.lancamento.finalidadeDiaria}"
 					required="true"
@@ -72,7 +74,7 @@
 				<p:outputLabel value="Observação:" for="observacao" />
 				<p:inputText id="observacao"
 					value="#{lancamentoController.lancamento.observacao}" size="154"
-					placeholder="Caso deseje, informe mais informações" />
+					placeholder="Informe o motivo da viagem, bem como benefícios e/ou recursos que serão alcançados em virtude dela" />
 
 			</h:panelGrid>
 
@@ -89,8 +91,8 @@
 						class="ui-icon ui-icon-grip-dotted-vertical" />
 					</span>
 
-					<p:button outcome="/pages/lancamentos.xhtml"
-						value="Voltar aos Lançamentos de Uso de Cotas" style="width:543px"
+					<p:button outcome="/pages/consumoDiarias.xhtml"
+						value="Ir para os lançamentos de diárias" style="width:543px"
 						icon="ui-icon-info" />
 				</f:facet>
 			</p:toolbar>
