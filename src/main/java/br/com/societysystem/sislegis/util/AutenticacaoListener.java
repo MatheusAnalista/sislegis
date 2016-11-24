@@ -18,7 +18,7 @@ public class AutenticacaoListener implements PhaseListener{
 		String paginaAtual = Faces.getViewId();	
 		String paginaInicial = Faces.getViewId();
 		
-		boolean epaginaInicial = paginaInicial.contains("inicial.xhtml");
+		boolean epaginaInicial = paginaInicial.contains("portalPublico.xhtml");
 		boolean epaginaAutenticacao = paginaAtual.contains("autenticacao.xhtml");
 	
 	if(!epaginaAutenticacao && !epaginaInicial){
