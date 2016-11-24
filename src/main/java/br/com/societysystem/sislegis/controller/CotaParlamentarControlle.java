@@ -1,8 +1,11 @@
 package br.com.societysystem.sislegis.controller;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+
 import org.omnifaces.util.Messages;
 
 import br.com.societysystem.sislegis.model.CotaParlamentar;
@@ -18,7 +21,7 @@ public class CotaParlamentarControlle implements Serializable
 	private CotaParlamentar cotaParlamentar;
 	private List<CotaParlamentar> cotasParlamentares;
 	private List<Perfil> perfis;
-
+	
 	
 	public CotaParlamentarControlle()
 	{
@@ -111,6 +114,10 @@ public class CotaParlamentarControlle implements Serializable
 	}
 	
 	
+
+
+	
+	
 	
 	public CotaParlamentarDAO getCotaDAO() {
 		return cotaDAO;
@@ -141,5 +148,9 @@ public class CotaParlamentarControlle implements Serializable
 
 	public void setPerfis(List<Perfil> perfis) {
 		this.perfis = perfis;
-	}	
+	}
+
+
+	
+	
 }

@@ -57,13 +57,13 @@
 				</p:column>
 
 				<p:column headerText="Quantidade Permitida">
+					<h:graphicImage library="sislegis" name="images/ilimitada.png"
+						rendered="#{planejamento.quantidadePermitida == null}"
+						alt="hafhafha" />
 					<h:outputText value="#{planejamento.quantidadePermitida}" />
 				</p:column>
 
-				<p:column headerText="Vigente">
-					<h:graphicImage library="sislegis" name="images/like.png"
-						rendered="#{planejamento.vigente}" />
-				</p:column>
+	
 
 				<p:column headerText="Ações" style="width: 80px"
 					rendered="#{autenticacao.isVereador() == false}">

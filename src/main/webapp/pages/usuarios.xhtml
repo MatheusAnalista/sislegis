@@ -27,7 +27,8 @@
 
 			<p:dataTable value="#{usuarioController.usuarios}"
 				emptyMessage="Nenhum registro encontrado" var="usuario"
-				id="tabelaUsuarios" filteredValue="#{usuarioController.usuarios}">
+				id="tabelaUsuarios" filteredValue="#{usuarioController.usuarios}"
+				rowHover="true">
 
 				<p:column headerText="E-mail" style="width: 400px">
 					<h:outputText value="#{usuario.email}" />

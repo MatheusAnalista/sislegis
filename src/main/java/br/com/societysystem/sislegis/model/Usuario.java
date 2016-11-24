@@ -36,7 +36,7 @@ public class Usuario extends Entidade<Long>
 	@GeneratedValue
 	private Long idUsuario;
 	
-	@Column(length = 50, nullable = false, unique = true)
+	@Column(length = 50, nullable = false)
 	@Length(max = 50, message = "O campo e-mail não pode ultrapassar o {max} de caracteres!")
 	@NotEmpty(message = "O campo e-mail é obrigatório")
 	@Email(message = "Preencha com um e-mail válido!")

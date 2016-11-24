@@ -13,8 +13,7 @@
 		<h:form id="frm" rendered="#{autenticacao.isVereador() == false}">
 			<hr color="#1e94d2" />
 
-			<p:wizard  flowListener="#{pessoaController.metodo()}">
-
+		
 				<p:tab id="pessoa" title="Detalhes">
 					<p:panel header="Informações Pessoais">
 						<h:panelGrid columns="1">
@@ -85,7 +84,7 @@
 						</h:panelGrid>
 					</p:panel>
 				</p:tab>
-			</p:wizard>
+		
 			<p:toolbar style="margin-top: 25px">
 				<f:facet name="left">
 					<p:commandButton value="Salvar" icon="ui-icon-check"

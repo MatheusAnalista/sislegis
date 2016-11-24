@@ -46,13 +46,13 @@
 					</f:selectItems>
 				</p:selectOneMenu>
 
-				<p:outputLabel value="Data do Lancamento:" for="dataLancamento" />
+				<p:outputLabel value="Data do lancamento:" for="dataLancamento" />
 				<p:calendar id="dataLancamento"
 					value="#{lancamentoController.lancamento.data}" size="154"
 					pattern="dd-MM-yyyy" placeholder="Infome a data deste lançamento">
 				</p:calendar>
 
-				<p:outputLabel value="Quantidade Retirada:" for="quantidade" />
+				<p:outputLabel value="Quantidade retirada:" for="quantidade" />
 				<p:inputText id="quantidade"
 					value="#{lancamentoController.lancamento.quantidadeRetirada}"
 					size="154" required="true"
@@ -92,7 +92,7 @@
 				<p:commandButton value="Não" type="button"
 					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
 			</p:confirmDialog>
-			
+
 		</h:form>
 	</ui:define>
 </ui:composition>

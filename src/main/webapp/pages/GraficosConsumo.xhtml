@@ -8,21 +8,18 @@
 	<ui:define name="content">
 
 
-		<h1 class="aw-page-title">Aqui você visualiza mediante gráfico,
-			o consumo das cotas parlamentares destinadas aos vereadores</h1>
-		<hr color="#1e94d2" />
+		<h1 class="aw-page-title">Aqui você visualiza mediante gráfico, o
+			consumo das cotas parlamentares destinadas aos vereadores</h1>
+			
+		<hr color="#1e94d2" style="margin-bottom: 50px"/>
 
-		<h:panelGrid columns="2" columnClasses="left,right" style="width:100%">
+		<h:panelGrid columns="3" columnClasses="left,right" style="width:100%">
 
-			<p:chart type="bar" model="#{graficoConsumoCota.graficoConsumo}" />
+			<p:chart type="bar" model="#{graficoConsumoCota.animatedModel2}" />
 
-			<p:chart type="bar"
-				model="#{graficoConsumoCota.graficoConsumoDiariaLancado}" />
+			<p:chart type="bar" model="#{graficoConsumoCota.animatedModel3}" />
 
-			<p:chart type="bar"
-				model="#{graficoConsumoCota.graficoConsumoLigacaoLancado}" />
-
-
+			<p:chart type="bar" model="#{graficoConsumoCota.animatedModel4}" />
 		</h:panelGrid>
 	</ui:define>
 

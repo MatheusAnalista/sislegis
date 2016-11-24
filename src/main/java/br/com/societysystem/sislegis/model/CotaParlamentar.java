@@ -76,6 +76,7 @@ public class CotaParlamentar extends Entidade<Long>
 		this.ativa = ativa;
 	}
 
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

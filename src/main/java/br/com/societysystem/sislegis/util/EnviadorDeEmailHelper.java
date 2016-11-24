@@ -61,7 +61,7 @@ public final class EnviadorDeEmailHelper {
 
 		USUARIO("cotasparlamentaresdearinos@gmail.com"),
 
-		SENHA(""),
+		SENHA("sislegis123"),
 
 		FROM_EMAIL("contato@sislegis.com.br"),
 

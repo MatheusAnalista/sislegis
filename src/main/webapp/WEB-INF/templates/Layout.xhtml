@@ -10,7 +10,8 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 	</f:facet>
 
-	<title>SISLEGIS - Apoio à Administraçã de Cotas Parlamentares</title>
+	<title>SISLEGIS - Apoio à Administraçã e Transparência no
+		consumo de Cotas Parlamentares</title>
 
 	<h:outputStylesheet library="sislegis" name="styles/custom.css" />
 	<h:outputStylesheet library="sislegis" name="styles/layout.css" />
@@ -24,6 +25,7 @@
 
 <h:body>
 	<h:form>
+
 		<header class="aw-topbar">
 
 
@@ -37,16 +39,33 @@
 				style="margin-left: 150px" />
 
 			<h:outputLabel value="Olá, #{autenticacao.usuarioAutenticado.email}"
-				style="color: white; margin-right: 100px"
+				style="color: white; margin-right: 50px"
 				rendered="#{autenticacao.usuarioAutenticado != null}" />
 
-			<h:outputText value="Não é você? Clique no ícone para sair"
+			<h:outputText value="Deseja sair? clique no ícone ao lado"
 				style="color: white" />
 
 			<h:commandLink action="#{autenticacao.encerrarSessaoDoUsuario()}">
-				<h:graphicImage library="sislegis" name="images/exit.png"
+				<h:graphicImage library="sislegis" name="images/sair.png"
 					rendered="#{autenticacao.usuarioAutenticado != null}" title="Sair"
-					style="margin-left: 5px" />
+					style="margin-left: 10px" />
+			</h:commandLink>
+
+
+			<h:commandLink
+				action="#{planejamentoCotaController.redirecionarParaPlanejamentos()}">
+				<h:graphicImage library="sislegis" name="images/alerta.png"
+					rendered="#{planejamentoCotaController.verificarVigenciaPlanejamentoEEmitirNotificacao() == true and autenticacao.isAdministrador() or autenticacao.isRecepcionista()}"
+					title="Há planejamentos expirando hoje! Faça novos planejamentos"
+					style="margin-left: 180px" />
+			</h:commandLink>
+
+			<h:commandLink
+				action="#{planejamentoCotaController.redirecionarParaPlanejamentos()}">
+				<h:graphicImage library="sislegis" name="images/notification.png"
+					rendered="#{planejamentoCotaController.emitirNotificacaoCotaXerograficaMinima() == true and autenticacao.isAdministrador() or autenticacao.isRecepcionista()}"
+					title="Há planejamentos de cota xerográfica esgotando!"
+					style="margin-left: 20px" />
 			</h:commandLink>
 
 			<a href="#" class="aw-toggle  js-toggle"><i class="fa  fa-bars"></i></a>

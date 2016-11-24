@@ -27,7 +27,7 @@
 
 			<p:dataTable value="#{lancamentoController.lancamentosDiarias}"
 				emptyMessage="Nenhum registro encontrado" var="lancamentoDiaria"
-				id="tabelaConsumoDiarias">
+				id="tabelaConsumoDiarias" rowHover="true">
 
 				<p:column headerText="Identificador" style="width: 90px">
 					<h:outputText value="#{lancamentoDiaria.idLancamento}" />

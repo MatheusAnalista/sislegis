@@ -12,7 +12,7 @@
 				<p:hotkey bind="ctrl+l"
 				action="#{teclasAtalho.atalhoParaTelaLancamentos()}" />
 				
-				<p:hotkey bind="ctrl+p"
+				<p:hotkey bind="ctrl+j"
 				action="#{teclasAtalho.atalhoParaTelaPlanejamentoCotas()}" />
 				
 				<p:hotkey bind="ctrl+g"
@@ -24,10 +24,10 @@
 				<p:hotkey bind="ctrl+s"
 				action="#{teclasAtalho.atalhoParaTelaSolicitantes()}" />
 				
-				<p:hotkey bind="ctrl+c"
+				<p:hotkey bind="ctrl+o"
 				action="#{teclasAtalho.atalhoParaTelaCotasParlamentares()}" />
 				
-				<p:hotkey bind="ctrl+v"
+				<p:hotkey bind="ctrl+e"
 				action="#{teclasAtalho.atalhoParaTelaVereadores()}" />
 		</h:form>
 
@@ -40,15 +40,15 @@
 				</h:link></li>
 
 			<li><h:link outcome="/pages/cotasParlamentares.xhtml"
-					title="Visualize e/ou faça operações nas cotas parlamentares (ctrl+c)">
+					title="Visualize e/ou faça operações nas cotas parlamentares (ctrl+o)">
 					<i class="fa  fa-fw  fa-cubes"></i>Cotas Parlamentares</h:link></li>
 
 			<li><h:link outcome="/pages/planejamentoCotas.xhtml"
-					title="Aqui você pode fazer o planejamento de consumo de cotas parlamentares para o período desejado (ctrl+p)">
+					title="Aqui você pode fazer o planejamento de consumo de cotas parlamentares para o período desejado (ctrl+j)">
 					<i class="fa  fa-fw  fa-edit"></i>Planejar Consumo de Cota Parlamentar</h:link>
 			</li>
 
-			<li><h:link outcome="/pages/lancamentos.xhtml"
+			<li><h:link outcome="/pages/lancamentos.xhtml" rendered="#{autenticacao.isAdministrador() or autenticacao.isRecepcionista()}" 
 					title="Aqui você pode realizar o lançamento do consumo das cotas parlamentares (ctrl+l)">
 					<i class="fa  fa-fw  fa-rocket"></i>Lançar Uso de Cota Parlamentar					
 					</h:link></li>
@@ -60,7 +60,7 @@
 
 
 			<li><h:link outcome="/pages/vereadores.xhtml"
-					title="Aqui você pode cadastrar, visualizar, editar e excluir os vereadores (ctrl+v)">
+					title="Aqui você pode cadastrar, visualizar, editar e excluir os vereadores (ctrl+e)">
 					<i class="fa  fa-fw  fa-briefcase"></i>Vereadores</h:link></li>
 
 			<li><h:link outcome="/pages/pessoas.xhtml"

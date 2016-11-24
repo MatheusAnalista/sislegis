@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 
+import org.apache.shiro.crypto.hash.SimpleHash;
 import org.omnifaces.util.Messages;
 
 import br.com.societysystem.sislegis.model.Endereco;
@@ -63,17 +64,23 @@ public class VereadorController {
 	}
 	
 	
-	public void salvar()
+	public String salvar()
 	{
 		try{
+			SimpleHash hash = new SimpleHash("md5", vereador.getUsuario().getSenha());
+			vereador.getUsuario().setSenha(hash.toHex());
+			vereador.getUsuario().setConfirmaSenha(hash.toHex());
 			vereadorDAO.salvar(vereador);	
 			Messages.addGlobalInfo("Operação realizada com sucesso!");
 			limparFormulario();
+			listar();
+			return "vereadores";
 		}
 		catch (RuntimeException ex) 
 		{
 			ex.printStackTrace();
 		}
+		return null;
 	}
 	
 	
@@ -93,7 +100,7 @@ public class VereadorController {
 	
 	
 	
-	public void excluir(PlanejamentoCota planejamentoCota)
+	public void excluir(Vereador vereador)
 	{
 		try 
 		{

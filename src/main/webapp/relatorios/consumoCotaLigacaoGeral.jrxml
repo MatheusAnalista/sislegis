@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2016-11-03T09:37:41 -->
+<!-- 2016-11-11T14:16:03 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="consumoCotaLigacaoGeral" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ccf01fab-12b7-4753-85c0-89e6220594fe">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Sislegis Data Adapter"/>
@@ -17,10 +17,10 @@ lc.numero_destino_ligacao IS NOT NULL
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="89" splitType="Stretch">
-			<image hAlign="Center" vAlign="Middle">
-				<reportElement x="30" y="10" width="520" height="79" uuid="4b4caf63-b0e2-4b4b-9b46-42623b2bbc97"/>
-				<imageExpression><![CDATA["C:/Users/Matheus Mendes/Pictures/relatorio.jpg"]]></imageExpression>
+		<band height="93" splitType="Stretch">
+			<image>
+				<reportElement x="50" y="10" width="470" height="83" uuid="ba33aa18-ee97-4b83-a7be-12798cfd1af8"/>
+				<imageExpression><![CDATA["C:/Users/Matheus Mendes/Pictures/bannerAtualizado.png"]]></imageExpression>
 			</image>
 		</band>
 	</title>

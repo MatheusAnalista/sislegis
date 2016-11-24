@@ -1,4 +1,5 @@
 package br.com.societysystem.sislegis.controller;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -26,8 +27,7 @@ public class Autenticacao {
 	private Usuario usuario;
 	private Usuario usuarioAutenticado;
 	private Perfil perfil;
-	
-	
+
 	public Usuario getUsuario() {
 		return usuario;
 	}
@@ -35,82 +35,81 @@ public class Autenticacao {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
-	
+
 	@PostConstruct
-	public void inicializar()
-	{
+	public void inicializar() {
 		usuario = new Usuario();
 	}
-	
-	
-	
-	public void autenticar() throws IOException
-	{
+
+	public void autenticar() throws IOException {
 		UsuarioDAO usuarioDAO = new UsuarioDAO();
-		usuarioAutenticado = usuarioDAO.autenticar(usuario.getEmail(), usuario.getSenha());
-		if(usuarioAutenticado == null)
-		{
+		usuarioAutenticado = usuarioDAO.autenticar(usuario.getEmail(),
+				usuario.getSenha());
+		if (usuarioAutenticado == null) {
 			Messages.addGlobalError("E-mail e/ou senha inválidos");
 			return;
-		}
-		else if(!usuarioAutenticado.isAtivo())
-		{
+		} else if (!usuarioAutenticado.isAtivo()) {
 			Messages.addGlobalWarn("Usuário desativado, verifique com o administrador do sistema!");
 			return;
 		}
 		inicializar();
 		Faces.redirect("./pages/GraficosConsumo.xhtml");
-		
-	}
-	
 
-	public String encerrarSessaoDoUsuario()
-	{
+	}
+
+	public String encerrarSessaoDoUsuario() {
 		usuarioAutenticado = null;
+		Messages.addGlobalInfo("Sislegis: Promovendo suporte à administração e transparência no consumo de cotas parlamentares");
 		return "autenticacao.xhtml?faces-redirect=true";
 	}
-	
-	
-	
-	public boolean isAdministrador()
-	{
+
+	public boolean isAdministrador() {
 		List<Perfil> perfis = usuarioAutenticado.getPerfis();
-		
-		for(Perfil perfil : perfis){
-			if(perfil.getId() == 1){
+
+		for (Perfil perfil : perfis) {
+			if (perfil.getId() == 1) {
 				return true;
 			}
 		}
 		return false;
 	}
-	
 
-	public boolean isVereador(){
+	
+	public boolean isRecepcionista() {
 		List<Perfil> perfis = usuarioAutenticado.getPerfis();
-		
-		for(Perfil perfil : perfis){
-			if(perfil.getIdPerfil() == 4){
+
+		for (Perfil perfil : perfis) {
+			if (perfil.getId() == 3) {
 				return true;
 			}
 		}
 		return false;
 	}
-	
-	
-		public Usuario getUsuarioAutenticado() {
-			return usuarioAutenticado;
-		}
+	public boolean isVereador() {
+		List<Perfil> perfis = usuarioAutenticado.getPerfis();
 
-		public void setUsuarioAutenticado(Usuario usuarioAutenticado) {
-			this.usuarioAutenticado = usuarioAutenticado;
+		for (Perfil perfil : perfis) {
+			if (perfil.getIdPerfil() == 4) {
+				return true;
+			}
 		}
+		return false;
+	}
 
-		public Perfil getPerfil() {
-			return perfil;
-		}
+	public Usuario getUsuarioAutenticado() {
+		return usuarioAutenticado;
+	}
 
-		public void setPerfil(Perfil perfil) {
-			this.perfil = perfil;
-		}
-		
+	public void setUsuarioAutenticado(Usuario usuarioAutenticado) {
+		this.usuarioAutenticado = usuarioAutenticado;
+	}
+
+	public Perfil getPerfil() {
+		return perfil;
+	}
+
+	public void setPerfil(Perfil perfil) {
+		this.perfil = perfil;
+	}
+
 }

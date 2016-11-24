@@ -1,4 +1,6 @@
 package br.com.societysystem.sislegis.controller;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -20,9 +22,9 @@ public class PlanejamentoCotaController {
 	private PlanejamentoCota planejamentoCota;
 	PlanejamentoCotaDAO planejamentoCotaDAO = new PlanejamentoCotaDAO();
 	private List<PlanejamentoCota> planejamentos;
+	private List<PlanejamentoCota> planejamentosDiarias;
 	private List<CotaParlamentar> cotasParlamentares;
 	CotaParlamentarDAO cotaDAO = new CotaParlamentarDAO();
-
 	private List<Vereador> vereadores;
 	VereadorDAO vereadorDAO = new VereadorDAO();
 
@@ -40,6 +42,7 @@ public class PlanejamentoCotaController {
 		return "planejamentoCota?faces-redirect=true";
 	}
 
+	
 	@PostConstruct
 	public void listar() {
 		try {
@@ -107,6 +110,45 @@ public class PlanejamentoCotaController {
 		}
 	}
 
+	
+	
+	
+	public boolean emitirNotificacaoCotaXerograficaMinima(){	
+		for(PlanejamentoCota planejamento : planejamentos){
+			if(planejamento.getQuantidadePermitida() != null && planejamento.getQuantidadePermitida() <= 50){
+				return true;
+			}
+		}
+		return false;	
+	}
+
+	
+	@SuppressWarnings("deprecation")
+	public boolean verificarVigenciaPlanejamentoEEmitirNotificacao(){
+		LocalDateTime now = LocalDateTime.now(); 
+		for(PlanejamentoCota planejamento : planejamentos){
+			if(planejamento.getDataFim().getDate() == now.getDayOfMonth()){		
+				return true;
+			}
+		}
+		return false;
+	}
+	
+
+	public void listarSomentePlanejamentoDeDiarias(){
+		for(PlanejamentoCota planejamento : planejamentos){
+			if(planejamento.getCotaParlamentar().getId() == 5){
+				planejamentosDiarias.add(planejamento);
+			}
+		}
+	}
+	
+	
+	public String redirecionarParaPlanejamentos(){
+		return "planejamentoCotas?faces-redirect=true";
+	}
+	
+	
 	public PlanejamentoCota getPlanejamentoCota() {
 		return planejamentoCota;
 	}
@@ -139,4 +181,15 @@ public class PlanejamentoCotaController {
 		this.vereadores = vereadores;
 	}
 
+	public List<PlanejamentoCota> getPlanejamentosDiarias() {
+		return planejamentosDiarias;
+	}
+
+	public void setPlanejamentosDiarias(List<PlanejamentoCota> planejamentosDiarias) {
+		this.planejamentosDiarias = planejamentosDiarias;
+	}
+
+
+
+	
 }

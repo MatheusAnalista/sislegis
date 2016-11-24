@@ -26,17 +26,10 @@ public class PessoaController {
 	
 	
 	
-	public String metodo(){
-		return null;
-	}
-	
-	
 	
 	public PessoaController()
 	{
-		if(pessoa == null){
-			pessoa = new Pessoa();
-		}
+		pessoa = new Pessoa();
 		municipios = municipioDAO.listar();
 		endereco = new Endereco();
 	}	
@@ -67,7 +60,7 @@ public class PessoaController {
 			Messages.addGlobalInfo("Operação realizada com sucesso!");
 			limparFormulario();
 			listar();
-			return "/pages/pessoas.xhtml";
+			return "pessoas?faces-redirect=true";
 		}
 		catch(RuntimeException erro)
 		{

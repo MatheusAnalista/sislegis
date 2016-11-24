@@ -35,7 +35,7 @@ public class LancamentoController {
 	private List<Pessoa> pessoas;
 	private List<FinalidadeDiariaEnum> finalidadeDiarias;
 	private PlanejamentoCota planejamentoCota = new PlanejamentoCota();
-	
+
 	
 	public LancamentoController() {
 		lancamento = new Lancamento();
@@ -58,18 +58,19 @@ public class LancamentoController {
 				if (verificarDataLancamento()
 					&& darBaixaNoPlanejamentoExecutado() && ehDataCorrente()){
 				lancamentoDAO.salvar(lancamento);
-				//enviarEmail();
+				analisarPossibilidadeDeEnvioDeEmail();
 				Messages.addGlobalInfo("Operação realizada com sucesso!");
 				limparFormulario();
-				return "/pages/GraficosConsumo.xhtml";
+				return "GraficosConsumo?faces-redirect=true";
 				}
 			}
 			else if(verificarPreenchimentoCampoDiaria() || verificarPreenchimentoCampoLigacao()){
 				if (verificarDataLancamento() && ehDataCorrente()){
 					lancamentoDAO.salvar(lancamento);
-					//enviarEmail();
+					analisarNecessidadeDeEnvioEmailDiaria();
 					Messages.addGlobalInfo("Operação realizada com sucesso!");
 					limparFormulario();
+					return "GraficosConsumo?faces-redirect=true";
 					}
 			}		
 		} catch (RuntimeException ex) {
@@ -101,12 +102,25 @@ public class LancamentoController {
 	
 	
 	public void excluir(Lancamento lancamento) {
-		try {
-			lancamentoDAO.excluir(lancamento);
-			lancamentos.remove(lancamento);
-			lancamentos = lancamentoDAO.listar();
+		try {		
+			if(lancamentosCotaLigacao.contains(lancamento)){
+				lancamentoDAO.excluir(lancamento);
+				lancamentosCotaLigacao.remove(lancamento);
+				listarSomenteConsumoLigacao();
+			}
+			if(lancamentosCotaXerografica.contains(lancamento)){
+				lancamentoDAO.excluir(lancamento);
+				lancamentosCotaXerografica.remove(lancamento);
+				listarSomenteConsumoXerografico();
+			}	
+			if(lancamentosDiarias.contains(lancamento)){		
+				lancamentoDAO.excluir(lancamento);
+				lancamentosDiarias.remove(lancamento);
+				listarSomenteConsumoDiaria();
+			}
 			Messages.addGlobalInfo("Lançamento excluído com sucesso!");
-		} catch (RuntimeException erro) {
+		}
+			catch (RuntimeException erro) {
 			Messages.addGlobalError("Erro ao tentar excluir o lançamento");
 			erro.printStackTrace();
 		}
@@ -136,18 +150,42 @@ public class LancamentoController {
 			return false;
 	}
 	
+	
 	public boolean darBaixaNoPlanejamentoExecutado() {
 		PlanejamentoCota planejamento = lancamento.getPlanejamentoCota();
 		int quantidadeDaCota = planejamento.getQuantidadePermitida();
 		int quantidadeLancada = lancamento.getQuantidadeRetirada();
-        
+		int ultimaQuantidadeRetirada = 0;
+		
+		if(lancamento.getId() != null){
+			
+			for(Lancamento lancamento : lancamentosCotaXerografica){
+				if(lancamento.getPlanejamentoCota().getId() == planejamento.getId()){
+					ultimaQuantidadeRetirada = lancamento.getQuantidadeRetirada();
+					int quantRestante = quantidadeLancada - ultimaQuantidadeRetirada;
+					
+					if(quantRestante <= quantidadeDaCota){
+						int restante = quantidadeDaCota - quantRestante;
+						planejamento.setQuantidadePermitida(restante);
+						planejamentoDAO.atualizar(planejamento);
+						return true;
+					}
+					else {
+						Messages.addGlobalWarn("Quantidade solicitada no lançamento maior que quantidade disponível no planejamento escolhido!");
+						return false;
+					}
+				}
+			}	
+		}
+		
 		if (quantidadeLancada <= quantidadeDaCota
 				&& lancamento.getPlanejamentoCota().getId() != null) {
 			int quantidadeCotaRestante = quantidadeDaCota - quantidadeLancada;
 			planejamento.setQuantidadePermitida(quantidadeCotaRestante);
 			planejamentoDAO.atualizar(planejamento);
 			return true;
-		} else {
+		} 
+		else {
 			Messages.addGlobalWarn("Quantidade solicitada no lançamento maior que quantidade disponível no planejamento escolhido!");
 			return false;
 		}
@@ -202,29 +240,38 @@ public class LancamentoController {
 	}
 	
 	
+	
 	private static String templateExemplo = "<b>Nome: </b>%s <br><b>Idade: </b>%s";
 	private static StringBuilder templateExemplo2 = new StringBuilder(
 			"<b>Nome: </b>%s <br><b>Idade: </b>%s");
 
 	
 	
-/*	public boolean analisarEnvioOuNaoDeEmail() throws EmailException{
-		int quantidadePermitida = planejamentoCota.getQuantidadePermitida();
-		double trintaPorCentoDaQuantidadePermitida = quantidadePermitida * 0.3;
-		
-		if(planejamentoCota.getQuantidadePermitida() <= trintaPorCentoDaQuantidadePermitida){
-			enviarEmail();
-			return true;
+	public void analisarPossibilidadeDeEnvioDeEmail() throws EmailException{
+		if(lancamento.getPlanejamentoCota().getQuantidadePermitida() != null){
+			int quantidadeDisponivelCota = lancamento.getPlanejamentoCota().getQuantidadePermitida();
+			if(quantidadeDisponivelCota <= 50){
+				enviarEmailConsumoXerografico();
+			}
 		}
-		return false;
-	}*/
+	}
 	
 
-	public void enviarEmail() throws EmailException {
+	
+	
+	public void analisarNecessidadeDeEnvioEmailDiaria() throws EmailException{
+		if(lancamento.getValorDiaria() != null){
+			double valorConsumido = lancamento.getValorDiaria();
+			if(valorConsumido >= 1000){
+				enviarEmailConsumoDiaria();
+			}
+		}
+	}
+
+	public void enviarEmailConsumoXerografico() throws EmailException {
 		ParametroEmail parametro = new EnviadorDeEmailHelper().new ParametroEmail();
 		parametro.setAssunto("Informações sobre os lançamentos de cotas parlamentares");
-		parametro.setMensagem("<b> Planejamento executado com menos de 30% da cota restante!</b>");
-		
+		parametro.setMensagem("<b>Há planejamento de cota xerográfica com quantidade inferior a 50 cópias e/ou impressões</b>");
 		parametro.setDestinatario(ChaveValor.novoCom("SISLEGIS",
 				"cotasparlamentaresdearinos@gmail.com"));
 		try {
@@ -236,21 +283,41 @@ public class LancamentoController {
 	}
 
 	
-
+	
+	public void enviarEmailConsumoDiaria() throws EmailException {
+		ParametroEmail parametro = new EnviadorDeEmailHelper().new ParametroEmail();
+		parametro.setAssunto("Informações sobre os lançamentos de cotas parlamentares");
+		parametro.setMensagem("<b>Lançamento de consumo de diárias acima de R$1.000,00. Verifique seus gastos, bem como benefícios oriundos destes.</b>");
+		
+		parametro.setDestinatario(ChaveValor.novoCom("SISLEGIS",
+				"cotasparlamentaresdearinos@gmail.com"));
+		try {
+			EnviadorDeEmailHelper.enviarHtmlMail(parametro);
+			System.out.println("Email enviado com sucesso!!!!" + lancamento.getQuantidadeRetirada());
+		} catch (EmailException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
+	@PostConstruct
 	public void listarSomenteConsumoXerografico(){
 		lancamentosCotaXerografica = lancamentoDAO.recuperarPorCotaXerografica();
 	}
 	
 	
-	
+	@PostConstruct
 	public void listarSomenteConsumoDiaria(){
 		lancamentosDiarias = lancamentoDAO.recuperarPorDiaria();
 	}
 	
 	
+	@PostConstruct
 	public void listarSomenteConsumoLigacao(){
 		lancamentosCotaLigacao = lancamentoDAO.recuperarPorCotaLigacao();
 	}
+	
 	
 	
 	
@@ -311,11 +378,9 @@ public class LancamentoController {
 		this.lancamentosCotaXerografica = lancamentosCotaXerografica;
 	}
 
-
 	public List<Lancamento> getLancamentosDiarias() {
 		return lancamentosDiarias;
 	}
-
 
 	public void setLancamentosDiarias(List<Lancamento> lancamentosDiarias) {
 		this.lancamentosDiarias = lancamentosDiarias;
@@ -325,7 +390,4 @@ public class LancamentoController {
 		return lancamentosCotaLigacao;
 	}
 
-	public void setLancamentosCotaLigacao(List<Lancamento> lancamentosCotaLigacao) {
-		this.lancamentosCotaLigacao = lancamentosCotaLigacao;
-	}	
 }

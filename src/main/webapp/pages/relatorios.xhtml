@@ -8,8 +8,9 @@
 
 	<ui:define name="content">
 
-		<h1 class="aw-page-title">Gere relatórios de consumo de cotas
-			parlamentares, bem como dos vereadores da instituição</h1>
+		<h1 class="aw-page-title">Gere relatórios inerentes ao consumo de
+			cotas parlamentares, bem como dos vereadores detentores deste
+			benefício</h1>
 
 		<hr color="#1e94d2" />
 
@@ -23,10 +24,6 @@
 					<h:commandLink
 						actionListener="#{relatorioController.gerarRelatorioDeConsumoDiaria()}"
 						value="Gerar relatório de consumo de diárias">
-						<!-- <h:graphicImage library="sislegis" name="images/pdf.png"
-						style="margin-top: 50px; margin-left: 350px; margin-right:50px"
-						title="Gerar relatório de consumo parlamentar"
-						url="/pages/lancamentoCotaDiaria.xhtml" /> -->
 					</h:commandLink>
 
 					<br />
@@ -34,10 +31,6 @@
 					<h:commandLink
 						actionListener="#{relatorioController.gerarRelatorioDeConsumoCotaXerografica()}"
 						value="Gerar relatório de consumo de cota xerográfica">
-						<!-- <h:graphicImage library="sislegis" name="images/pdf.png"
-						style="margin-top: 50px; margin-right:50px"
-						title="Gerar relatório de vereadores e respectivas informações"
-						url="/pages/lancamentoCotaLigacao.xhtml" /> -->
 					</h:commandLink>
 
 					<br />
@@ -45,9 +38,6 @@
 					<h:commandLink
 						actionListener="#{relatorioController.gerarRelatorioDeConsumoCotaLigacao()}"
 						value="Gerar relatório de consumo de cota ligações">
-						<!-- 		<h:graphicImage library="sislegis" name="images/pdf.png"
-						style="margin-top: 50px;"
-						title="Gerar relatório de planejamentos de consumo parlamentar" /> -->
 					</h:commandLink>
 
 					<br />
@@ -56,12 +46,11 @@
 					<h:commandLink
 						actionListener="#{relatorioController.gerarRelatorioVereadores()}"
 						value="Gerar relatório de vereadores">
-						<!-- 		<h:graphicImage library="sislegis" name="images/pdf.png"
-						style="margin-top: 50px;"
-						title="Gerar relatório de planejamentos de consumo parlamentar" /> -->
 					</h:commandLink>
-
+					<br />
+					<br />
 				</h:panelGrid>
+				<br />
 			</p:fieldset>
 		</h:form>
 	</ui:define>

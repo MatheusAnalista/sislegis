@@ -3,13 +3,10 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.omnifaces.util.Messages;
-
 import br.com.societysystem.sislegis.model.Perfil;
 import br.com.societysystem.sislegis.model.Usuario;
 import br.com.societysystem.sislegis.repository.PerfilDAO;
@@ -24,7 +21,7 @@ public class UsuarioController implements Serializable {
 	PerfilDAO perfilDAO = new PerfilDAO();
 	private List<Usuario> usuarios;
 	private List<String> emailsEncontrados;
-	
+
 
 	public void inicializar() {
 		usuario = new Usuario();
@@ -45,7 +42,7 @@ public class UsuarioController implements Serializable {
 				Messages.addGlobalInfo("Operação realizada com sucesso!");
 				inicializar();
 				listar();
-				return "/pages/usuarios.xhtml";
+				return "usuarios";
 			} 
 		} catch (RuntimeException e) {
 			e.printStackTrace();
@@ -111,7 +108,7 @@ public class UsuarioController implements Serializable {
 		
 		for(Usuario usuario : usuarios){
 			emailsNoBanco = usuario.getEmail();
-			if(emailsNoBanco.equals(email) && usuario.getId() != this.getUsuario().getId()){
+			if(emailsNoBanco.equals(email) && this.usuario.getId() == null){
 				Messages.addGlobalWarn("E-mail já existente no banco de dados!");
 				return false;
 			}		
@@ -153,5 +150,4 @@ public class UsuarioController implements Serializable {
 	public void setEmailsEncontrados(List<String> emailsEncontrados) {
 		this.emailsEncontrados = emailsEncontrados;
 	}
-
 }

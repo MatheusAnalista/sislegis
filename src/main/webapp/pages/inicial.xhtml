@@ -6,18 +6,20 @@
 	template="/WEB-INF/templates/LayoutInicial.xhtml">
 
 	<ui:define name="content">
-		<h:panelGrid columns="2" columnClasses="left,right" style="width:100%">
 
-			<p:chart type="bar" model="#{graficoConsumoCota.graficoConsumo}"
-				style="width:400px;" />
+		<h1 class="aw-page-title">Olá cidadão, aqui você pode ter acesso
+			as informações inerentes ao consumo das cotas parlamentares dos
+			vereadores da Câmara Municipal de Arinos - MG</h1>
 
-			<!-- <p:chart type="bar"
-				model="#{graficoConsumoCota.graficoConsumoDiariaLancado}"
-				style="width:400px;" />
- -->
-			<p:chart type="bar"
-				model="#{graficoConsumoCota.graficoConsumoLigacaoLancado}"
-				style="width:400px;" />
+		<hr color="#1e94d2" />
+
+		<h:panelGrid columns="3" columnClasses="left,right" style="width:100%">
+
+			<p:chart type="bar" model="#{graficoConsumoCota.animatedModel2}" />
+
+			<p:chart type="bar" model="#{graficoConsumoCota.animatedModel3}" />
+
+			<p:chart type="bar" model="#{graficoConsumoCota.animatedModel4}" />
 
 		</h:panelGrid>
 

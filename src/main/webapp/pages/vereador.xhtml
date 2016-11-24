@@ -11,166 +11,186 @@
 		<p:messages id="msg" />
 		<h:form id="frm" rendered="#{autenticacao.isAdministrador()}">
 			<hr color="#1e94d2" />
-			
-				<p:tab id="vereador" title="Dados Pessoais">
-					<p:panel header="Informações Pessoais">
 
-						<h:panelGrid columns="1">
-							<p:outputLabel value="Nome:" for="nomeVer" />
-							<p:inputText id="nomeVer" size="140"
-								value="#{vereadorController.vereador.nome}" />
+			<p:tab id="vereador" title="Dados Pessoais">
+				<p:panel header="Informações Pessoais">
 
-							<p:outputLabel value="Sobrenome:" for="sobrenomeVer" />
-							<p:inputText id="sobrenomeVer" size="140"
-								value="#{vereadorController.vereador.sobrenome}" />
-
-							<p:outputLabel value="Telefone" for="telefoneVer" />
-							<p:inputMask mask="(99)-(9999-9999)" size="140" id="telefoneVer"
-								value="#{vereadorController.vereador.telefone}" />
-
-							<p:outputLabel for="generoVer" value="Gênero:" />
-							<p:selectOneRadio id="generoVer"
-								value="#{vereadorController.vereador.genero}">
-								<f:selectItem itemLabel="Masculino" itemValue="MASCULINO" />
-								<f:selectItem itemLabel="Feminino" itemValue="FEMININO" />
-							</p:selectOneRadio>
-						</h:panelGrid>
-					</p:panel>
-				</p:tab>
-
-				<p:tab id="endereco" title="Endereço">
-					<p:panel header="Informações de Endereço">
-						<h:panelGrid columns="1">
-							<p:outputLabel value="Logradouro:" for="logradouro" />
-							<p:inputText id="logradouro" size="140"
-								value="#{vereadorController.vereador.endereco.logradouro}" />
-
-							<p:outputLabel value="Bairro:" for="bairro" />
-							<p:inputText id="bairro" size="140"
-								value="#{vereadorController.vereador.endereco.bairro}" />
-
-							<p:outputLabel value="Número:" for="numero" />
-							<p:inputText id="numero" size="140"
-								value="#{vereadorController.vereador.endereco.numero}" />
-
-							<p:outputLabel value="Complemento:" for="complemento" />
-							<p:inputText id="complemento" size="140"
-								value="#{vereadorController.vereador.endereco.complemento}" />
-
-							<p:outputLabel value="Municipio:" />
-							<p:selectOneMenu filter="true"
-								converter="omnifaces.SelectItemsConverter"
-								value="#{vereadorController.vereador.endereco.municipio}">
-								<f:selectItem noSelectionOption="true"
-									itemLabel="Selecione um Município" />
-								<f:selectItems value="#{vereadorController.municipios}"
-									var="municipio" itemLabel="#{municipio.nome}"
-									itemValue="#{municipio}">
-								</f:selectItems>
-							</p:selectOneMenu>
-
-						</h:panelGrid>
-					</p:panel>
-				</p:tab>
-
-				<p:tab id="pessoa" title="Informações de Vereança">
-					<p:panel header="Informações de Vereança">
-						<h:panelGrid columns="1">
-
-							<p:outputLabel value="Nome Parlamentar:" for="nome" />
-							<p:inputText id="nome" size="140"
-								value="#{vereadorController.vereador.nomeParlamentar}" />
-
-							<p:outputLabel value="Presidente:" />
-							<p:selectBooleanButton
-								value="#{vereadorController.vereador.presidente}" onLabel="Sim"
-								offLabel="Não" onIcon="ui-icon-check" offIcon="ui-icon-close"
-								style="width:1020px" />
-
-							<p:outputLabel value="CPF:" for="cpf" />
-							<p:inputMask mask="999-999-999-99" id="cpf" size="140"
-								value="#{vereadorController.vereador.cpf}" />
-
-							<p:outputLabel value="Data Nascimento:" for="dataNascimento" />
-							<p:calendar id="dataNascimento"
-								value="#{vereadorController.vereador.dataNascimento}" size="140"
-								pattern="dd-MM-yyyy" />
-
-							<p:outputLabel value="Partido:" />
-							<p:selectOneMenu filter="true"
-								converter="omnifaces.SelectItemsConverter"
-								value="#{vereadorController.vereador.partido}" id="gridPartido">
-								<f:selectItem noSelectionOption="true"
-									itemLabel="Selecione um Partido" />
-								<f:selectItems value="#{vereadorController.partidos}"
-									var="partido" itemLabel="#{partido.nome}"
-									itemValue="#{partido}">
-								</f:selectItems>
-							</p:selectOneMenu>
-
-							<p:commandButton value="Inserir Partido"
-								oncomplete="PF('dialogoPartido').show();" />
-
-						</h:panelGrid>
-					</p:panel>
-				</p:tab>
-
-				<p:tab title="Dados de Acesso">
-					<p:panel header="Informações de Acesso">
-						<p:outputLabel value="E-mail:" for="email" />
-						<p:inputText id="email"
-							value="#{vereadorController.vereador.usuario.email}" size="150" />
-
-						<p:outputLabel value="Senha:" for="senha" />
-						<p:password id="senha"
-							value="#{vereadorController.vereador.usuario.senha}"
-							match="confirmaSenha" label="Senha" size="150" feedback="true"
-							inline="true" promptLabel="Vazio" weakLabel="Fraca"
-							goodLabel="Boa" strongLabel="Forte" />
-
-						<p:outputLabel value="Confirme Senha:" for="confirmaSenha" />
-						<p:password id="confirmaSenha"
-							value="#{vereadorController.vereador.usuario.confirmaSenha}"
-							label="Confirma Senha" size="150"
-							validatorMessage="Senhas não conferem" />
-
-						<p:outputLabel value="Data de Cadastro:" for="dataCadastro" />
-						<p:calendar id="dataCadastro"
-							value="#{vereadorController.vereador.usuario.dataCadastro}"
-							size="150" />
-
-						<p:outputLabel value="Perfil:" />
-						<p:selectManyCheckbox
-							value="#{vereadorController.vereador.usuario.perfis}"
-							converter="omnifaces.SelectItemsConverter">
-							<f:selectItems var="perfil" itemValue="#{perfil}"
-								value="#{vereadorController.perfis}" itemLabel="#{perfil.nome}" />
-						</p:selectManyCheckbox>
-
-						<p:outputLabel value="Ativo" />
-						<p:selectBooleanCheckbox
-							value="#{vereadorController.vereador.usuario.ativo}" />
-					</p:panel>
-				</p:tab>
+					<h:panelGrid columns="1">
+						<h:inputHidden
+							value="#{vereadorController.vereador.usuario.idUsuario}" />
+						<h:inputHidden value="#{vereadorController.vereador.idPessoa}" />
 
 
-				<p:toolbar style="margin-top: 25px">
-					<f:facet name="left">
-						<p:commandButton value="Salvar" icon="ui-icon-check"
-							actionListener="#{vereadorController.salvar}" update="msg :frm"
-							style="width:530px" />
+						<p:outputLabel value="Nome:" for="nomeVer" />
+						<p:inputText id="nomeVer" size="140"
+							value="#{vereadorController.vereador.nome}"
+							placeholder="Por favor, informe o nome do vereador" />
 
-						<span class="ui-separator"> <span
-							class="ui-icon ui-icon-grip-dotted-vertical" />
-						</span>
+						<p:outputLabel value="Sobrenome:" for="sobrenomeVer" />
+						<p:inputText id="sobrenomeVer" size="140"
+							value="#{vereadorController.vereador.sobrenome}"
+							placeholder="Informe aqui o sobrenome" />
 
-						<p:button outcome="/pages/vereadores.xhtml"
-							value="Voltar aos Vereadores" style="width:530px"
-							icon="ui-icon-info" />
-					</f:facet>
-				</p:toolbar>
+						<p:outputLabel value="Telefone" for="telefoneVer" />
+						<p:inputMask mask="(99)-(9999-9999)" size="140" id="telefoneVer"
+							value="#{vereadorController.vereador.telefone}"
+							placeholder="Informe aqui o telefone do vereador" />
 
-			
+						<p:outputLabel for="generoVer" value="Gênero:" />
+						<p:selectOneRadio id="generoVer"
+							value="#{vereadorController.vereador.genero}">
+							<f:selectItem itemLabel="Masculino" itemValue="MASCULINO" />
+							<f:selectItem itemLabel="Feminino" itemValue="FEMININO" />
+						</p:selectOneRadio>
+					</h:panelGrid>
+				</p:panel>
+			</p:tab>
+
+			<p:tab id="endereco" title="Endereço">
+				<p:panel header="Informações de Endereço">
+					<h:panelGrid columns="1">
+						<p:outputLabel value="Logradouro:" for="logradouro" />
+						<p:inputText id="logradouro" size="140"
+							value="#{vereadorController.vereador.endereco.logradouro}"
+							placeholder="Informe aqui o endereço do vereador" />
+
+						<p:outputLabel value="Bairro:" for="bairro" />
+						<p:inputText id="bairro" size="140"
+							value="#{vereadorController.vereador.endereco.bairro}"
+							placeholder="Informe aqui o bairro que reside o vereador" />
+
+						<p:outputLabel value="Número:" for="numero" />
+						<p:inputText id="numero" size="140"
+							value="#{vereadorController.vereador.endereco.numero}"
+							placeholder="Informe o número da residência ou apartamento" />
+
+						<p:outputLabel value="Complemento:" for="complemento" />
+						<p:inputText id="complemento" size="140"
+							value="#{vereadorController.vereador.endereco.complemento}"
+							placeholder="Caso deseje, informe o complemento" />
+
+						<p:outputLabel value="Municipio:" />
+						<p:selectOneMenu filter="true"
+							converter="omnifaces.SelectItemsConverter"
+							value="#{vereadorController.vereador.endereco.municipio}">
+							<f:selectItem noSelectionOption="true"
+								itemLabel="Selecione um Município" />
+							<f:selectItems value="#{vereadorController.municipios}"
+								var="municipio" itemLabel="#{municipio.nome}"
+								itemValue="#{municipio}">
+							</f:selectItems>
+						</p:selectOneMenu>
+
+					</h:panelGrid>
+				</p:panel>
+			</p:tab>
+
+			<p:tab id="pessoa" title="Informações de Vereança">
+				<p:panel header="Informações de Vereança">
+					<h:panelGrid columns="1">
+
+						<p:outputLabel value="Nome Parlamentar:" for="nome" />
+						<p:inputText id="nome" size="140"
+							value="#{vereadorController.vereador.nomeParlamentar}"
+							placeholder="Informe aqui o nome parlamentar do vereador" />
+
+						<p:outputLabel value="Presidente:" />
+						<p:selectBooleanButton
+							value="#{vereadorController.vereador.presidente}" onLabel="Sim"
+							offLabel="Não" onIcon="ui-icon-check" offIcon="ui-icon-close"
+							style="width:1020px" />
+
+						<p:outputLabel value="CPF:" for="cpf" />
+						<p:inputMask mask="999-999-999-99" id="cpf" size="140"
+							value="#{vereadorController.vereador.cpf}"
+							placeholder="Informe aqui o CPF do vereador" />
+
+						<p:outputLabel value="Data Nascimento:" for="dataNascimento" />
+						<p:calendar id="dataNascimento"
+							value="#{vereadorController.vereador.dataNascimento}" size="140"
+							pattern="dd-MM-yyyy"
+							placeholder="Informe aqui a data de nascimento do vereador" />
+
+						<p:outputLabel value="Partido:" />
+						<p:selectOneMenu filter="true"
+							converter="omnifaces.SelectItemsConverter"
+							value="#{vereadorController.vereador.partido}" id="gridPartido">
+							<f:selectItem noSelectionOption="true"
+								itemLabel="Selecione um Partido" />
+							<f:selectItems value="#{vereadorController.partidos}"
+								var="partido" itemLabel="#{partido.nome}" itemValue="#{partido}">
+							</f:selectItems>
+						</p:selectOneMenu>
+
+						<p:commandButton value="Inserir Partido"
+							oncomplete="PF('dialogoPartido').show();" />
+
+					</h:panelGrid>
+				</p:panel>
+			</p:tab>
+
+			<p:tab title="Dados de Acesso">
+				<p:panel header="Informações de Acesso">
+					<p:outputLabel value="E-mail:" for="email" />
+					<p:inputText id="email"
+						value="#{vereadorController.vereador.usuario.email}" size="150"
+						placeholder="Informe aqui o e-mail do vereador para acesso ao sislegis" />
+
+					<p:outputLabel value="Senha:" for="senha" />
+					<p:password id="senha"
+						value="#{vereadorController.vereador.usuario.senha}"
+						match="confirmaSenha" label="Senha" size="150" feedback="true"
+						inline="true" promptLabel="Vazio" weakLabel="Fraca"
+						goodLabel="Boa" strongLabel="Forte"
+						placeholder="Informe aqui a senha para acesso" />
+
+					<p:outputLabel value="Confirme Senha:" for="confirmaSenha" />
+					<p:password id="confirmaSenha"
+						value="#{vereadorController.vereador.usuario.confirmaSenha}"
+						label="Confirma Senha" size="150"
+						validatorMessage="Senhas não conferem"
+						placeholder="Repita a senha" />
+
+					<p:outputLabel value="Data de Cadastro:" for="dataCadastro" />
+					<p:calendar id="dataCadastro"
+						value="#{vereadorController.vereador.usuario.dataCadastro}"
+						size="150" placeholder="Informe aqui a data de hoje" />
+
+					<p:outputLabel value="Perfil:" />
+					<p:selectManyCheckbox
+						value="#{vereadorController.vereador.usuario.perfis}"
+						converter="omnifaces.SelectItemsConverter">
+						<f:selectItems var="perfil" itemValue="#{perfil}"
+							value="#{vereadorController.perfis}" itemLabel="#{perfil.nome}" />
+					</p:selectManyCheckbox>
+
+					<p:outputLabel value="Ativo:" />
+					<p:selectBooleanButton
+						value="#{vereadorController.vereador.usuario.ativo}" onLabel="Sim"
+						offLabel="Não" onIcon="ui-icon-check" offIcon="ui-icon-close"
+						style="width:1118px" />
+				</p:panel>
+			</p:tab>
+
+			<p:toolbar style="margin-top: 25px">
+				<f:facet name="left">
+					<p:commandButton value="Salvar" icon="ui-icon-check"
+						action="#{vereadorController.salvar}" update="msg :frm"
+						style="width:530px">
+						<p:confirm header="Confirmação de operação" icon="ui-icon-alert"
+							message="Deseja realmente realizar esta operação?" />
+					</p:commandButton>
+					<span class="ui-separator"> <span
+						class="ui-icon ui-icon-grip-dotted-vertical" />
+					</span>
+
+					<p:button outcome="/pages/vereadores.xhtml"
+						value="Voltar aos Vereadores" style="width:530px"
+						icon="ui-icon-info" />
+				</f:facet>
+			</p:toolbar>
+
+
 			<p:confirmDialog global="true">
 				<p:commandButton value="Sim" type="button"
 					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />

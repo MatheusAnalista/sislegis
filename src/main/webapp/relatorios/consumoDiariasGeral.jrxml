@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2016-11-03T12:56:34 -->
+<!-- 2016-11-14T22:03:01 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="consumoDiariasGeral" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7562481b-c22e-4215-861b-a5a790bf13de">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Sislegis Data Adapter"/>
@@ -10,7 +10,7 @@ from vereador as v, planejamento_consumo_cota as pc, lancamento_consumo as lc
 where v.id_vereador = pc.vereador_id and pc.id_planejamento = lc.planejamento_id
   and lc.valor_diaria is not null
 group BY v.nome_parlamentar  
-ORDER BY v.nome_parlamentar ]]>
+ORDER BY v.nome_parlamentar]]>
 	</queryString>
 	<field name="nome_parlamentar" class="java.lang.String"/>
 	<field name="SUM(lc.valor_diaria)" class="java.lang.Double"/>
@@ -18,10 +18,10 @@ ORDER BY v.nome_parlamentar ]]>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="104" splitType="Stretch">
-			<image hAlign="Center" vAlign="Middle">
-				<reportElement x="0" y="10" width="550" height="94" uuid="48c43e8a-9b79-47f3-a996-236cfd3284f3"/>
-				<imageExpression><![CDATA["C:/Users/Matheus Mendes/Pictures/relatorio.jpg"]]></imageExpression>
+		<band height="115" splitType="Stretch">
+			<image>
+				<reportElement x="40" y="20" width="480" height="95" uuid="e1934f82-aca7-4347-a457-495e14c3cb0b"/>
+				<imageExpression><![CDATA["C:/Users/Matheus Mendes/Pictures/bannerAtualizado.png"]]></imageExpression>
 			</image>
 		</band>
 	</title>
@@ -37,7 +37,7 @@ ORDER BY v.nome_parlamentar ]]>
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="61" splitType="Stretch">
+		<band height="81" splitType="Stretch">
 			<staticText>
 				<reportElement x="90" y="30" width="100" height="30" uuid="9eb0d686-d169-4525-bf18-775fdffcbbd3"/>
 				<textElement>
@@ -55,7 +55,7 @@ ORDER BY v.nome_parlamentar ]]>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="40" splitType="Stretch">
+		<band height="49" splitType="Stretch">
 			<textField>
 				<reportElement x="90" y="10" width="100" height="30" uuid="6bc844f4-4b15-4bb2-8be2-84cecfcd05eb"/>
 				<textElement>
@@ -64,12 +64,16 @@ ORDER BY v.nome_parlamentar ]]>
 				<textFieldExpression><![CDATA[$F{nome_parlamentar}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="360" y="10" width="100" height="30" uuid="617f2a99-efa6-4619-9654-57eb12ccd2f5"/>
+				<reportElement x="360" y="10" width="100" height="20" uuid="617f2a99-efa6-4619-9654-57eb12ccd2f5"/>
 				<textElement>
 					<font size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{SUM(lc.valor_diaria)}]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement x="330" y="10" width="100" height="30" uuid="e5de50d6-742e-441c-9a8e-bee07981aae2"/>
+				<text><![CDATA[R$]]></text>
+			</staticText>
 		</band>
 	</detail>
 	<pageFooter>

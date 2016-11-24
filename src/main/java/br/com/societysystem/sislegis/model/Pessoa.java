@@ -61,7 +61,7 @@ public class Pessoa extends Entidade<Long> implements Serializable
 	public Pessoa()
 	{
 		endereco = new Endereco();
-		//usuario = new Usuario();
+		usuario = new Usuario();
 	}
 	
 

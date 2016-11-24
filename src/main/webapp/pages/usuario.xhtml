@@ -31,30 +31,29 @@
 					strongLabel="Forte" validatorMessage="Senhas não conferem"
 					placeholder="Infome uma senha para o usuário. Dê preferência à senhas fortes" />
 
-
 				<p:outputLabel value="Confirme Senha:" for="confirmaSenha" />
 				<p:password id="confirmaSenha"
 					value="#{usuarioController.usuario.confirmaSenha}"
 					label="Confirma Senha" size="154"
-					placeholder="Informe a mesma senha inserida no campo acima">
-				</p:password>
-				
+					placeholder="Informe a mesma senha inserida no campo acima" />
+
 				<p:outputLabel value="Data de Cadastro:" for="dataCadastro" />
 				<p:calendar id="dataCadastro"
 					value="#{usuarioController.usuario.dataCadastro}" size="154"
 					placeholder="Informe a data atual" pattern="dd/MM/yyyy">
 				</p:calendar>
+
+				<p:outputLabel value="Usuário ativo:" />
+				<p:selectBooleanButton value="#{usuarioController.usuario.ativo}"
+					onLabel="Sim" offLabel="Não" onIcon="ui-icon-check"
+					offIcon="ui-icon-close" style="width:1118px" />
+
 				<p:outputLabel value="Perfil:" />
 				<p:selectManyCheckbox value="#{usuarioController.usuario.perfis}"
 					converter="omnifaces.SelectItemsConverter">
 					<f:selectItems var="perfil" itemValue="#{perfil}"
 						value="#{usuarioController.perfis}" itemLabel="#{perfil.nome}" />
 				</p:selectManyCheckbox>
-
-				<p:outputLabel value="Ativo:" />
-				<p:selectBooleanCheckbox value="#{usuarioController.usuario.ativo}"
-					onLabel="Sim" offLabel="Não" onIcon="ui-icon-check"
-					offIcon="ui-icon-close" />
 
 			</h:panelGrid>
 

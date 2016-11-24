@@ -27,7 +27,7 @@
 
 			<p:dataTable value="#{pessoaController.pessoas}"
 				emptyMessage="Nenhum registro encontrado" var="pessoa"
-				id="tabelaPessoa">
+				id="tabelaPessoa" rowHover="true">
 
 				<p:column headerText="Identificador" style="width: 90px">
 					<h:outputText value="#{pessoa.idPessoa}" />

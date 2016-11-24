@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2016-11-03T13:05:31 -->
+<!-- 2016-11-11T14:12:39 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="vereadores" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="78432b5d-8cf8-4458-a8e9-e07e3bc5a2f3">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Sislegis Data Adapter"/>
@@ -17,10 +17,10 @@ FROM sislegis.vereador
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="78" splitType="Stretch">
-			<image hAlign="Center" vAlign="Middle">
-				<reportElement x="0" y="0" width="560" height="74" uuid="6817148e-fc1a-4f4d-8de1-31f303a65645"/>
-				<imageExpression><![CDATA["C:/Users/Matheus Mendes/Pictures/relatorio.jpg"]]></imageExpression>
+		<band height="79" splitType="Stretch">
+			<image>
+				<reportElement x="62" y="0" width="430" height="79" uuid="ba3dcc2b-bb23-42c6-b4bc-5a2776299a5d"/>
+				<imageExpression><![CDATA["C:/Users/Matheus Mendes/Pictures/bannerAtualizado.png"]]></imageExpression>
 			</image>
 		</band>
 	</title>
